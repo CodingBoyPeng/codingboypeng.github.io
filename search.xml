@@ -11,12 +11,24 @@
 <figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> *</span><br><span class="line"><span class="keyword">FROM</span> xxl_job_registry <span class="keyword">AS</span> t</span><br><span class="line"><span class="keyword">WHERE</span> t.update_time &gt; <span class="keyword">DATE_ADD</span>(<span class="comment">#&#123;nowTime&#125;,INTERVAL -#&#123;timeout&#125; SECOND)</span></span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
-        <category>旅行</category>
-        <category>国内</category>
+        <category>技术</category>
       </categories>
       <tags>
-        <tag>旅行</tag>
-        <tag>国内</tag>
+        <tag>XML</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>与地球的第一次相遇</title>
+    <url>/2020/11/24/%E4%B8%8E%E5%9C%B0%E7%90%83%E7%9A%84%E7%AC%AC%E4%B8%80%E6%AC%A1%E7%9B%B8%E9%81%87/</url>
+    <content><![CDATA[<p>地球是一只英短银渐层猫咪，是我女朋友和我在她同事那买的一只只有2个月大的小猫咪。<br>十一月，是我与她的第一次见面，由于还不熟悉，她对我们还是心有芥蒂。<br>偷看她!!!<br><img src="/2020/11/24/%E4%B8%8E%E5%9C%B0%E7%90%83%E7%9A%84%E7%AC%AC%E4%B8%80%E6%AC%A1%E7%9B%B8%E9%81%87/1.png" alt="偷拍1"><br><img src="/2020/11/24/%E4%B8%8E%E5%9C%B0%E7%90%83%E7%9A%84%E7%AC%AC%E4%B8%80%E6%AC%A1%E7%9B%B8%E9%81%87/2.png" alt="偷拍2"><br>与她的晚餐：<br><img src="/2020/11/24/%E4%B8%8E%E5%9C%B0%E7%90%83%E7%9A%84%E7%AC%AC%E4%B8%80%E6%AC%A1%E7%9B%B8%E9%81%87/3.png" alt="晚饭"><br>我相信她会慢慢的向我们靠近的！</p>
+]]></content>
+      <categories>
+        <category>地球</category>
+        <category>猫咪</category>
+      </categories>
+      <tags>
+        <tag>地球</tag>
+        <tag>宠物</tag>
       </tags>
   </entry>
   <entry>
