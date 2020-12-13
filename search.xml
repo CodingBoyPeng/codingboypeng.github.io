@@ -1,6 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>仨月的地球儿</title>
+    <url>/2020/12/13/%E4%BB%A8%E6%9C%88%E7%9A%84%E5%9C%B0%E7%90%83%E5%84%BF/</url>
+    <content><![CDATA[<h1 id="可爱的球球仨月了"><a href="#可爱的球球仨月了" class="headerlink" title="可爱的球球仨月了"></a>可爱的球球仨月了</h1><p>球已经到家已经一个月了，现在已经特别粘人了。。。每次回到家开门，她就在门口瞪着大眼睛对着我，然后一直粘着你的脚跟。</p>
+<p><img src="/2020/12/13/%E4%BB%A8%E6%9C%88%E7%9A%84%E5%9C%B0%E7%90%83%E5%84%BF/image-20201213202113835.png" alt="image-20201213202113835"></p>
+<p>似乎在看我敲电脑。。。不屑你</p>
+<p><img src="/2020/12/13/%E4%BB%A8%E6%9C%88%E7%9A%84%E5%9C%B0%E7%90%83%E5%84%BF/image-20201213202144924.png" alt="image-20201213202144924"></p>
+<p><img src="/2020/12/13/%E4%BB%A8%E6%9C%88%E7%9A%84%E5%9C%B0%E7%90%83%E5%84%BF/image-20201213202201822.png" alt="image-20201213202201822"></p>
+<p>长大了很多啊</p>
+<p><img src="/2020/12/13/%E4%BB%A8%E6%9C%88%E7%9A%84%E5%9C%B0%E7%90%83%E5%84%BF/image-20201213202222905.png" alt="image-20201213202222905"></p>
+<p>一起看综艺…</p>
+<p><img src="/2020/12/13/%E4%BB%A8%E6%9C%88%E7%9A%84%E5%9C%B0%E7%90%83%E5%84%BF/image-20201213202259570.png" alt="image-20201213202259570"></p>
+]]></content>
+      <categories>
+        <category>地球</category>
+        <category>猫咪</category>
+      </categories>
+      <tags>
+        <tag>地球</tag>
+        <tag>宠物</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>html中的attr和css区别</title>
+    <url>/2020/12/13/html%E4%B8%AD%E7%9A%84attr%E5%92%8Ccss%E5%8C%BA%E5%88%AB/</url>
+    <content><![CDATA[<p>本人再通过jquery给input标签添加visibility属性（保留网页物理空间）</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">$.(&quot;#input&quot;).attr(&quot;visibility&quot;, &quot;none&quot;)</span><br></pre></td></tr></table></figure>
+
+<p>并没有生效。最终发现应该调用.css方法，如下</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">$.(&quot;#input&quot;).css(&quot;visibility&quot;, &quot;none&quot;)</span><br></pre></td></tr></table></figure>
+
+<p>原因是style是标签的属性，而visibility是style的子属性，结构如下</p>
+<p><img src="/2020/12/13/html%E4%B8%AD%E7%9A%84attr%E5%92%8Ccss%E5%8C%BA%E5%88%AB/image-20201213195806971.png" alt="image-20201213195806971"></p>
+]]></content>
+      <categories>
+        <category>技术</category>
+      </categories>
+      <tags>
+        <tag>jquery</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>记录一次Mongdb动态切换库查询</title>
     <url>/2020/12/01/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1Mongdb%E5%8A%A8%E6%80%81%E5%88%87%E6%8D%A2%E5%BA%93%E6%9F%A5%E8%AF%A2/</url>
     <content><![CDATA[<h1 id="记录一次Mongdb动态切换库查询"><a href="#记录一次Mongdb动态切换库查询" class="headerlink" title="记录一次Mongdb动态切换库查询"></a>记录一次Mongdb动态切换库查询</h1><p>最近因为mongdb从单库改成随日期递增的多库，所以现在需要将原本单个数据源改为根据每天日期动态读库。</p>
