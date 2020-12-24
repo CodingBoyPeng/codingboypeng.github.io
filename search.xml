@@ -1,25 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>仨月的地球儿</title>
-    <url>/2020/12/13/%E4%BB%A8%E6%9C%88%E7%9A%84%E5%9C%B0%E7%90%83%E5%84%BF/</url>
-    <content><![CDATA[<h1 id="可爱的球球仨月了"><a href="#可爱的球球仨月了" class="headerlink" title="可爱的球球仨月了"></a>可爱的球球仨月了</h1><p>球已经到家已经一个月了，现在已经特别粘人了。。。每次回到家开门，她就在门口瞪着大眼睛对着我，然后一直粘着你的脚跟。</p>
-<p><img src="/2020/12/13/%E4%BB%A8%E6%9C%88%E7%9A%84%E5%9C%B0%E7%90%83%E5%84%BF/image-20201213202113835.png" alt="image-20201213202113835"></p>
-<p>似乎在看我敲电脑。。。不屑你</p>
-<p><img src="/2020/12/13/%E4%BB%A8%E6%9C%88%E7%9A%84%E5%9C%B0%E7%90%83%E5%84%BF/image-20201213202144924.png" alt="image-20201213202144924"></p>
-<p><img src="/2020/12/13/%E4%BB%A8%E6%9C%88%E7%9A%84%E5%9C%B0%E7%90%83%E5%84%BF/image-20201213202201822.png" alt="image-20201213202201822"></p>
-<p>长大了很多啊</p>
-<p><img src="/2020/12/13/%E4%BB%A8%E6%9C%88%E7%9A%84%E5%9C%B0%E7%90%83%E5%84%BF/image-20201213202222905.png" alt="image-20201213202222905"></p>
-<p>一起看综艺…</p>
-<p><img src="/2020/12/13/%E4%BB%A8%E6%9C%88%E7%9A%84%E5%9C%B0%E7%90%83%E5%84%BF/image-20201213202259570.png" alt="image-20201213202259570"></p>
+    <title>XML中的CDATA</title>
+    <url>/2020/11/17/XML%E4%B8%AD%E7%9A%84CDATA/</url>
+    <content><![CDATA[<p>CDATA是什么，这是XML语法。在CDATA内部的所有内容都会被解析器忽略。</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line">SELECT *</span><br><span class="line">FROM xxl_job_registry AS t</span><br><span class="line">WHERE t.update_time &lt;![CDATA[ &gt; ]]&gt; DATE_ADD(#&#123;nowTime&#125;,INTERVAL -#&#123;timeout&#125; SECOND)</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+
+<p>类似与</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> *</span><br><span class="line"><span class="keyword">FROM</span> xxl_job_registry <span class="keyword">AS</span> t</span><br><span class="line"><span class="keyword">WHERE</span> t.update_time &gt; <span class="keyword">DATE_ADD</span>(<span class="comment">#&#123;nowTime&#125;,INTERVAL -#&#123;timeout&#125; SECOND)</span></span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
-        <category>地球</category>
-        <category>猫咪</category>
+        <category>技术</category>
       </categories>
       <tags>
-        <tag>地球</tag>
-        <tag>宠物</tag>
+        <tag>XML</tag>
       </tags>
   </entry>
   <entry>
@@ -42,26 +37,117 @@
       </tags>
   </entry>
   <entry>
-    <title>记录一次Mongdb动态切换库查询</title>
-    <url>/2020/12/01/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1Mongdb%E5%8A%A8%E6%80%81%E5%88%87%E6%8D%A2%E5%BA%93%E6%9F%A5%E8%AF%A2/</url>
-    <content><![CDATA[<h1 id="记录一次Mongdb动态切换库查询"><a href="#记录一次Mongdb动态切换库查询" class="headerlink" title="记录一次Mongdb动态切换库查询"></a>记录一次Mongdb动态切换库查询</h1><p>最近因为mongdb从单库改成随日期递增的多库，所以现在需要将原本单个数据源改为根据每天日期动态读库。</p>
-<p>原版本是采用MongodbTemplate读取properties配置文件中mongo相关配置，网上找了不下20篇博文，却没有一篇有清晰解释的。</p>
-<p>业务：ip超过三次发送邮件</p>
-<p>mongo：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 原聚合查询是这样的 </span></span><br><span class="line">Aggregation aggregation = Aggregation.newAggregation(</span><br><span class="line"><span class="comment">// where匹配查询条件：affid, offerid,sourceid。</span></span><br><span class="line">Aggregation.match(</span><br><span class="line">    Criteria.where(<span class="string">&quot;aff_id&quot;</span>).is(affId.toString())</span><br><span class="line">            .and(<span class="string">&quot;offer_id&quot;</span>).is(offerId.toString())</span><br><span class="line">            .and(<span class="string">&quot;source_id&quot;</span>).is(originSourceId)),</span><br><span class="line"><span class="comment">// 通过ip进行分组，查询超过3条记录的ip</span></span><br><span class="line">Aggregation.group(<span class="string">&quot;ip&quot;</span>).count().as(<span class="string">&quot;ipCount&quot;</span>), Aggregation.match(Criteria.where(<span class="string">&quot;ipCount&quot;</span>).gt(<span class="number">3</span>)));</span><br><span class="line">AggregationResults&lt;Map&gt; ans = mongoTemplate.aggregate(aggregation, collectionName, Map.class);</span><br></pre></td></tr></table></figure>
+    <title>jquery元素绑定事件失效的原因</title>
+    <url>/2020/12/24/jquery%E5%85%83%E7%B4%A0%E7%BB%91%E5%AE%9A%E4%BA%8B%E4%BB%B6%E5%A4%B1%E6%95%88%E7%9A%84%E5%8E%9F%E5%9B%A0/</url>
+    <content><![CDATA[<p>今天开发过程中在给页面初始化设置的适合遇见了绑定事件无效的问题，特此总结下。以往给指定元素绑定事件是因为id或class是经过渲染后的，是动态的，才导致页面<code>定位出错</code>。这次并不是<code>定位出错</code>，而是<code>有效</code>的（我手动在浏览器里执行了）</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">// 请求ajax，进行页面的intput二级联动</span><br><span class="line">initAdvSourceType(&quot;$&#123;advSourceType&#125;&quot;);</span><br><span class="line">// 给渲染出来标签赋初始值</span><br><span class="line">echoData();</span><br></pre></td></tr></table></figure>
 
-<p>使用原生API：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 连接mongo</span></span><br><span class="line">MongoClient mongoClient = MongoClients.create(<span class="string">&quot;mongodb://localhost:27017&quot;</span>);</span><br><span class="line">String dateBaseName = prefix_database + DateUtils.formatDate(DateUtils.yyyyMMdd);</span><br><span class="line"><span class="comment">// 获取集合</span></span><br><span class="line">MongoCollection&lt;Document&gt; doc = database.getCollection(collectionName);</span><br><span class="line"><span class="comment">// match mongo筛选条件,匹配对应source_id, aff_id, offer_id的记录</span></span><br><span class="line">Document subMatch = <span class="keyword">new</span> Document();</span><br><span class="line">subMatch.put(<span class="string">&quot;offer_id&quot;</span>, offerId.toString());</span><br><span class="line">subMatch.put(<span class="string">&quot;aff_id&quot;</span>, affId.toString());</span><br><span class="line">subMatch.put(<span class="string">&quot;source_id&quot;</span>, originSourceId);</span><br><span class="line"></span><br><span class="line"><span class="comment">// group 根据ip进行分组</span></span><br><span class="line">Document subGroup = <span class="keyword">new</span> Document();</span><br><span class="line">subGroup.put(<span class="string">&quot;_id&quot;</span>, <span class="string">&quot;$ip&quot;</span>); </span><br><span class="line"><span class="comment">// 这里必须_id ：强制必须存在。可以为 null。</span></span><br><span class="line"><span class="comment">// 其余的计算字段是可选的，并使用&lt;accumulator&gt;运算符计算。具体的使用，通过下面的代码说明：</span></span><br><span class="line">subGroup.put(<span class="string">&quot;ipCount&quot;</span>, <span class="keyword">new</span> Document(<span class="string">&quot;$sum&quot;</span>, <span class="number">1</span>));</span><br><span class="line">Document match = <span class="keyword">new</span> Document(<span class="string">&quot;$match&quot;</span>, subMatch);</span><br><span class="line">Document group = <span class="keyword">new</span> Document(<span class="string">&quot;$group&quot;</span>, subGroup);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 对分组后结果筛选超过3次的IP</span></span><br><span class="line">Document matchGroup = <span class="keyword">new</span> Document(<span class="string">&quot;$match&quot;</span>, <span class="keyword">new</span> Document(<span class="string">&quot;ipCount&quot;</span>,<span class="keyword">new</span> Document(<span class="string">&quot;$gt&quot;</span>, <span class="number">3</span>)));</span><br><span class="line">List&lt;Document&gt; aggregateList = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">aggregateList.add(match);</span><br><span class="line">aggregateList.add(group);</span><br><span class="line">aggregateList.add(matchGroup);</span><br><span class="line"><span class="comment">// 返回结果</span></span><br><span class="line">AggregateIterable&lt;Document&gt; resultSet = doc.aggregate(aggregateList);</span><br><span class="line"><span class="comment">// 遍历结果</span></span><br><span class="line">Iterator&lt;Document&gt; iterator = resultSet.iterator();</span><br><span class="line"><span class="keyword">while</span> (iterator.hasNext()) &#123;</span><br><span class="line">      Document map = iterator.next();</span><br><span class="line">      String ip = (String) map.get(<span class="string">&quot;_id&quot;</span>);</span><br><span class="line">      ips.add(ip);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>select二级联动<br><img src="/2020/12/24/jquery%E5%85%83%E7%B4%A0%E7%BB%91%E5%AE%9A%E4%BA%8B%E4%BB%B6%E5%A4%B1%E6%95%88%E7%9A%84%E5%8E%9F%E5%9B%A0/image-20201224234414431.png" alt="image-20201224234414431"><br>给渲染的标签赋值<br><img src="/2020/12/24/jquery%E5%85%83%E7%B4%A0%E7%BB%91%E5%AE%9A%E4%BA%8B%E4%BB%B6%E5%A4%B1%E6%95%88%E7%9A%84%E5%8E%9F%E5%9B%A0/image-20201224234459006.png" alt="image-20201224234459006"><br>手动执行一下，居然成功了。到这里说明并不是定位不到元素，仔细想想可能是在ajax还没有执行完毕（<code>ajax是异步</code>）就已经执行了该<code>标签赋值</code>方法。因为ajax是异步的，会另起一个线程去执行接下来的代码。<br><img src="/2020/12/24/jquery%E5%85%83%E7%B4%A0%E7%BB%91%E5%AE%9A%E4%BA%8B%E4%BB%B6%E5%A4%B1%E6%95%88%E7%9A%84%E5%8E%9F%E5%9B%A0/image-20201224235045884.png" alt="image-20201224235045884"><br>分析好原因后，所以我们要解决的就是想办法让操作同步，所以我们可以在ajax拿到数据渲染后我们再进行赋值初始化操作<br><img src="/2020/12/24/jquery%E5%85%83%E7%B4%A0%E7%BB%91%E5%AE%9A%E4%BA%8B%E4%BB%B6%E5%A4%B1%E6%95%88%E7%9A%84%E5%8E%9F%E5%9B%A0/image-20201224235715203.png" alt="image-20201224235045884"></p>
+]]></content>
+      <categories>
+        <category>技术</category>
+        <category>前端</category>
+      </categories>
+      <tags>
+        <tag>jquery</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>selenuim的安装和配置</title>
+    <url>/2020/12/14/selenuim%E7%9A%84%E5%AE%89%E8%A3%85%E5%92%8C%E9%85%8D%E7%BD%AE/</url>
+    <content><![CDATA[<h2 id="使用Selenuim自动化"><a href="#使用Selenuim自动化" class="headerlink" title="使用Selenuim自动化"></a>使用Selenuim自动化</h2><p>（1）第一步，我们需要查看浏览器版本，再下载对应的浏览器驱动</p>
+<p><img src="/2020/12/14/selenuim%E7%9A%84%E5%AE%89%E8%A3%85%E5%92%8C%E9%85%8D%E7%BD%AE/image-20200901172911708.png" alt="image-20200901172911708"></p>
+<p>浏览器驱动和浏览器版本对照表：<a href="https://www.cnblogs.com/xiaoyujuan/p/13580258.html">https://www.cnblogs.com/xiaoyujuan/p/13580258.html</a></p>
+<p>驱动下载地址：<a href="https://chromedriver.storage.googleapis.com/index.html">https://chromedriver.storage.googleapis.com/index.html</a></p>
+<p>（2）第二步，配置环境变量</p>
+<p>​        1.首先我们应该找到浏览器安装包所在位置，将ChromeDriver.exe复制其根目录下</p>
+<p>​            <img src="/2020/12/14/selenuim%E7%9A%84%E5%AE%89%E8%A3%85%E5%92%8C%E9%85%8D%E7%BD%AE/image-20200904175241549.png" alt="image-20200904175241549"></p>
+<p>​        2.再将当前路径配置导环境变量Path中，打开cmd输入chromedriver检验是否安装成功</p>
+<p><img src="/2020/12/14/selenuim%E7%9A%84%E5%AE%89%E8%A3%85%E5%92%8C%E9%85%8D%E7%BD%AE/image-20200904175917351.png" alt="image-20200904175917351"></p>
+<p><img src="/2020/12/14/selenuim%E7%9A%84%E5%AE%89%E8%A3%85%E5%92%8C%E9%85%8D%E7%BD%AE/image-20200904180008917.png" alt="image-20200904180008917">        </p>
+<p>​        3.最后将ChromeDriver.exe复制Python解释器的安装路径下</p>
+<p><img src="/2020/12/14/selenuim%E7%9A%84%E5%AE%89%E8%A3%85%E5%92%8C%E9%85%8D%E7%BD%AE/image-20200904175509882.png" alt="image-20200904175509882"></p>
+<p>（3）安装selenuim库</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">pip install Selenium</span><br></pre></td></tr></table></figure>
 
-<p>Console:</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; 打印结果</span><br><span class="line">[107.150.126.148]</span><br></pre></td></tr></table></figure>
+<h3 id><a href="#" class="headerlink" title></a></h3>]]></content>
+      <categories>
+        <category>技术</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>爬虫</tag>
+        <tag>selenuim</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>xxl-job整合钉钉机器人实现服务监控</title>
+    <url>/2020/12/14/xxl-job%E6%95%B4%E5%90%88%E9%92%89%E9%92%89%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AE%9E%E7%8E%B0%E6%9C%8D%E5%8A%A1%E7%9B%91%E6%8E%A7/</url>
+    <content><![CDATA[<h1 id="XXL-JOB整合钉钉机器人"><a href="#XXL-JOB整合钉钉机器人" class="headerlink" title="XXL-JOB整合钉钉机器人"></a>XXL-JOB整合钉钉机器人</h1><p>XXLJOB默认支持的报警是邮件，我们关注邮件并不是特别及时，所以本人想将钉钉机器人集成XXL-JOB；</p>
+<p>话不多说整，让我们开始吧！！！</p>
+<p>首先我们在钉钉上创建一个三人以上的群， 随后自定义一个机器人</p>
+<h3 id="1-创建机器人"><a href="#1-创建机器人" class="headerlink" title="1.创建机器人"></a>1.创建机器人</h3><p><img src="/2020/12/14/xxl-job%E6%95%B4%E5%90%88%E9%92%89%E9%92%89%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AE%9E%E7%8E%B0%E6%9C%8D%E5%8A%A1%E7%9B%91%E6%8E%A7/image-20201112174723190.png" alt="image-20201112174723190"></p>
+<p>这边我们可以定义多个关键字，以满足不同内容的任务告警。</p>
+<h3 id="2-XXL-Job集成钉钉机器人"><a href="#2-XXL-Job集成钉钉机器人" class="headerlink" title="2.XXL-Job集成钉钉机器人"></a>2.XXL-Job集成钉钉机器人</h3><ul>
+<li>加入pom依赖</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!--钉钉机器人通知--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.aliyun<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>alibaba-dingtalk-service-sdk<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">version</span>&gt;</span>1.0.1<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
+<ul>
+<li>在application.propertis文件中增加常量</li>
+</ul>
+<figure class="highlight properties"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 也就是我们的webhook地址</span></span><br><span class="line"><span class="meta">alarm.ding.accessToken</span> = <span class="string">9e962fca4cc894da988c06940079a20b8c3f50d227f90ce8b6afc7fa4d8de348</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>新增DingJobAlarm</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@description</span>: 钉钉通知</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span>:Peng</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Date</span>:2020/11/11</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DingJobAlarm</span> <span class="keyword">implements</span> <span class="title">JobAlarm</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> RestTemplate restTemplate = <span class="keyword">new</span> RestTemplate();</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Value(&quot;$&#123;alarm.ding.accessToken&#125;&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> String accessToken;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> StringBuilder dingUrl = <span class="keyword">new</span> StringBuilder(<span class="string">&quot;https://oapi.dingtalk.com/robot/send&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">doAlarm</span><span class="params">(XxlJobInfo info, XxlJobLog jobLog)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">boolean</span> alarmResult = <span class="keyword">true</span>;</span><br><span class="line">        System.out.println(<span class="string">&quot;ding ---------------------&quot;</span>);</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            contactHttpPostUrl();</span><br><span class="line">            HashMap&lt;String, Object&gt; map = contactHttpPostParam(info, jobLog);</span><br><span class="line">            restTemplate.postForEntity(dingUrl.toString(), map, Object.class);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">            alarmResult = <span class="keyword">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> alarmResult;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> HashMap&lt;String, Object&gt; <span class="title">contactHttpPostParam</span><span class="params">(XxlJobInfo info, XxlJobLog jobLog)</span> </span>&#123;</span><br><span class="line">        HashMap&lt;String, Object&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;(<span class="number">2</span>);</span><br><span class="line">        map.put(<span class="string">&quot;msgtype&quot;</span>, <span class="string">&quot;text&quot;</span>);</span><br><span class="line">        HashMap&lt;String, String&gt; contentMap = <span class="keyword">new</span> HashMap&lt;&gt;(<span class="number">1</span>);</span><br><span class="line">        String content = <span class="string">&quot;定时任务失败： &quot;</span> + <span class="string">&quot;任务名称：&quot;</span> + info.getJobDesc() +</span><br><span class="line">                <span class="string">&quot;,执行器名称：&quot;</span> + info.getExecutorHandler() +</span><br><span class="line">                <span class="comment">// 钉钉机器人通知内容</span></span><br><span class="line">                <span class="string">&quot;,执行时间：&quot;</span> + <span class="keyword">new</span> SimpleDateFormat(<span class="string">&quot;yyyy-MM-dd&quot;</span>).format(<span class="keyword">new</span> Date()) +</span><br><span class="line">                <span class="string">&quot;,执行器ip：&quot;</span> + jobLog.getExecutorAddress();</span><br><span class="line">        contentMap.put(<span class="string">&quot;content&quot;</span>, content);</span><br><span class="line">        map.put(<span class="string">&quot;text&quot;</span>, contentMap);</span><br><span class="line">        <span class="keyword">return</span> map;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">contactHttpPostUrl</span><span class="params">()</span> <span class="keyword">throws</span> NoSuchAlgorithmException, InvalidKeyException, UnsupportedEncodingException </span>&#123;</span><br><span class="line">        <span class="comment">// 获取当前时间戳，签名计算后的签名</span></span><br><span class="line">        Long timestamp = System.currentTimeMillis();</span><br><span class="line">        <span class="comment">// 密钥</span></span><br><span class="line">        String secret = <span class="string">&quot;SECd7e8d13a32a779e7b2e344d8c698bf8f209f3561c7bb05bfd8aabd5d0f63fb2a&quot;</span>;</span><br><span class="line">        String stringToSign = timestamp + <span class="string">&quot;\n&quot;</span> + secret;</span><br><span class="line">        Mac mac = Mac.getInstance(<span class="string">&quot;HmacSHA256&quot;</span>);</span><br><span class="line">        mac.init(<span class="keyword">new</span> SecretKeySpec(secret.getBytes(StandardCharsets.UTF_8), <span class="string">&quot;HmacSHA256&quot;</span>));</span><br><span class="line">        <span class="keyword">byte</span>[] signData = mac.doFinal(stringToSign.getBytes(StandardCharsets.UTF_8));</span><br><span class="line">        String sign = URLEncoder.encode(<span class="keyword">new</span> String(Base64.encodeBase64(signData)),<span class="string">&quot;UTF-8&quot;</span>);</span><br><span class="line">        dingUrl.append(<span class="string">&quot;?access_token=&quot;</span>).append(accessToken)</span><br><span class="line">                .append(<span class="string">&quot;&amp;sign=&quot;</span>).append(sign)</span><br><span class="line">                .append(<span class="string">&quot;&amp;timestamp=&quot;</span>).append(timestamp);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2020/12/14/xxl-job%E6%95%B4%E5%90%88%E9%92%89%E9%92%89%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AE%9E%E7%8E%B0%E6%9C%8D%E5%8A%A1%E7%9B%91%E6%8E%A7/image-20201112180132037.png" alt="image-20201112180132037"></p>
+<p>当然钉钉通知可以支持markdown，图片等等。想详细研究请查看<a href="https://ding-doc.dingtalk.com/doc#/serverapi2/qf2nxq">官方文档</a></p>
 ]]></content>
       <categories>
         <category>技术</category>
       </categories>
       <tags>
-        <tag>mongo</tag>
+        <tag>xxl-job</tag>
+        <tag>钉钉机器人</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>与地球的第一次相遇</title>
+    <url>/2020/11/24/%E4%B8%8E%E5%9C%B0%E7%90%83%E7%9A%84%E7%AC%AC%E4%B8%80%E6%AC%A1%E7%9B%B8%E9%81%87/</url>
+    <content><![CDATA[<p>地球是一只英短银渐层猫咪，是我女朋友和我在她同事那买的一只只有2个月大的小猫咪。<br>十一月，是我与她的第一次见面，由于还不熟悉，她对我们还是心有芥蒂。<br>偷看她!!!<br><img src="/2020/11/24/%E4%B8%8E%E5%9C%B0%E7%90%83%E7%9A%84%E7%AC%AC%E4%B8%80%E6%AC%A1%E7%9B%B8%E9%81%87/1.png" alt="偷拍1"><br><img src="/2020/11/24/%E4%B8%8E%E5%9C%B0%E7%90%83%E7%9A%84%E7%AC%AC%E4%B8%80%E6%AC%A1%E7%9B%B8%E9%81%87/2.png" alt="偷拍2"><br>与她的晚餐：<br><img src="/2020/11/24/%E4%B8%8E%E5%9C%B0%E7%90%83%E7%9A%84%E7%AC%AC%E4%B8%80%E6%AC%A1%E7%9B%B8%E9%81%87/3.png" alt="晚饭"><br>我相信她会慢慢的向我们靠近的！</p>
+]]></content>
+      <categories>
+        <category>地球</category>
+        <category>猫咪</category>
+      </categories>
+      <tags>
+        <tag>地球</tag>
+        <tag>宠物</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>仨月的地球儿</title>
+    <url>/2020/12/13/%E4%BB%A8%E6%9C%88%E7%9A%84%E5%9C%B0%E7%90%83%E5%84%BF/</url>
+    <content><![CDATA[<h1 id="可爱的球球仨月了"><a href="#可爱的球球仨月了" class="headerlink" title="可爱的球球仨月了"></a>可爱的球球仨月了</h1><p>球已经到家已经一个月了，现在已经特别粘人了。。。每次回到家开门，她就在门口瞪着大眼睛对着我，然后一直粘着你的脚跟。</p>
+<p><img src="/2020/12/13/%E4%BB%A8%E6%9C%88%E7%9A%84%E5%9C%B0%E7%90%83%E5%84%BF/image-20201213202113835.png" alt="image-20201213202113835"></p>
+<p>似乎在看我敲电脑。。。不屑你</p>
+<p><img src="/2020/12/13/%E4%BB%A8%E6%9C%88%E7%9A%84%E5%9C%B0%E7%90%83%E5%84%BF/image-20201213202144924.png" alt="image-20201213202144924"></p>
+<p><img src="/2020/12/13/%E4%BB%A8%E6%9C%88%E7%9A%84%E5%9C%B0%E7%90%83%E5%84%BF/image-20201213202201822.png" alt="image-20201213202201822"></p>
+<p>长大了很多啊</p>
+<p><img src="/2020/12/13/%E4%BB%A8%E6%9C%88%E7%9A%84%E5%9C%B0%E7%90%83%E5%84%BF/image-20201213202222905.png" alt="image-20201213202222905"></p>
+<p>一起看综艺…</p>
+<p><img src="/2020/12/13/%E4%BB%A8%E6%9C%88%E7%9A%84%E5%9C%B0%E7%90%83%E5%84%BF/image-20201213202259570.png" alt="image-20201213202259570"></p>
+]]></content>
+      <categories>
+        <category>地球</category>
+        <category>猫咪</category>
+      </categories>
+      <tags>
+        <tag>地球</tag>
+        <tag>宠物</tag>
       </tags>
   </entry>
   <entry>
@@ -97,17 +183,45 @@
       </tags>
   </entry>
   <entry>
-    <title>与地球的第一次相遇</title>
-    <url>/2020/11/24/%E4%B8%8E%E5%9C%B0%E7%90%83%E7%9A%84%E7%AC%AC%E4%B8%80%E6%AC%A1%E7%9B%B8%E9%81%87/</url>
-    <content><![CDATA[<p>地球是一只英短银渐层猫咪，是我女朋友和我在她同事那买的一只只有2个月大的小猫咪。<br>十一月，是我与她的第一次见面，由于还不熟悉，她对我们还是心有芥蒂。<br>偷看她!!!<br><img src="/2020/11/24/%E4%B8%8E%E5%9C%B0%E7%90%83%E7%9A%84%E7%AC%AC%E4%B8%80%E6%AC%A1%E7%9B%B8%E9%81%87/1.png" alt="偷拍1"><br><img src="/2020/11/24/%E4%B8%8E%E5%9C%B0%E7%90%83%E7%9A%84%E7%AC%AC%E4%B8%80%E6%AC%A1%E7%9B%B8%E9%81%87/2.png" alt="偷拍2"><br>与她的晚餐：<br><img src="/2020/11/24/%E4%B8%8E%E5%9C%B0%E7%90%83%E7%9A%84%E7%AC%AC%E4%B8%80%E6%AC%A1%E7%9B%B8%E9%81%87/3.png" alt="晚饭"><br>我相信她会慢慢的向我们靠近的！</p>
+    <title>多个class名相同时，jquery定位指定class</title>
+    <url>/2020/12/24/%E5%A4%9A%E4%B8%AAclass%E5%90%8D%E7%9B%B8%E5%90%8C%E6%97%B6%EF%BC%8Cjquery%E5%AE%9A%E4%BD%8D%E6%8C%87%E5%AE%9Aclass/</url>
+    <content><![CDATA[<p>本人在开发一个新页面的时候，需要给经过动态渲染后的多个input框赋不同的值。</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span> = <span class="string">&quot;trackKey&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span> = <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span> = <span class="string">&quot;trackParam&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span> = <span class="string">&quot;trackKey&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span> = <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span> = <span class="string">&quot;trackParam&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span> = <span class="string">&quot;trackKey&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span> = <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span> = <span class="string">&quot;trackParam&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"> ……</span><br></pre></td></tr></table></figure>
+<p>这边有6个经过动态渲染生成的input框，且类名都为<code>trackKey</code>。现在需要给它们一一赋值，值列表取自后台，以下只演示示范代码</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">var trackParam = &#123;&quot;sub1&quot;:&quot;qaq&quot;, &quot;sub2&quot;: &quot;wow&quot;, &quot;sub3&quot;: &quot;qwq&quot;&#125;</span><br><span class="line"></span><br><span class="line">var i = 0;</span><br><span class="line">for (var key in trackParam) &#123;</span><br><span class="line">    // 遍历给trackParam input赋值</span><br><span class="line">    $(&quot;.trackKey&quot;).eq(i).val(key);</span><br><span class="line">    $(&quot;.trackValue&quot;).eq(i).val(trackParam[key]);</span><br><span class="line">    i = i + 1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>当然，如果你只是单纯想为某个下拉框赋值，我们可以这样写：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">// 第4个trackKey</span><br><span class="line">$(&#x27;.trackKey&#x27;).eq(4);</span><br><span class="line">// 倒数第二个trackKey</span><br><span class="line">$(&#x27;.trackKey&#x27;).eq(-2);</span><br><span class="line">// 最后一个trackKey</span><br><span class="line">$(&#x27;.trackKey&#x27;).last();</span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
-        <category>地球</category>
-        <category>猫咪</category>
+        <category>技术</category>
+        <category>前端</category>
       </categories>
       <tags>
-        <tag>地球</tag>
-        <tag>宠物</tag>
+        <tag>jquery</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>记录一次Mongdb动态切换库查询</title>
+    <url>/2020/12/01/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1Mongdb%E5%8A%A8%E6%80%81%E5%88%87%E6%8D%A2%E5%BA%93%E6%9F%A5%E8%AF%A2/</url>
+    <content><![CDATA[<h1 id="记录一次Mongdb动态切换库查询"><a href="#记录一次Mongdb动态切换库查询" class="headerlink" title="记录一次Mongdb动态切换库查询"></a>记录一次Mongdb动态切换库查询</h1><p>最近因为mongdb从单库改成随日期递增的多库，所以现在需要将原本单个数据源改为根据每天日期动态读库。</p>
+<p>原版本是采用MongodbTemplate读取properties配置文件中mongo相关配置，网上找了不下20篇博文，却没有一篇有清晰解释的。</p>
+<p>业务：ip超过三次发送邮件</p>
+<p>mongo：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 原聚合查询是这样的 </span></span><br><span class="line">Aggregation aggregation = Aggregation.newAggregation(</span><br><span class="line"><span class="comment">// where匹配查询条件：affid, offerid,sourceid。</span></span><br><span class="line">Aggregation.match(</span><br><span class="line">    Criteria.where(<span class="string">&quot;aff_id&quot;</span>).is(affId.toString())</span><br><span class="line">            .and(<span class="string">&quot;offer_id&quot;</span>).is(offerId.toString())</span><br><span class="line">            .and(<span class="string">&quot;source_id&quot;</span>).is(originSourceId)),</span><br><span class="line"><span class="comment">// 通过ip进行分组，查询超过3条记录的ip</span></span><br><span class="line">Aggregation.group(<span class="string">&quot;ip&quot;</span>).count().as(<span class="string">&quot;ipCount&quot;</span>), Aggregation.match(Criteria.where(<span class="string">&quot;ipCount&quot;</span>).gt(<span class="number">3</span>)));</span><br><span class="line">AggregationResults&lt;Map&gt; ans = mongoTemplate.aggregate(aggregation, collectionName, Map.class);</span><br></pre></td></tr></table></figure>
+
+<p>使用原生API：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 连接mongo</span></span><br><span class="line">MongoClient mongoClient = MongoClients.create(<span class="string">&quot;mongodb://localhost:27017&quot;</span>);</span><br><span class="line">String dateBaseName = prefix_database + DateUtils.formatDate(DateUtils.yyyyMMdd);</span><br><span class="line"><span class="comment">// 获取集合</span></span><br><span class="line">MongoCollection&lt;Document&gt; doc = database.getCollection(collectionName);</span><br><span class="line"><span class="comment">// match mongo筛选条件,匹配对应source_id, aff_id, offer_id的记录</span></span><br><span class="line">Document subMatch = <span class="keyword">new</span> Document();</span><br><span class="line">subMatch.put(<span class="string">&quot;offer_id&quot;</span>, offerId.toString());</span><br><span class="line">subMatch.put(<span class="string">&quot;aff_id&quot;</span>, affId.toString());</span><br><span class="line">subMatch.put(<span class="string">&quot;source_id&quot;</span>, originSourceId);</span><br><span class="line"></span><br><span class="line"><span class="comment">// group 根据ip进行分组</span></span><br><span class="line">Document subGroup = <span class="keyword">new</span> Document();</span><br><span class="line">subGroup.put(<span class="string">&quot;_id&quot;</span>, <span class="string">&quot;$ip&quot;</span>); </span><br><span class="line"><span class="comment">// 这里必须_id ：强制必须存在。可以为 null。</span></span><br><span class="line"><span class="comment">// 其余的计算字段是可选的，并使用&lt;accumulator&gt;运算符计算。具体的使用，通过下面的代码说明：</span></span><br><span class="line">subGroup.put(<span class="string">&quot;ipCount&quot;</span>, <span class="keyword">new</span> Document(<span class="string">&quot;$sum&quot;</span>, <span class="number">1</span>));</span><br><span class="line">Document match = <span class="keyword">new</span> Document(<span class="string">&quot;$match&quot;</span>, subMatch);</span><br><span class="line">Document group = <span class="keyword">new</span> Document(<span class="string">&quot;$group&quot;</span>, subGroup);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 对分组后结果筛选超过3次的IP</span></span><br><span class="line">Document matchGroup = <span class="keyword">new</span> Document(<span class="string">&quot;$match&quot;</span>, <span class="keyword">new</span> Document(<span class="string">&quot;ipCount&quot;</span>,<span class="keyword">new</span> Document(<span class="string">&quot;$gt&quot;</span>, <span class="number">3</span>)));</span><br><span class="line">List&lt;Document&gt; aggregateList = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">aggregateList.add(match);</span><br><span class="line">aggregateList.add(group);</span><br><span class="line">aggregateList.add(matchGroup);</span><br><span class="line"><span class="comment">// 返回结果</span></span><br><span class="line">AggregateIterable&lt;Document&gt; resultSet = doc.aggregate(aggregateList);</span><br><span class="line"><span class="comment">// 遍历结果</span></span><br><span class="line">Iterator&lt;Document&gt; iterator = resultSet.iterator();</span><br><span class="line"><span class="keyword">while</span> (iterator.hasNext()) &#123;</span><br><span class="line">      Document map = iterator.next();</span><br><span class="line">      String ip = (String) map.get(<span class="string">&quot;_id&quot;</span>);</span><br><span class="line">      ips.add(ip);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Console:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; 打印结果</span><br><span class="line">[107.150.126.148]</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>技术</category>
+      </categories>
+      <tags>
+        <tag>mongo</tag>
       </tags>
   </entry>
   <entry>
@@ -172,23 +286,6 @@
       </categories>
       <tags>
         <tag>博客</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>XML中的CDATA</title>
-    <url>/2020/11/17/XML%E4%B8%AD%E7%9A%84CDATA/</url>
-    <content><![CDATA[<p>CDATA是什么，这是XML语法。在CDATA内部的所有内容都会被解析器忽略。</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line">SELECT *</span><br><span class="line">FROM xxl_job_registry AS t</span><br><span class="line">WHERE t.update_time &lt;![CDATA[ &gt; ]]&gt; DATE_ADD(#&#123;nowTime&#125;,INTERVAL -#&#123;timeout&#125; SECOND)</span><br></pre></td></tr></table></figure>
-<a id="more"></a>
-
-<p>类似与</p>
-<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> *</span><br><span class="line"><span class="keyword">FROM</span> xxl_job_registry <span class="keyword">AS</span> t</span><br><span class="line"><span class="keyword">WHERE</span> t.update_time &gt; <span class="keyword">DATE_ADD</span>(<span class="comment">#&#123;nowTime&#125;,INTERVAL -#&#123;timeout&#125; SECOND)</span></span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>技术</category>
-      </categories>
-      <tags>
-        <tag>XML</tag>
       </tags>
   </entry>
 </search>
