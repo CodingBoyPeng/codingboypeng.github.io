@@ -1,42 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>XML中的CDATA</title>
-    <url>/2020/11/17/XML%E4%B8%AD%E7%9A%84CDATA/</url>
-    <content><![CDATA[<p>CDATA是什么，这是XML语法。在CDATA内部的所有内容都会被解析器忽略。</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line">SELECT *</span><br><span class="line">FROM xxl_job_registry AS t</span><br><span class="line">WHERE t.update_time &lt;![CDATA[ &gt; ]]&gt; DATE_ADD(#&#123;nowTime&#125;,INTERVAL -#&#123;timeout&#125; SECOND)</span><br></pre></td></tr></table></figure>
-<a id="more"></a>
-
-<p>类似与</p>
-<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> *</span><br><span class="line"><span class="keyword">FROM</span> xxl_job_registry <span class="keyword">AS</span> t</span><br><span class="line"><span class="keyword">WHERE</span> t.update_time &gt; <span class="keyword">DATE_ADD</span>(<span class="comment">#&#123;nowTime&#125;,INTERVAL -#&#123;timeout&#125; SECOND)</span></span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>技术</category>
-      </categories>
-      <tags>
-        <tag>XML</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>html中的attr和css区别</title>
-    <url>/2020/12/13/html%E4%B8%AD%E7%9A%84attr%E5%92%8Ccss%E5%8C%BA%E5%88%AB/</url>
-    <content><![CDATA[<p>本人再通过jquery给input标签添加visibility属性（保留网页物理空间）</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">$.(&quot;#input&quot;).attr(&quot;visibility&quot;, &quot;none&quot;)</span><br></pre></td></tr></table></figure>
-
-<p>并没有生效。最终发现应该调用.css方法，如下</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">$.(&quot;#input&quot;).css(&quot;visibility&quot;, &quot;none&quot;)</span><br></pre></td></tr></table></figure>
-
-<p>原因是style是标签的属性，而visibility是style的子属性，结构如下</p>
-<p><img src="/2020/12/13/html%E4%B8%AD%E7%9A%84attr%E5%92%8Ccss%E5%8C%BA%E5%88%AB/image-20201213195806971.png" alt="image-20201213195806971"></p>
-]]></content>
-      <categories>
-        <category>技术</category>
-      </categories>
-      <tags>
-        <tag>jquery</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>jquery元素绑定事件失效的原因</title>
     <url>/2020/12/24/jquery%E5%85%83%E7%B4%A0%E7%BB%91%E5%AE%9A%E4%BA%8B%E4%BB%B6%E5%A4%B1%E6%95%88%E7%9A%84%E5%8E%9F%E5%9B%A0/</url>
     <content><![CDATA[<p>今天开发过程中在给页面初始化设置的适合遇见了绑定事件无效的问题，特此总结下。以往给指定元素绑定事件是因为id或class是经过渲染后的，是动态的，才导致页面<code>定位出错</code>。这次并不是<code>定位出错</code>，而是<code>有效</code>的（我手动在浏览器里执行了）</p>
@@ -53,31 +17,22 @@
       </tags>
   </entry>
   <entry>
-    <title>selenuim的安装和配置</title>
-    <url>/2020/12/14/selenuim%E7%9A%84%E5%AE%89%E8%A3%85%E5%92%8C%E9%85%8D%E7%BD%AE/</url>
-    <content><![CDATA[<h2 id="使用Selenuim自动化"><a href="#使用Selenuim自动化" class="headerlink" title="使用Selenuim自动化"></a>使用Selenuim自动化</h2><p>（1）第一步，我们需要查看浏览器版本，再下载对应的浏览器驱动</p>
-<p><img src="/2020/12/14/selenuim%E7%9A%84%E5%AE%89%E8%A3%85%E5%92%8C%E9%85%8D%E7%BD%AE/image-20200901172911708.png" alt="image-20200901172911708"></p>
-<p>浏览器驱动和浏览器版本对照表：<a href="https://www.cnblogs.com/xiaoyujuan/p/13580258.html">https://www.cnblogs.com/xiaoyujuan/p/13580258.html</a></p>
-<p>驱动下载地址：<a href="https://chromedriver.storage.googleapis.com/index.html">https://chromedriver.storage.googleapis.com/index.html</a></p>
-<p>（2）第二步，配置环境变量</p>
-<p>​        1.首先我们应该找到浏览器安装包所在位置，将ChromeDriver.exe复制其根目录下</p>
-<p>​            <img src="/2020/12/14/selenuim%E7%9A%84%E5%AE%89%E8%A3%85%E5%92%8C%E9%85%8D%E7%BD%AE/image-20200904175241549.png" alt="image-20200904175241549"></p>
-<p>​        2.再将当前路径配置导环境变量Path中，打开cmd输入chromedriver检验是否安装成功</p>
-<p><img src="/2020/12/14/selenuim%E7%9A%84%E5%AE%89%E8%A3%85%E5%92%8C%E9%85%8D%E7%BD%AE/image-20200904175917351.png" alt="image-20200904175917351"></p>
-<p><img src="/2020/12/14/selenuim%E7%9A%84%E5%AE%89%E8%A3%85%E5%92%8C%E9%85%8D%E7%BD%AE/image-20200904180008917.png" alt="image-20200904180008917">        </p>
-<p>​        3.最后将ChromeDriver.exe复制Python解释器的安装路径下</p>
-<p><img src="/2020/12/14/selenuim%E7%9A%84%E5%AE%89%E8%A3%85%E5%92%8C%E9%85%8D%E7%BD%AE/image-20200904175509882.png" alt="image-20200904175509882"></p>
-<p>（3）安装selenuim库</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">pip install Selenium</span><br></pre></td></tr></table></figure>
+    <title>多个class名相同时，jquery定位指定class</title>
+    <url>/2020/12/24/%E5%A4%9A%E4%B8%AAclass%E5%90%8D%E7%9B%B8%E5%90%8C%E6%97%B6%EF%BC%8Cjquery%E5%AE%9A%E4%BD%8D%E6%8C%87%E5%AE%9Aclass/</url>
+    <content><![CDATA[<p>本人在开发一个新页面的时候，需要给经过动态渲染后的多个input框赋不同的值。</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span> = <span class="string">&quot;trackKey&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span> = <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span> = <span class="string">&quot;trackParam&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span> = <span class="string">&quot;trackKey&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span> = <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span> = <span class="string">&quot;trackParam&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span> = <span class="string">&quot;trackKey&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span> = <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span> = <span class="string">&quot;trackParam&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"> ……</span><br></pre></td></tr></table></figure>
+<p>这边有6个经过动态渲染生成的input框，且类名都为<code>trackKey</code>。现在需要给它们一一赋值，值列表取自后台，以下只演示示范代码</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">var trackParam = &#123;&quot;sub1&quot;:&quot;qaq&quot;, &quot;sub2&quot;: &quot;wow&quot;, &quot;sub3&quot;: &quot;qwq&quot;&#125;</span><br><span class="line"></span><br><span class="line">var i = 0;</span><br><span class="line">for (var key in trackParam) &#123;</span><br><span class="line">    // 遍历给trackParam input赋值</span><br><span class="line">    $(&quot;.trackKey&quot;).eq(i).val(key);</span><br><span class="line">    $(&quot;.trackValue&quot;).eq(i).val(trackParam[key]);</span><br><span class="line">    i = i + 1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h3 id><a href="#" class="headerlink" title></a></h3>]]></content>
+<p>当然，如果你只是单纯想为某个下拉框赋值，我们可以这样写：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">// 第4个trackKey</span><br><span class="line">$(&#x27;.trackKey&#x27;).eq(4);</span><br><span class="line">// 倒数第二个trackKey</span><br><span class="line">$(&#x27;.trackKey&#x27;).eq(-2);</span><br><span class="line">// 最后一个trackKey</span><br><span class="line">$(&#x27;.trackKey&#x27;).last();</span><br></pre></td></tr></table></figure>
+]]></content>
       <categories>
         <category>技术</category>
+        <category>前端</category>
       </categories>
       <tags>
-        <tag>python</tag>
-        <tag>爬虫</tag>
-        <tag>selenuim</tag>
+        <tag>jquery</tag>
       </tags>
   </entry>
   <entry>
@@ -115,17 +70,31 @@
       </tags>
   </entry>
   <entry>
-    <title>与地球的第一次相遇</title>
-    <url>/2020/11/24/%E4%B8%8E%E5%9C%B0%E7%90%83%E7%9A%84%E7%AC%AC%E4%B8%80%E6%AC%A1%E7%9B%B8%E9%81%87/</url>
-    <content><![CDATA[<p>地球是一只英短银渐层猫咪，是我女朋友和我在她同事那买的一只只有2个月大的小猫咪。<br>十一月，是我与她的第一次见面，由于还不熟悉，她对我们还是心有芥蒂。<br>偷看她!!!<br><img src="/2020/11/24/%E4%B8%8E%E5%9C%B0%E7%90%83%E7%9A%84%E7%AC%AC%E4%B8%80%E6%AC%A1%E7%9B%B8%E9%81%87/1.png" alt="偷拍1"><br><img src="/2020/11/24/%E4%B8%8E%E5%9C%B0%E7%90%83%E7%9A%84%E7%AC%AC%E4%B8%80%E6%AC%A1%E7%9B%B8%E9%81%87/2.png" alt="偷拍2"><br>与她的晚餐：<br><img src="/2020/11/24/%E4%B8%8E%E5%9C%B0%E7%90%83%E7%9A%84%E7%AC%AC%E4%B8%80%E6%AC%A1%E7%9B%B8%E9%81%87/3.png" alt="晚饭"><br>我相信她会慢慢的向我们靠近的！</p>
-]]></content>
+    <title>selenuim的安装和配置</title>
+    <url>/2020/12/14/selenuim%E7%9A%84%E5%AE%89%E8%A3%85%E5%92%8C%E9%85%8D%E7%BD%AE/</url>
+    <content><![CDATA[<h2 id="使用Selenuim自动化"><a href="#使用Selenuim自动化" class="headerlink" title="使用Selenuim自动化"></a>使用Selenuim自动化</h2><p>（1）第一步，我们需要查看浏览器版本，再下载对应的浏览器驱动</p>
+<p><img src="/2020/12/14/selenuim%E7%9A%84%E5%AE%89%E8%A3%85%E5%92%8C%E9%85%8D%E7%BD%AE/image-20200901172911708.png" alt="image-20200901172911708"></p>
+<p>浏览器驱动和浏览器版本对照表：<a href="https://www.cnblogs.com/xiaoyujuan/p/13580258.html">https://www.cnblogs.com/xiaoyujuan/p/13580258.html</a></p>
+<p>驱动下载地址：<a href="https://chromedriver.storage.googleapis.com/index.html">https://chromedriver.storage.googleapis.com/index.html</a></p>
+<p>（2）第二步，配置环境变量</p>
+<p>​        1.首先我们应该找到浏览器安装包所在位置，将ChromeDriver.exe复制其根目录下</p>
+<p>​            <img src="/2020/12/14/selenuim%E7%9A%84%E5%AE%89%E8%A3%85%E5%92%8C%E9%85%8D%E7%BD%AE/image-20200904175241549.png" alt="image-20200904175241549"></p>
+<p>​        2.再将当前路径配置导环境变量Path中，打开cmd输入chromedriver检验是否安装成功</p>
+<p><img src="/2020/12/14/selenuim%E7%9A%84%E5%AE%89%E8%A3%85%E5%92%8C%E9%85%8D%E7%BD%AE/image-20200904175917351.png" alt="image-20200904175917351"></p>
+<p><img src="/2020/12/14/selenuim%E7%9A%84%E5%AE%89%E8%A3%85%E5%92%8C%E9%85%8D%E7%BD%AE/image-20200904180008917.png" alt="image-20200904180008917">        </p>
+<p>​        3.最后将ChromeDriver.exe复制Python解释器的安装路径下</p>
+<p><img src="/2020/12/14/selenuim%E7%9A%84%E5%AE%89%E8%A3%85%E5%92%8C%E9%85%8D%E7%BD%AE/image-20200904175509882.png" alt="image-20200904175509882"></p>
+<p>（3）安装selenuim库</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">pip install Selenium</span><br></pre></td></tr></table></figure>
+
+<h3 id><a href="#" class="headerlink" title></a></h3>]]></content>
       <categories>
-        <category>地球</category>
-        <category>猫咪</category>
+        <category>技术</category>
       </categories>
       <tags>
-        <tag>地球</tag>
-        <tag>宠物</tag>
+        <tag>python</tag>
+        <tag>爬虫</tag>
+        <tag>selenuim</tag>
       </tags>
   </entry>
   <entry>
@@ -148,6 +117,48 @@
       <tags>
         <tag>地球</tag>
         <tag>宠物</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>html中的attr和css区别</title>
+    <url>/2020/12/13/html%E4%B8%AD%E7%9A%84attr%E5%92%8Ccss%E5%8C%BA%E5%88%AB/</url>
+    <content><![CDATA[<p>本人再通过jquery给input标签添加visibility属性（保留网页物理空间）</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">$.(&quot;#input&quot;).attr(&quot;visibility&quot;, &quot;none&quot;)</span><br></pre></td></tr></table></figure>
+
+<p>并没有生效。最终发现应该调用.css方法，如下</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">$.(&quot;#input&quot;).css(&quot;visibility&quot;, &quot;none&quot;)</span><br></pre></td></tr></table></figure>
+
+<p>原因是style是标签的属性，而visibility是style的子属性，结构如下</p>
+<p><img src="/2020/12/13/html%E4%B8%AD%E7%9A%84attr%E5%92%8Ccss%E5%8C%BA%E5%88%AB/image-20201213195806971.png" alt="image-20201213195806971"></p>
+]]></content>
+      <categories>
+        <category>技术</category>
+      </categories>
+      <tags>
+        <tag>jquery</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>记录一次Mongdb动态切换库查询</title>
+    <url>/2020/12/01/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1Mongdb%E5%8A%A8%E6%80%81%E5%88%87%E6%8D%A2%E5%BA%93%E6%9F%A5%E8%AF%A2/</url>
+    <content><![CDATA[<h1 id="记录一次Mongdb动态切换库查询"><a href="#记录一次Mongdb动态切换库查询" class="headerlink" title="记录一次Mongdb动态切换库查询"></a>记录一次Mongdb动态切换库查询</h1><p>最近因为mongdb从单库改成随日期递增的多库，所以现在需要将原本单个数据源改为根据每天日期动态读库。</p>
+<p>原版本是采用MongodbTemplate读取properties配置文件中mongo相关配置，网上找了不下20篇博文，却没有一篇有清晰解释的。</p>
+<p>业务：ip超过三次发送邮件</p>
+<p>mongo：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 原聚合查询是这样的 </span></span><br><span class="line">Aggregation aggregation = Aggregation.newAggregation(</span><br><span class="line"><span class="comment">// where匹配查询条件：affid, offerid,sourceid。</span></span><br><span class="line">Aggregation.match(</span><br><span class="line">    Criteria.where(<span class="string">&quot;aff_id&quot;</span>).is(affId.toString())</span><br><span class="line">            .and(<span class="string">&quot;offer_id&quot;</span>).is(offerId.toString())</span><br><span class="line">            .and(<span class="string">&quot;source_id&quot;</span>).is(originSourceId)),</span><br><span class="line"><span class="comment">// 通过ip进行分组，查询超过3条记录的ip</span></span><br><span class="line">Aggregation.group(<span class="string">&quot;ip&quot;</span>).count().as(<span class="string">&quot;ipCount&quot;</span>), Aggregation.match(Criteria.where(<span class="string">&quot;ipCount&quot;</span>).gt(<span class="number">3</span>)));</span><br><span class="line">AggregationResults&lt;Map&gt; ans = mongoTemplate.aggregate(aggregation, collectionName, Map.class);</span><br></pre></td></tr></table></figure>
+
+<p>使用原生API：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 连接mongo</span></span><br><span class="line">MongoClient mongoClient = MongoClients.create(<span class="string">&quot;mongodb://localhost:27017&quot;</span>);</span><br><span class="line">String dateBaseName = prefix_database + DateUtils.formatDate(DateUtils.yyyyMMdd);</span><br><span class="line"><span class="comment">// 获取集合</span></span><br><span class="line">MongoCollection&lt;Document&gt; doc = database.getCollection(collectionName);</span><br><span class="line"><span class="comment">// match mongo筛选条件,匹配对应source_id, aff_id, offer_id的记录</span></span><br><span class="line">Document subMatch = <span class="keyword">new</span> Document();</span><br><span class="line">subMatch.put(<span class="string">&quot;offer_id&quot;</span>, offerId.toString());</span><br><span class="line">subMatch.put(<span class="string">&quot;aff_id&quot;</span>, affId.toString());</span><br><span class="line">subMatch.put(<span class="string">&quot;source_id&quot;</span>, originSourceId);</span><br><span class="line"></span><br><span class="line"><span class="comment">// group 根据ip进行分组</span></span><br><span class="line">Document subGroup = <span class="keyword">new</span> Document();</span><br><span class="line">subGroup.put(<span class="string">&quot;_id&quot;</span>, <span class="string">&quot;$ip&quot;</span>); </span><br><span class="line"><span class="comment">// 这里必须_id ：强制必须存在。可以为 null。</span></span><br><span class="line"><span class="comment">// 其余的计算字段是可选的，并使用&lt;accumulator&gt;运算符计算。具体的使用，通过下面的代码说明：</span></span><br><span class="line">subGroup.put(<span class="string">&quot;ipCount&quot;</span>, <span class="keyword">new</span> Document(<span class="string">&quot;$sum&quot;</span>, <span class="number">1</span>));</span><br><span class="line">Document match = <span class="keyword">new</span> Document(<span class="string">&quot;$match&quot;</span>, subMatch);</span><br><span class="line">Document group = <span class="keyword">new</span> Document(<span class="string">&quot;$group&quot;</span>, subGroup);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 对分组后结果筛选超过3次的IP</span></span><br><span class="line">Document matchGroup = <span class="keyword">new</span> Document(<span class="string">&quot;$match&quot;</span>, <span class="keyword">new</span> Document(<span class="string">&quot;ipCount&quot;</span>,<span class="keyword">new</span> Document(<span class="string">&quot;$gt&quot;</span>, <span class="number">3</span>)));</span><br><span class="line">List&lt;Document&gt; aggregateList = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">aggregateList.add(match);</span><br><span class="line">aggregateList.add(group);</span><br><span class="line">aggregateList.add(matchGroup);</span><br><span class="line"><span class="comment">// 返回结果</span></span><br><span class="line">AggregateIterable&lt;Document&gt; resultSet = doc.aggregate(aggregateList);</span><br><span class="line"><span class="comment">// 遍历结果</span></span><br><span class="line">Iterator&lt;Document&gt; iterator = resultSet.iterator();</span><br><span class="line"><span class="keyword">while</span> (iterator.hasNext()) &#123;</span><br><span class="line">      Document map = iterator.next();</span><br><span class="line">      String ip = (String) map.get(<span class="string">&quot;_id&quot;</span>);</span><br><span class="line">      ips.add(ip);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Console:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; 打印结果</span><br><span class="line">[107.150.126.148]</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>技术</category>
+      </categories>
+      <tags>
+        <tag>mongo</tag>
       </tags>
   </entry>
   <entry>
@@ -183,45 +194,17 @@
       </tags>
   </entry>
   <entry>
-    <title>多个class名相同时，jquery定位指定class</title>
-    <url>/2020/12/24/%E5%A4%9A%E4%B8%AAclass%E5%90%8D%E7%9B%B8%E5%90%8C%E6%97%B6%EF%BC%8Cjquery%E5%AE%9A%E4%BD%8D%E6%8C%87%E5%AE%9Aclass/</url>
-    <content><![CDATA[<p>本人在开发一个新页面的时候，需要给经过动态渲染后的多个input框赋不同的值。</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span> = <span class="string">&quot;trackKey&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span> = <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span> = <span class="string">&quot;trackParam&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span> = <span class="string">&quot;trackKey&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span> = <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span> = <span class="string">&quot;trackParam&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span> = <span class="string">&quot;trackKey&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span> = <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span> = <span class="string">&quot;trackParam&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"> ……</span><br></pre></td></tr></table></figure>
-<p>这边有6个经过动态渲染生成的input框，且类名都为<code>trackKey</code>。现在需要给它们一一赋值，值列表取自后台，以下只演示示范代码</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">var trackParam = &#123;&quot;sub1&quot;:&quot;qaq&quot;, &quot;sub2&quot;: &quot;wow&quot;, &quot;sub3&quot;: &quot;qwq&quot;&#125;</span><br><span class="line"></span><br><span class="line">var i = 0;</span><br><span class="line">for (var key in trackParam) &#123;</span><br><span class="line">    // 遍历给trackParam input赋值</span><br><span class="line">    $(&quot;.trackKey&quot;).eq(i).val(key);</span><br><span class="line">    $(&quot;.trackValue&quot;).eq(i).val(trackParam[key]);</span><br><span class="line">    i = i + 1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>当然，如果你只是单纯想为某个下拉框赋值，我们可以这样写：</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">// 第4个trackKey</span><br><span class="line">$(&#x27;.trackKey&#x27;).eq(4);</span><br><span class="line">// 倒数第二个trackKey</span><br><span class="line">$(&#x27;.trackKey&#x27;).eq(-2);</span><br><span class="line">// 最后一个trackKey</span><br><span class="line">$(&#x27;.trackKey&#x27;).last();</span><br></pre></td></tr></table></figure>
+    <title>与地球的第一次相遇</title>
+    <url>/2020/11/24/%E4%B8%8E%E5%9C%B0%E7%90%83%E7%9A%84%E7%AC%AC%E4%B8%80%E6%AC%A1%E7%9B%B8%E9%81%87/</url>
+    <content><![CDATA[<p>地球是一只英短银渐层猫咪，是我女朋友和我在她同事那买的一只只有2个月大的小猫咪。<br>十一月，是我与她的第一次见面，由于还不熟悉，她对我们还是心有芥蒂。<br>偷看她!!!<br><img src="/2020/11/24/%E4%B8%8E%E5%9C%B0%E7%90%83%E7%9A%84%E7%AC%AC%E4%B8%80%E6%AC%A1%E7%9B%B8%E9%81%87/1.png" alt="偷拍1"><br><img src="/2020/11/24/%E4%B8%8E%E5%9C%B0%E7%90%83%E7%9A%84%E7%AC%AC%E4%B8%80%E6%AC%A1%E7%9B%B8%E9%81%87/2.png" alt="偷拍2"><br>与她的晚餐：<br><img src="/2020/11/24/%E4%B8%8E%E5%9C%B0%E7%90%83%E7%9A%84%E7%AC%AC%E4%B8%80%E6%AC%A1%E7%9B%B8%E9%81%87/3.png" alt="晚饭"><br>我相信她会慢慢的向我们靠近的！</p>
 ]]></content>
       <categories>
-        <category>技术</category>
-        <category>前端</category>
+        <category>地球</category>
+        <category>猫咪</category>
       </categories>
       <tags>
-        <tag>jquery</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>记录一次Mongdb动态切换库查询</title>
-    <url>/2020/12/01/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1Mongdb%E5%8A%A8%E6%80%81%E5%88%87%E6%8D%A2%E5%BA%93%E6%9F%A5%E8%AF%A2/</url>
-    <content><![CDATA[<h1 id="记录一次Mongdb动态切换库查询"><a href="#记录一次Mongdb动态切换库查询" class="headerlink" title="记录一次Mongdb动态切换库查询"></a>记录一次Mongdb动态切换库查询</h1><p>最近因为mongdb从单库改成随日期递增的多库，所以现在需要将原本单个数据源改为根据每天日期动态读库。</p>
-<p>原版本是采用MongodbTemplate读取properties配置文件中mongo相关配置，网上找了不下20篇博文，却没有一篇有清晰解释的。</p>
-<p>业务：ip超过三次发送邮件</p>
-<p>mongo：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 原聚合查询是这样的 </span></span><br><span class="line">Aggregation aggregation = Aggregation.newAggregation(</span><br><span class="line"><span class="comment">// where匹配查询条件：affid, offerid,sourceid。</span></span><br><span class="line">Aggregation.match(</span><br><span class="line">    Criteria.where(<span class="string">&quot;aff_id&quot;</span>).is(affId.toString())</span><br><span class="line">            .and(<span class="string">&quot;offer_id&quot;</span>).is(offerId.toString())</span><br><span class="line">            .and(<span class="string">&quot;source_id&quot;</span>).is(originSourceId)),</span><br><span class="line"><span class="comment">// 通过ip进行分组，查询超过3条记录的ip</span></span><br><span class="line">Aggregation.group(<span class="string">&quot;ip&quot;</span>).count().as(<span class="string">&quot;ipCount&quot;</span>), Aggregation.match(Criteria.where(<span class="string">&quot;ipCount&quot;</span>).gt(<span class="number">3</span>)));</span><br><span class="line">AggregationResults&lt;Map&gt; ans = mongoTemplate.aggregate(aggregation, collectionName, Map.class);</span><br></pre></td></tr></table></figure>
-
-<p>使用原生API：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 连接mongo</span></span><br><span class="line">MongoClient mongoClient = MongoClients.create(<span class="string">&quot;mongodb://localhost:27017&quot;</span>);</span><br><span class="line">String dateBaseName = prefix_database + DateUtils.formatDate(DateUtils.yyyyMMdd);</span><br><span class="line"><span class="comment">// 获取集合</span></span><br><span class="line">MongoCollection&lt;Document&gt; doc = database.getCollection(collectionName);</span><br><span class="line"><span class="comment">// match mongo筛选条件,匹配对应source_id, aff_id, offer_id的记录</span></span><br><span class="line">Document subMatch = <span class="keyword">new</span> Document();</span><br><span class="line">subMatch.put(<span class="string">&quot;offer_id&quot;</span>, offerId.toString());</span><br><span class="line">subMatch.put(<span class="string">&quot;aff_id&quot;</span>, affId.toString());</span><br><span class="line">subMatch.put(<span class="string">&quot;source_id&quot;</span>, originSourceId);</span><br><span class="line"></span><br><span class="line"><span class="comment">// group 根据ip进行分组</span></span><br><span class="line">Document subGroup = <span class="keyword">new</span> Document();</span><br><span class="line">subGroup.put(<span class="string">&quot;_id&quot;</span>, <span class="string">&quot;$ip&quot;</span>); </span><br><span class="line"><span class="comment">// 这里必须_id ：强制必须存在。可以为 null。</span></span><br><span class="line"><span class="comment">// 其余的计算字段是可选的，并使用&lt;accumulator&gt;运算符计算。具体的使用，通过下面的代码说明：</span></span><br><span class="line">subGroup.put(<span class="string">&quot;ipCount&quot;</span>, <span class="keyword">new</span> Document(<span class="string">&quot;$sum&quot;</span>, <span class="number">1</span>));</span><br><span class="line">Document match = <span class="keyword">new</span> Document(<span class="string">&quot;$match&quot;</span>, subMatch);</span><br><span class="line">Document group = <span class="keyword">new</span> Document(<span class="string">&quot;$group&quot;</span>, subGroup);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 对分组后结果筛选超过3次的IP</span></span><br><span class="line">Document matchGroup = <span class="keyword">new</span> Document(<span class="string">&quot;$match&quot;</span>, <span class="keyword">new</span> Document(<span class="string">&quot;ipCount&quot;</span>,<span class="keyword">new</span> Document(<span class="string">&quot;$gt&quot;</span>, <span class="number">3</span>)));</span><br><span class="line">List&lt;Document&gt; aggregateList = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">aggregateList.add(match);</span><br><span class="line">aggregateList.add(group);</span><br><span class="line">aggregateList.add(matchGroup);</span><br><span class="line"><span class="comment">// 返回结果</span></span><br><span class="line">AggregateIterable&lt;Document&gt; resultSet = doc.aggregate(aggregateList);</span><br><span class="line"><span class="comment">// 遍历结果</span></span><br><span class="line">Iterator&lt;Document&gt; iterator = resultSet.iterator();</span><br><span class="line"><span class="keyword">while</span> (iterator.hasNext()) &#123;</span><br><span class="line">      Document map = iterator.next();</span><br><span class="line">      String ip = (String) map.get(<span class="string">&quot;_id&quot;</span>);</span><br><span class="line">      ips.add(ip);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>Console:</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; 打印结果</span><br><span class="line">[107.150.126.148]</span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>技术</category>
-      </categories>
-      <tags>
-        <tag>mongo</tag>
+        <tag>地球</tag>
+        <tag>宠物</tag>
       </tags>
   </entry>
   <entry>
@@ -286,6 +269,23 @@
       </categories>
       <tags>
         <tag>博客</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>XML中的CDATA</title>
+    <url>/2020/11/17/XML%E4%B8%AD%E7%9A%84CDATA/</url>
+    <content><![CDATA[<p>CDATA是什么，这是XML语法。在CDATA内部的所有内容都会被解析器忽略。</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line">SELECT *</span><br><span class="line">FROM xxl_job_registry AS t</span><br><span class="line">WHERE t.update_time &lt;![CDATA[ &gt; ]]&gt; DATE_ADD(#&#123;nowTime&#125;,INTERVAL -#&#123;timeout&#125; SECOND)</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+
+<p>类似与</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> *</span><br><span class="line"><span class="keyword">FROM</span> xxl_job_registry <span class="keyword">AS</span> t</span><br><span class="line"><span class="keyword">WHERE</span> t.update_time &gt; <span class="keyword">DATE_ADD</span>(<span class="comment">#&#123;nowTime&#125;,INTERVAL -#&#123;timeout&#125; SECOND)</span></span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>技术</category>
+      </categories>
+      <tags>
+        <tag>XML</tag>
       </tags>
   </entry>
 </search>
