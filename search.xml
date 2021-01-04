@@ -3,7 +3,50 @@
   <entry>
     <title>Mysql自动分区</title>
     <url>/2021/01/04/Mysql%E8%87%AA%E5%8A%A8%E5%88%86%E5%8C%BA/</url>
-    <content><![CDATA[]]></content>
+    <content><![CDATA[<h1 id="Mysql表分区"><a href="#Mysql表分区" class="headerlink" title="Mysql表分区"></a>Mysql表分区</h1><p>公司的业务报表需要查询到历年数据，  表是以小时为维度统计的导致数据量太大，查询效率太低下。</p>
+<p>公司现采用的策略是一个月生成一张表，以<code>hour_data_YYYYMM</code></p>
+<p>方式。这种方式会造成修改处过多，工作量太大；所以我们可以将表按月进行分区。</p>
+<p>注意：当表中含有主键或唯⼀键时，则每个被⽤作<strong>分区函数的字段必须是表中唯⼀键和主键的全部或⼀部分</strong></p>
+<h2 id="分区方式"><a href="#分区方式" class="headerlink" title="分区方式"></a>分区方式</h2><p>mysql分区分为</p>
+<ul>
+<li><p>RANGE表分区：范围表分区，按照⼀定的<strong>范围值</strong>来确定每个分区包含的数据</p>
+</li>
+<li><p>LIST表分区：列表表分区，按照⼀个⼀个<strong>确定的值</strong>来确定每个分区包含的数据</p>
+</li>
+<li><p>HASH表分区：哈希表分区，按照⼀个<strong>⾃定义的函数返回值</strong>来确定每个分区包含的数据</p>
+</li>
+<li><p>KEY表分区 ：key表分区，与哈希表分区类似，只是⽤MySQL⾃⼰的<strong>HASH函数</strong>来确定每个分区包含的数据</p>
+</li>
+</ul>
+<p>Range表分区</p>
+<p>按照一定的返回值来确定每个分区的数据，分区函数的字段必须为整形，分区范围需要连续。符合范围条件的数据将会写入对应的分区。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">CREATE TABLE employees ( id INT NOT NULL,</span><br><span class="line"> fname VARCHAR(30), lname VARCHAR(30),</span><br><span class="line"> store_id INT NOT NULL </span><br><span class="line"> primary key (&#96;id&#96;, &#96;store_id&#96;)    -- 这里因为有主键字段，分区字段必须是主键和唯一索引的全部或一部分                    </span><br><span class="line"> )</span><br><span class="line"> PARTITION BY RANGE (store_id)</span><br><span class="line"> ( PARTITION p0 VALUES LESS THAN (6), PARTITION p1 VALUES LESS THAN (11),</span><br><span class="line"> PARTITION p2 VALUES LESS THAN (16), PARTITION p3 VALUES LESS THAN (21) );</span><br></pre></td></tr></table></figure>
+
+<p>其他分区可以自行去了解。</p>
+<p><code>其中range分区和list分区，若分区字段不在分区范围中会报错</code></p>
+<p>mysql不支持自动分区，我们可以使用event事件来定时执行，如果对应分区存在则不创建，反之创建。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">CREATE TABLE &#96;hour_data_202012&#96;  (</span><br><span class="line">  &#96;id&#96; int(11) NOT NULL AUTO_INCREMENT,</span><br><span class="line">  &#96;date_hour&#96; int(11) NOT NULL   COMMENT &#39;int类型的小时时间，就像2018-09-05 11:00:00对应的int类型的数值&#39;,</span><br><span class="line">  &#96;date&#96; int(11) NULL DEFAULT NULL COMMENT &#39;int类型的日期，就是2018-09-05转换成的int类型&#39;,</span><br><span class="line">  &#96;offer_id&#96; int(11) NULL DEFAULT NULL COMMENT &#39;offerID，来自offer表的主键&#39;,</span><br><span class="line">  &#96;aff_id&#96; int(10) NULL DEFAULT NULL COMMENT &#39;下游渠道id&#39;,</span><br><span class="line">  &#96;origin_source_id&#96; varchar(180) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT &#39;&#39; COMMENT &#39;下游上报的原始sourceId，默认会考虑把_之前的保留，其他的放弃，否则sourceid会太多&#39;,</span><br><span class="line">  &#96;new_source_id&#96; int(11) NULL DEFAULT 0 COMMENT &#39;加密后的新sourceId，默认为0&#39;,</span><br><span class="line">  &#96;geo&#96; char(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT &#39;&#39; COMMENT &#39;geo，aff上报的所在地geo&#39;,</span><br><span class="line">  &#96;event_id&#96; tinyint(4) NULL DEFAULT 1 COMMENT &#39;event_id，来自于offer_event_adv的event_id定义&#39;,</span><br><span class="line">  &#96;impressions&#96; int(11) NULL DEFAULT 0 COMMENT &#39;impressions&#39;,</span><br><span class="line">  &#96;clicks&#96; int(11) NULL DEFAULT 0 COMMENT &#39;点击数，只在install事件时有数据，其他event下都为0&#39;,</span><br><span class="line">  &#96;revenue_num&#96; int(11) NULL DEFAULT 0 COMMENT &#39;我们接收到的数据，比如转化数、注册数&#39;,</span><br><span class="line">  &#96;payout_num&#96; int(11) NULL DEFAULT 0 COMMENT &#39;给下游的数据，比如转化数、注册数&#39;,</span><br><span class="line">  &#96;revenue&#96; decimal(10, 2) NULL DEFAULT 0.00 COMMENT &#39;这个小时我们的收益&#39;,</span><br><span class="line">  &#96;payout&#96; decimal(10, 2) NULL DEFAULT 0.00 COMMENT &#39;这个小时给下游的费用&#39;,</span><br><span class="line">  PRIMARY KEY (&#96;id&#96;,  &#96;date_hour&#96;) USING BTREE,</span><br><span class="line">  UNIQUE INDEX &#96;unique_offer_date_aff_hour_2&#96;(&#96;offer_id&#96;, &#96;aff_id&#96;, &#96;event_id&#96;, &#96;date_hour&#96;, &#96;origin_source_id&#96;, &#96;new_source_id&#96;, &#96;geo&#96;) USING BTREE,</span><br><span class="line">  INDEX &#96;date_index2&#96;(&#96;date&#96;) USING BTREE,</span><br><span class="line">  INDEX &#96;report_index2&#96;(&#96;date_hour&#96;, &#96;date&#96;, &#96;offer_id&#96;, &#96;aff_id&#96;, &#96;event_id&#96;, &#96;geo&#96;) USING BTREE</span><br><span class="line">) ENGINE &#x3D; InnoDB AUTO_INCREMENT &#x3D; 102964582 CHARACTER SET &#x3D; utf8mb4 COLLATE &#x3D; utf8mb4_general_ci COMMENT &#x3D; &#39;每日每小时sourceid数据表。注意价格是实时变化的，这里需要注意每月一张表&#39; ROW_FORMAT &#x3D; COMPACT</span><br><span class="line">	PARTITION BY RANGE (date_hour)</span><br><span class="line">	(PARTITION p202101 VALUES LESS THAN (1609747898)); -- 新建表时创建一个分区</span><br></pre></td></tr></table></figure>
+
+<p><strong>存储过程</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">DELIMITER &#x2F;&#x2F;</span><br><span class="line">#该表所在数据库名称</span><br><span class="line">USE &#96;test&#96; &#x2F;&#x2F; DROP PROCEDURE</span><br><span class="line">IF</span><br><span class="line">	EXISTS &#96;create_partition_by_month&#96; &#x2F;&#x2F; CREATE PROCEDURE &#96;create_partition_by_month&#96; ( IN_SCHEMANAME VARCHAR ( 64 ), IN_TABLENAME VARCHAR ( 64 ) ) BEGIN</span><br><span class="line">	DECLARE</span><br><span class="line">		ROWS_CNT INT UNSIGNED;   -- 符合指定分区的个数</span><br><span class="line">	DECLARE</span><br><span class="line">		BEGINTIME TIMESTAMP;		</span><br><span class="line">	DECLARE</span><br><span class="line">		ENDTIME INT UNSIGNED;</span><br><span class="line">	DECLARE</span><br><span class="line">		PARTITIONNAME VARCHAR ( 16 );</span><br><span class="line">	DECLARE</span><br><span class="line">		ENDTIME_DATETIME VARCHAR ( 30 );</span><br><span class="line">	</span><br><span class="line">	SET BEGINTIME &#x3D; DATE( NOW( ) - INTERVAL DAY ( NOW( ) ) DAY + INTERVAL 1 DAY + INTERVAL 1 MONTH );</span><br><span class="line">    select BEGINTIME;</span><br><span class="line">	SET PARTITIONNAME &#x3D; DATE_FORMAT( BEGINTIME, &#39;p%Y%m&#39; );</span><br><span class="line">    select PARTITIONNAME;</span><br><span class="line">	SET ENDTIME &#x3D; UNIX_TIMESTAMP( BEGINTIME + INTERVAL 1 MONTH );</span><br><span class="line">	select endtime;</span><br><span class="line">	-- 查询指定schema，指定表，符合指定分区的记录数</span><br><span class="line">	SELECT</span><br><span class="line">		COUNT( * ) INTO ROWS_CNT </span><br><span class="line">	FROM</span><br><span class="line">		information_schema.PARTITIONS </span><br><span class="line">	WHERE</span><br><span class="line">		table_schema &#x3D; IN_SCHEMANAME </span><br><span class="line">		AND table_name &#x3D; IN_TABLENAME </span><br><span class="line">		AND partition_name &#x3D; PARTITIONNAME;</span><br><span class="line">	IF ROWS_CNT &#x3D; 0 THEN	 -- 若不存在则创建</span><br><span class="line">			SET @SQL &#x3D; CONCAT( &#39;ALTER TABLE &#96;&#39;, IN_SCHEMANAME, &#39;&#96;.&#96;&#39;, IN_TABLENAME, &#39;&#96;&#39;, &#39; ADD PARTITION (PARTITION &#39;, PARTITIONNAME, &quot; VALUES LESS THAN (&quot;, ENDTIME, &quot;) ENGINE &#x3D; InnoDB);&quot; );</span><br><span class="line">		PREPARE STMT </span><br><span class="line">		FROM</span><br><span class="line">			@SQL;</span><br><span class="line">		EXECUTE STMT;</span><br><span class="line">		DEALLOCATE PREPARE STMT;</span><br><span class="line">	ELSE SELECT</span><br><span class="line">			CONCAT( &quot;partition &#96;&quot;, PARTITIONNAME, &quot;&#96; for table &#96;&quot;, IN_SCHEMANAME, &quot;.&quot;, 		IN_TABLENAME, &quot;&#96; already exists&quot; ) AS result;</span><br><span class="line">	END IF;</span><br><span class="line"></span><br><span class="line">END &#x2F;&#x2F;</span><br><span class="line">DELIMITER;</span><br><span class="line">--  删除存储过程												 </span><br><span class="line">--  DROP PROCEDURE   create_partition_by_month                     </span><br><span class="line">--  手动测试</span><br><span class="line">call create_partition_by_month(&quot;test&quot;, &quot;hour_data_202012&quot;);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><strong>数据库定时任务：</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">DELIMITER $$</span><br><span class="line">#该表所在的数据库名称</span><br><span class="line">USE &#96;ycdb&#96;$$</span><br><span class="line">CREATE EVENT IF NOT EXISTS &#96;Month_partition_t1&#96;</span><br><span class="line">ON SCHEDULE EVERY 1 hour   #执行周期，还有天、月等等</span><br><span class="line">STARTS &#39;2020-08-10 17:00:00&#39;</span><br><span class="line">ON COMPLETION PRESERVE</span><br><span class="line">ENABLE</span><br><span class="line">COMMENT &#39;Creating partitions By month&#39;</span><br><span class="line">DO BEGIN</span><br><span class="line">    #调用刚才创建的存储过程，第一个参数是数据库名称，第二个参数是表名称</span><br><span class="line">    CALL ycdb.create_partition_by_month(&quot;test&quot;, &quot;hour_data_202012&quot;);</span><br><span class="line">END$$</span><br><span class="line">DELIMITER ;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>结果：</p>
+<p><img src="/2021/01/04/Mysql%E8%87%AA%E5%8A%A8%E5%88%86%E5%8C%BA/image-20210104185441855.png" alt="image-20210104185441855"></p>
+<p>查询分区<code>p202101</code>的数据：</p>
+<p><img src="/2021/01/04/Mysql%E8%87%AA%E5%8A%A8%E5%88%86%E5%8C%BA/image-20210104203138681.png" alt="image-20210104203138681"></p>
+<p>查询分区 <code>p202102</code>:</p>
+<p><img src="/2021/01/04/Mysql%E8%87%AA%E5%8A%A8%E5%88%86%E5%8C%BA/image-20210104203210201.png" alt="image-20210104203210201"></p>
+]]></content>
+      <categories>
+        <category>技术</category>
+        <category>数据库</category>
+      </categories>
+      <tags>
+        <tag>mysql</tag>
+      </tags>
   </entry>
   <entry>
     <title>jquery元素绑定事件失效的原因</title>
