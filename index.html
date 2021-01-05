@@ -142,6 +142,78 @@
     
     
     <article
+  id="post-CentOS手动更新gcc"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2021/01/05/CentOS%E6%89%8B%E5%8A%A8%E6%9B%B4%E6%96%B0gcc/"
+    >CentOS手动更新gcc</a> 
+</h2>
+ 
+
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2021/01/05/CentOS%E6%89%8B%E5%8A%A8%E6%9B%B4%E6%96%B0gcc/" class="article-date">
+  <time datetime="2021-01-05T06:59:45.000Z" itemprop="datePublished">2021-01-05</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a> / <a class="article-category-link" href="/categories/%E6%8A%80%E6%9C%AF/linux/">linux</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="CentOS手动更新gcc"><a href="#CentOS手动更新gcc" class="headerlink" title="CentOS手动更新gcc"></a>CentOS手动更新gcc</h1><p>不久前在阿里云服务买了台服务器，急忙的装了jdk，mysql……</p>
+<p>步入正题，<code>centos7</code>默认的gcc版本是<code>4.8</code>，<code>仅支持c++11</code>，更高版本需要自行手动升级，所以想给它升级一下。。。哪想会有这么多坑！！！</p>
+<p><img src="/2021/01/05/CentOS%E6%89%8B%E5%8A%A8%E6%9B%B4%E6%96%B0gcc/image-20210105141953681.png" alt="image-20210105141953681"></p>
+<h4 id="1-手动升级，需要去下载对应的tar包，放到linux环境中进行解压"><a href="#1-手动升级，需要去下载对应的tar包，放到linux环境中进行解压" class="headerlink" title="1.手动升级，需要去下载对应的tar包，放到linux环境中进行解压"></a>1.手动升级，需要去下载对应的tar包，放到linux环境中进行解压</h4><p>可以在<a target="_blank" rel="noopener" href="https://ftp.gnu.org/gnu/gcc/">gcc版本库</a>中下载所需版本，这里我下载的是9.2版本，下载完成后放到服务器上解压。</p>
+<p><img src="/2021/01/05/CentOS%E6%89%8B%E5%8A%A8%E6%9B%B4%E6%96%B0gcc/image-20210105142725271.png" alt="image-20210105142725271"></p>
+<h4 id="2-我们cd-gcc-9-2-0目录下-此时还不能直接安装，-linux在安装包时会有检验包依赖的过程，安装gcc需要3个包，分别是gmp-mpfr-mpc"><a href="#2-我们cd-gcc-9-2-0目录下-此时还不能直接安装，-linux在安装包时会有检验包依赖的过程，安装gcc需要3个包，分别是gmp-mpfr-mpc" class="headerlink" title="2.我们cd gcc-9.2.0目录下,  此时还不能直接安装， linux在安装包时会有检验包依赖的过程，安装gcc需要3个包，分别是gmp, mpfr, mpc"></a>2.我们<code>cd gcc-9.2.0</code>目录下,  此时还不能直接安装， linux在安装包时会有检验包依赖的过程，安装<code>gcc</code>需要3个包，分别是<code>gmp, mpfr, mpc</code></h4><p>同样，这三个包可自动下载，也可手动下载。</p>
+<p><em>手动下载地址</em>： <a target="_blank" rel="noopener" href="http://ftp.gnu.org/pub/gnu/gmp/">gmp</a>，<a target="_blank" rel="noopener" href="https://www.mpfr.org/history.html">mpfr</a>，<a target="_blank" rel="noopener" href="http://ftp.gnu.org/gnu/mpc/">mpc</a></p>
+<p><code>(如果是手动下载，需要对下载后的包进行解压，然后cd到对应目录下安装编译 ./configure --prefix=/软件安装路径,make &amp;&amp; make install)</code></p>
+<p><em>自动安装：</em>相对于手动安装简单许多，在gcc目录下执行<code>./contrib/download_prerequisites</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">.&#x2F;contrib&#x2F;download_prerequisites</span><br><span class="line">&#x2F;&#x2F; 这条命令的意思就是下载上面3个包文件</span><br></pre></td></tr></table></figure>
+
+<p>控制台出现<code>All prerequisites downloaded successfully</code>，证明三个包文件下载成功</p>
+<h4 id="3-生成Makefile文件"><a href="#3-生成Makefile文件" class="headerlink" title="3.生成Makefile文件"></a>3.生成Makefile文件</h4><p>在gcc安装目录下创建一个<code>gcc-build</code>文件，用于存放<code>gcc编译文件</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost gcc-9.2.0]# mkdir gcc-build-9.3.0 </span><br><span class="line">[root@localhost gcc-9.2.0]# cd gcc-build-9.3.0  &#x2F;&#x2F; cd到gcc-build目录下</span><br><span class="line">[root@localhost gcc-9.2.0]# ..&#x2F;configure --enable-checking&#x3D;release --enable-languages&#x3D;c,c++ --disable-multilib  </span><br><span class="line">&#x2F;&#x2F; 表示gcc支持哪些语言</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-编译make"><a href="#4-编译make" class="headerlink" title="4.编译make"></a>4.编译make</h4><p>这里是最重…要的一步！这一步差不多消耗<code>3-4小时</code>进行编译，请你预安排好执行。</p>
+<p><em>可以使用多个线程进行处理，但请先了解当前处理器的配置，避免安装失败</em></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost gcc-build-9.3.0]# make [-j4] 　&#x2F;&#x2F;表示启动四个线程来编译gcc，[]表示可省略</span><br></pre></td></tr></table></figure>
+
+<h4 id="5-安装、查看gcc版本"><a href="#5-安装、查看gcc版本" class="headerlink" title="5.安装、查看gcc版本"></a>5.安装、查看gcc版本</h4><p>这一步<code>make install</code>执行安装。安装完成后，使用<code>gcc -v</code>查看gcc版本。</p>
+<p><img src="/2021/01/05/CentOS%E6%89%8B%E5%8A%A8%E6%9B%B4%E6%96%B0gcc/image-20210105145847495.png" alt="image-20210105145847495"></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/gcc/" rel="tag">gcc</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+   
+</article>
+
+    
+    <article
   id="post-Mysql自动分区"
   class="article article-type-post"
   itemscope
@@ -341,86 +413,13 @@
 </article>
 
     
-    <article
-  id="post-xxl-job整合钉钉机器人实现服务监控"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2020/12/14/xxl-job%E6%95%B4%E5%90%88%E9%92%89%E9%92%89%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AE%9E%E7%8E%B0%E6%9C%8D%E5%8A%A1%E7%9B%91%E6%8E%A7/"
-    >xxl-job整合钉钉机器人实现服务监控</a> 
-</h2>
- 
-
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2020/12/14/xxl-job%E6%95%B4%E5%90%88%E9%92%89%E9%92%89%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AE%9E%E7%8E%B0%E6%9C%8D%E5%8A%A1%E7%9B%91%E6%8E%A7/" class="article-date">
-  <time datetime="2020-12-14T06:18:03.000Z" itemprop="datePublished">2020-12-14</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h1 id="XXL-JOB整合钉钉机器人"><a href="#XXL-JOB整合钉钉机器人" class="headerlink" title="XXL-JOB整合钉钉机器人"></a>XXL-JOB整合钉钉机器人</h1><p>XXLJOB默认支持的报警是邮件，我们关注邮件并不是特别及时，所以本人想将钉钉机器人集成XXL-JOB；</p>
-<p>话不多说整，让我们开始吧！！！</p>
-<p>首先我们在钉钉上创建一个三人以上的群， 随后自定义一个机器人</p>
-<h3 id="1-创建机器人"><a href="#1-创建机器人" class="headerlink" title="1.创建机器人"></a>1.创建机器人</h3><p><img src="/2020/12/14/xxl-job%E6%95%B4%E5%90%88%E9%92%89%E9%92%89%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AE%9E%E7%8E%B0%E6%9C%8D%E5%8A%A1%E7%9B%91%E6%8E%A7/image-20201112174723190.png" alt="image-20201112174723190"></p>
-<p>这边我们可以定义多个关键字，以满足不同内容的任务告警。</p>
-<h3 id="2-XXL-Job集成钉钉机器人"><a href="#2-XXL-Job集成钉钉机器人" class="headerlink" title="2.XXL-Job集成钉钉机器人"></a>2.XXL-Job集成钉钉机器人</h3><ul>
-<li>加入pom依赖</li>
-</ul>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--钉钉机器人通知--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.aliyun<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>alibaba-dingtalk-service-sdk<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">version</span>&gt;</span>1.0.1<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>在application.propertis文件中增加常量</li>
-</ul>
-<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 也就是我们的webhook地址</span></span><br><span class="line"><span class="meta">alarm.ding.accessToken</span> = <span class="string">9e962fca4cc894da988c06940079a20b8c3f50d227f90ce8b6afc7fa4d8de348</span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>新增DingJobAlarm</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@description</span>: 钉钉通知</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span>:Peng</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Date</span>:2020/11/11</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DingJobAlarm</span> <span class="keyword">implements</span> <span class="title">JobAlarm</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> RestTemplate restTemplate = <span class="keyword">new</span> RestTemplate();</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Value(&quot;$&#123;alarm.ding.accessToken&#125;&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> String accessToken;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> StringBuilder dingUrl = <span class="keyword">new</span> StringBuilder(<span class="string">&quot;https://oapi.dingtalk.com/robot/send&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">doAlarm</span><span class="params">(XxlJobInfo info, XxlJobLog jobLog)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">boolean</span> alarmResult = <span class="keyword">true</span>;</span><br><span class="line">        System.out.println(<span class="string">&quot;ding ---------------------&quot;</span>);</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            contactHttpPostUrl();</span><br><span class="line">            HashMap&lt;String, Object&gt; map = contactHttpPostParam(info, jobLog);</span><br><span class="line">            restTemplate.postForEntity(dingUrl.toString(), map, Object.class);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">            alarmResult = <span class="keyword">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> alarmResult;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> HashMap&lt;String, Object&gt; <span class="title">contactHttpPostParam</span><span class="params">(XxlJobInfo info, XxlJobLog jobLog)</span> </span>&#123;</span><br><span class="line">        HashMap&lt;String, Object&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;(<span class="number">2</span>);</span><br><span class="line">        map.put(<span class="string">&quot;msgtype&quot;</span>, <span class="string">&quot;text&quot;</span>);</span><br><span class="line">        HashMap&lt;String, String&gt; contentMap = <span class="keyword">new</span> HashMap&lt;&gt;(<span class="number">1</span>);</span><br><span class="line">        String content = <span class="string">&quot;定时任务失败： &quot;</span> + <span class="string">&quot;任务名称：&quot;</span> + info.getJobDesc() +</span><br><span class="line">                <span class="string">&quot;,执行器名称：&quot;</span> + info.getExecutorHandler() +</span><br><span class="line">                <span class="comment">// 钉钉机器人通知内容</span></span><br><span class="line">                <span class="string">&quot;,执行时间：&quot;</span> + <span class="keyword">new</span> SimpleDateFormat(<span class="string">&quot;yyyy-MM-dd&quot;</span>).format(<span class="keyword">new</span> Date()) +</span><br><span class="line">                <span class="string">&quot;,执行器ip：&quot;</span> + jobLog.getExecutorAddress();</span><br><span class="line">        contentMap.put(<span class="string">&quot;content&quot;</span>, content);</span><br><span class="line">        map.put(<span class="string">&quot;text&quot;</span>, contentMap);</span><br><span class="line">        <span class="keyword">return</span> map;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">contactHttpPostUrl</span><span class="params">()</span> <span class="keyword">throws</span> NoSuchAlgorithmException, InvalidKeyException, UnsupportedEncodingException </span>&#123;</span><br><span class="line">        <span class="comment">// 获取当前时间戳，签名计算后的签名</span></span><br><span class="line">        Long timestamp = System.currentTimeMillis();</span><br><span class="line">        <span class="comment">// 密钥</span></span><br><span class="line">        String secret = <span class="string">&quot;SECd7e8d13a32a779e7b2e344d8c698bf8f209f3561c7bb05bfd8aabd5d0f63fb2a&quot;</span>;</span><br><span class="line">        String stringToSign = timestamp + <span class="string">&quot;\n&quot;</span> + secret;</span><br><span class="line">        Mac mac = Mac.getInstance(<span class="string">&quot;HmacSHA256&quot;</span>);</span><br><span class="line">        mac.init(<span class="keyword">new</span> SecretKeySpec(secret.getBytes(StandardCharsets.UTF_8), <span class="string">&quot;HmacSHA256&quot;</span>));</span><br><span class="line">        <span class="keyword">byte</span>[] signData = mac.doFinal(stringToSign.getBytes(StandardCharsets.UTF_8));</span><br><span class="line">        String sign = URLEncoder.encode(<span class="keyword">new</span> String(Base64.encodeBase64(signData)),<span class="string">&quot;UTF-8&quot;</span>);</span><br><span class="line">        dingUrl.append(<span class="string">&quot;?access_token=&quot;</span>).append(accessToken)</span><br><span class="line">                .append(<span class="string">&quot;&amp;sign=&quot;</span>).append(sign)</span><br><span class="line">                .append(<span class="string">&quot;&amp;timestamp=&quot;</span>).append(timestamp);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><img src="/2020/12/14/xxl-job%E6%95%B4%E5%90%88%E9%92%89%E9%92%89%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AE%9E%E7%8E%B0%E6%9C%8D%E5%8A%A1%E7%9B%91%E6%8E%A7/image-20201112180132037.png" alt="image-20201112180132037"></p>
-<p>当然钉钉通知可以支持markdown，图片等等。想详细研究请查看<a target="_blank" rel="noopener" href="https://ding-doc.dingtalk.com/doc#/serverapi2/qf2nxq">官方文档</a></p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/xxl-job/" rel="tag">xxl-job</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%92%89%E9%92%89%E6%9C%BA%E5%99%A8%E4%BA%BA/" rel="tag">钉钉机器人</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-   
-</article>
-
-    
   </article>
   
 
   
   <nav class="page-nav">
     
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">下一页</a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/">下一页</a>
   </nav>
   
 </section>
