@@ -142,6 +142,61 @@
     
     
     <article
+  id="post-jquery元素绑定事件失效的原因"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2020/12/24/jquery%E5%85%83%E7%B4%A0%E7%BB%91%E5%AE%9A%E4%BA%8B%E4%BB%B6%E5%A4%B1%E6%95%88%E7%9A%84%E5%8E%9F%E5%9B%A0/"
+    >jquery元素绑定事件失效的原因</a> 
+</h2>
+ 
+
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2020/12/24/jquery%E5%85%83%E7%B4%A0%E7%BB%91%E5%AE%9A%E4%BA%8B%E4%BB%B6%E5%A4%B1%E6%95%88%E7%9A%84%E5%8E%9F%E5%9B%A0/" class="article-date">
+  <time datetime="2020-12-24T11:13:25.000Z" itemprop="datePublished">2020-12-24</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a> / <a class="article-category-link" href="/categories/%E6%8A%80%E6%9C%AF/%E5%89%8D%E7%AB%AF/">前端</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>今天开发过程中在给页面初始化设置的适合遇见了绑定事件无效的问题，特此总结下。以往给指定元素绑定事件是因为id或class是经过渲染后的，是动态的，才导致页面<code>定位出错</code>。这次并不是<code>定位出错</code>，而是<code>有效</code>的（我手动在浏览器里执行了）</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// 请求ajax，进行页面的intput二级联动</span><br><span class="line">initAdvSourceType(&quot;$&#123;advSourceType&#125;&quot;);</span><br><span class="line">// 给渲染出来标签赋初始值</span><br><span class="line">echoData();</span><br></pre></td></tr></table></figure>
+
+<p>select二级联动<br><img src="/2020/12/24/jquery%E5%85%83%E7%B4%A0%E7%BB%91%E5%AE%9A%E4%BA%8B%E4%BB%B6%E5%A4%B1%E6%95%88%E7%9A%84%E5%8E%9F%E5%9B%A0/image-20201224234414431.png" alt="image-20201224234414431"><br>给渲染的标签赋值<br><img src="/2020/12/24/jquery%E5%85%83%E7%B4%A0%E7%BB%91%E5%AE%9A%E4%BA%8B%E4%BB%B6%E5%A4%B1%E6%95%88%E7%9A%84%E5%8E%9F%E5%9B%A0/image-20201224234459006.png" alt="image-20201224234459006"><br>手动执行一下，居然成功了。到这里说明并不是定位不到元素，仔细想想可能是在ajax还没有执行完毕（<code>ajax是异步</code>）就已经执行了该<code>标签赋值</code>方法。因为ajax是异步的，会另起一个线程去执行接下来的代码。<br><img src="/2020/12/24/jquery%E5%85%83%E7%B4%A0%E7%BB%91%E5%AE%9A%E4%BA%8B%E4%BB%B6%E5%A4%B1%E6%95%88%E7%9A%84%E5%8E%9F%E5%9B%A0/image-20201224235045884.png" alt="image-20201224235045884"><br>分析好原因后，所以我们要解决的就是想办法让操作同步，所以我们可以在ajax拿到数据渲染后我们再进行赋值初始化操作<br><img src="/2020/12/24/jquery%E5%85%83%E7%B4%A0%E7%BB%91%E5%AE%9A%E4%BA%8B%E4%BB%B6%E5%A4%B1%E6%95%88%E7%9A%84%E5%8E%9F%E5%9B%A0/image-20201224235715203.png" alt="image-20201224235045884"></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jquery/" rel="tag">jquery</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+   
+</article>
+
+    
+    <article
   id="post-多个class名相同时，jquery定位指定class"
   class="article article-type-post"
   itemscope
@@ -329,66 +384,6 @@
     <footer class="article-footer">
        
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/selenuim/" rel="tag">selenuim</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%88%AC%E8%99%AB/" rel="tag">爬虫</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-   
-</article>
-
-    
-    <article
-  id="post-仨月的地球儿"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2020/12/13/%E4%BB%A8%E6%9C%88%E7%9A%84%E5%9C%B0%E7%90%83%E5%84%BF/"
-    >仨月的地球儿</a> 
-</h2>
- 
-
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2020/12/13/%E4%BB%A8%E6%9C%88%E7%9A%84%E5%9C%B0%E7%90%83%E5%84%BF/" class="article-date">
-  <time datetime="2020-12-13T12:23:38.000Z" itemprop="datePublished">2020-12-13</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E5%9C%B0%E7%90%83/">地球</a> / <a class="article-category-link" href="/categories/%E5%9C%B0%E7%90%83/%E7%8C%AB%E5%92%AA/">猫咪</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h1 id="可爱的球球仨月了"><a href="#可爱的球球仨月了" class="headerlink" title="可爱的球球仨月了"></a>可爱的球球仨月了</h1><p>球已经到家已经一个月了，现在已经特别粘人了。。。每次回到家开门，她就在门口瞪着大眼睛对着我，然后一直粘着你的脚跟。</p>
-<p><img src="/2020/12/13/%E4%BB%A8%E6%9C%88%E7%9A%84%E5%9C%B0%E7%90%83%E5%84%BF/image-20201213202113835.png" alt="image-20201213202113835"></p>
-<p>似乎在看我敲电脑。。。不屑你</p>
-<p><img src="/2020/12/13/%E4%BB%A8%E6%9C%88%E7%9A%84%E5%9C%B0%E7%90%83%E5%84%BF/image-20201213202144924.png" alt="image-20201213202144924"></p>
-<p><img src="/2020/12/13/%E4%BB%A8%E6%9C%88%E7%9A%84%E5%9C%B0%E7%90%83%E5%84%BF/image-20201213202201822.png" alt="image-20201213202201822"></p>
-<p>长大了很多啊</p>
-<p><img src="/2020/12/13/%E4%BB%A8%E6%9C%88%E7%9A%84%E5%9C%B0%E7%90%83%E5%84%BF/image-20201213202222905.png" alt="image-20201213202222905"></p>
-<p>一起看综艺…</p>
-<p><img src="/2020/12/13/%E4%BB%A8%E6%9C%88%E7%9A%84%E5%9C%B0%E7%90%83%E5%84%BF/image-20201213202259570.png" alt="image-20201213202259570"></p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%9C%B0%E7%90%83/" rel="tag">地球</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%AE%A0%E7%89%A9/" rel="tag">宠物</a></li></ul>
 
     </footer>
   </div>
