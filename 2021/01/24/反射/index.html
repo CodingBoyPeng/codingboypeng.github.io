@@ -77,7 +77,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> 字数统计:</span>
-            <span class="post-count">498</span>
+            <span class="post-count">794</span>
         </span>
     </span>
 
@@ -86,107 +86,32 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> 阅读时长≈</span>
-            <span class="post-count">2 分钟</span>
+            <span class="post-count">3 分钟</span>
         </span>
     </span>
 </div>
  
     </div>
       
+    <div class="tocbot"></div>
+
 
 
 
   
     <div class="article-entry" itemprop="articleBody">
        
-  <p>package com.pf.springboot.test;</p>
-<p>import com.pf.springboot.entity.Company;<br>import com.pf.springboot.entity.ObjectDetail;<br>import com.pf.springboot.entity.People;</p>
-<p>import java.lang.reflect.Constructor;<br>import java.lang.reflect.Field;<br>import java.lang.reflect.InvocationTargetException;<br>import java.lang.reflect.Method;<br>import java.lang.reflect.Modifier;<br>import java.math.BigDecimal;<br>import java.util.ArrayList;<br>import java.util.Arrays;<br>import java.util.Date;<br>import java.util.List;<br>import java.util.stream.Collectors;</p>
-<p>/**</p>
-<ul>
-<li>@description:</li>
-<li>@author:Peng</li>
-<li>@Date:2021/1/15</li>
-<li>/<br>public class ReflectTest {<br>  // java 反射 api<br>  public static void main(String[] args) {<pre><code>  Company company = new Company(1,&quot;黄小龙&quot;, 50, new Date(), BigDecimal.ONE);
-  List&lt;?&gt; list = getClassField(company);
-  // 对象拥有的属性
-  // System.out.println(list.toString());
-  // 对象所有方法
-  // echoAllMethods(people);
-  // 反射执行指定方法
-  invokeMethod(company, &quot;echoCompanyDetail&quot;);</code></pre>
-  }</li>
-</ul>
-<pre><code>/**
- *
- * 利用反射获取所传的类属性列表（包括私有、共有等）
- * @param obj 任意对象
- * @param &lt;?&gt; 泛型对象
- * @return
- */
-private static List&lt;?&gt; getClassField(Object obj) &#123;
-    // 获取
-    Class&lt;?&gt; clazz = obj.getClass();
-    // 所有属性
-    Field[] fields = clazz.getDeclaredFields();
+  <h1 id="反射"><a href="#反射" class="headerlink" title="反射"></a>反射</h1><p>什么是反射？就是一个逆向调用的过程。在java中，我们通常通过一个已知类对象去调用其方法或属性，这是正向过程。那么对于一个未知类对象，我们如何去调用其属性和方法呢，这时我们就可以通过反射去获取对象的class，调用其方法去获取对象的属性或执行目标对象的方法。</p>
+<p><code>测试Company类</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.pf.springboot.entity;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.math.BigDecimal;</span><br><span class="line"><span class="keyword">import</span> java.text.SimpleDateFormat;</span><br><span class="line"><span class="keyword">import</span> java.util.Date;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@description</span>: 公司实体</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Date</span>:2021/1/15</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Company</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> Integer id;</span><br><span class="line">    <span class="keyword">private</span> String bossName;</span><br><span class="line">    <span class="keyword">private</span> Integer size;</span><br><span class="line">    <span class="keyword">private</span> Date createTime;</span><br><span class="line">    <span class="keyword">private</span> BigDecimal registerMoney;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Company</span><span class="params">(Integer id, String bossName, Integer size, Date createTime, BigDecimal registerMoney)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.id = id;</span><br><span class="line">        <span class="keyword">this</span>.bossName = bossName;</span><br><span class="line">        <span class="keyword">this</span>.size = size;</span><br><span class="line">        <span class="keyword">this</span>.createTime = createTime;</span><br><span class="line">        <span class="keyword">this</span>.registerMoney = registerMoney;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">		<span class="comment">// 省略get,set方法</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">echoCompanyDetail</span><span class="params">(String bossName, Integer size, Date createTime, BigDecimal registerMoney)</span> </span>&#123;</span><br><span class="line">        SimpleDateFormat format = <span class="keyword">new</span> SimpleDateFormat(<span class="string">&quot;yyyy-MM-dd&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;(●&#x27;◡&#x27;●)ﾉ【pic】(●&#x27;◡&#x27;●)ﾉ【pic】(●&#x27;◡&#x27;●)ﾉ【pic】 \n 这哩呀》》》&quot;</span> +</span><br><span class="line">                <span class="string">&quot;公司老板名称: &quot;</span> + bossName + <span class="string">&quot;\n&quot;</span> +</span><br><span class="line">                <span class="string">&quot;规模: &quot;</span> + size + <span class="string">&quot;\n&quot;</span> +</span><br><span class="line">                <span class="string">&quot;创立时间: &quot;</span> + format.format(createTime) + <span class="string">&quot;\n&quot;</span> +</span><br><span class="line">                <span class="string">&quot;注册资金: &quot;</span> + registerMoney + <span class="string">&quot;\n￣□￣｜｜&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-    List&lt;String&gt; list = new ArrayList&lt;&gt;();
-    Arrays.stream(fields).forEach(field -&gt; &#123;
-        // 设置是否允许访问
-        field.setAccessible(true);
-        String fieldStr = null;
-        try &#123;
-            fieldStr = &quot;属性: &quot; +
-                    field.getName() +
-                    &quot; = &quot; +
-                    field.get(obj) +
-                    &quot;, 访问修饰符: &quot; +
-                    Modifier.toString(field.getModifiers()) +
-                    &quot;, 参数类型: &quot; +
-                    field.getType();
-        &#125; catch (IllegalAccessException e) &#123;
-            e.printStackTrace();
-        &#125;
-        list.add(fieldStr + &quot;\n&quot;);
-    &#125;);
-    return list;
-&#125;;
+<p><code>测试类</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.pf.springboot.test;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.pf.springboot.entity.Company;</span><br><span class="line"><span class="keyword">import</span> com.pf.springboot.entity.ObjectDetail;</span><br><span class="line"><span class="keyword">import</span> com.pf.springboot.entity.People;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Constructor;</span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Field;</span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.InvocationTargetException;</span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Method;</span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Modifier;</span><br><span class="line"><span class="keyword">import</span> java.math.BigDecimal;</span><br><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.Arrays;</span><br><span class="line"><span class="keyword">import</span> java.util.Date;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"><span class="keyword">import</span> java.util.stream.Collectors;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@description</span>:</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span>:Peng</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Date</span>:2021/1/15</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ReflectTest</span> </span>&#123;</span><br><span class="line">    <span class="comment">// java 反射 api</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Company company = <span class="keyword">new</span> Company(<span class="number">1</span>,<span class="string">&quot;黄小龙&quot;</span>, <span class="number">50</span>, <span class="keyword">new</span> Date(), BigDecimal.ONE);</span><br><span class="line">        List&lt;?&gt; list = getClassField(company);</span><br><span class="line">        <span class="comment">// 对象拥有的属性</span></span><br><span class="line">        <span class="comment">// System.out.println(list.toString());</span></span><br><span class="line">        <span class="comment">// 对象所有方法</span></span><br><span class="line">        <span class="comment">// echoAllMethods(people);</span></span><br><span class="line">        <span class="comment">// 反射执行指定方法</span></span><br><span class="line">        invokeMethod(company, <span class="string">&quot;echoCompanyDetail&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * 利用反射获取所传的类属性列表（包括私有、共有等）</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> obj 任意对象</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> &lt;?&gt; 泛型对象</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> List&lt;?&gt; getClassField(Object obj) &#123;</span><br><span class="line">        <span class="comment">// 获取</span></span><br><span class="line">        Class&lt;?&gt; clazz = obj.getClass();</span><br><span class="line">        <span class="comment">// 所有属性</span></span><br><span class="line">        Field[] fields = clazz.getDeclaredFields();</span><br><span class="line"></span><br><span class="line">        List&lt;String&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        Arrays.stream(fields).forEach(field -&gt; &#123;</span><br><span class="line">            <span class="comment">// 设置是否允许访问</span></span><br><span class="line">            field.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">            String fieldStr = <span class="keyword">null</span>;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                fieldStr = <span class="string">&quot;属性: &quot;</span> +</span><br><span class="line">                        field.getName() +</span><br><span class="line">                        <span class="string">&quot; = &quot;</span> +</span><br><span class="line">                        field.get(obj) +</span><br><span class="line">                        <span class="string">&quot;, 访问修饰符: &quot;</span> +</span><br><span class="line">                        Modifier.toString(field.getModifiers()) +</span><br><span class="line">                        <span class="string">&quot;, 参数类型: &quot;</span> +</span><br><span class="line">                        field.getType();</span><br><span class="line">            &#125; <span class="keyword">catch</span> (IllegalAccessException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">            list.add(fieldStr + <span class="string">&quot;\n&quot;</span>);</span><br><span class="line">        &#125;);</span><br><span class="line">        <span class="keyword">return</span> list;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 打印所拿到反射类中的所有公有，私有，保护，默认方法；但不包括父类的方法</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> obj</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">echoAllMethods</span><span class="params">(Object obj)</span> </span>&#123;</span><br><span class="line">        Class&lt;?&gt; clazz = obj.getClass();</span><br><span class="line">        <span class="comment">// 拿到反射类中所有的公有方法（包括父类）</span></span><br><span class="line">        <span class="comment">// Method[] methods = clazz.getMethods();</span></span><br><span class="line">        <span class="comment">//  拿到反射类中的所有公有，私有，保护，默认方法；但不包括父类的方法</span></span><br><span class="line">        Method[] methods = clazz.getDeclaredMethods();</span><br><span class="line">        <span class="keyword">for</span> (Method method : methods) &#123;</span><br><span class="line">            String name = method.getName();</span><br><span class="line">            System.out.println(name);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 通过反射 invoke方法</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> obj</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">invokeMethod</span><span class="params">(Object obj, String methodName)</span> </span>&#123;</span><br><span class="line">        Class&lt;?&gt; clazz = obj.getClass();</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Method method = clazz.getMethod(methodName, String.class, Integer.class, Date.class, BigDecimal.class);</span><br><span class="line">            String result = (String) method.invoke(obj, <span class="string">&quot;李天刚&quot;</span>, <span class="number">1</span>, <span class="keyword">new</span> Date(), BigDecimal.valueOf(<span class="number">3</span>));</span><br><span class="line">            System.out.println(result);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (NoSuchMethodException e) &#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;在当前类中没有找到找到指定方法: &quot;</span> + methodName);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IllegalAccessException | InvocationTargetException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-
-/**
- * 打印所拿到反射类中的所有公有，私有，保护，默认方法；但不包括父类的方法
- * @param obj
- */
-public static void echoAllMethods(Object obj) &#123;
-    Class&lt;?&gt; clazz = obj.getClass();
-    // 拿到反射类中所有的公有方法（包括父类）
-    // Method[] methods = clazz.getMethods();
-    //  拿到反射类中的所有公有，私有，保护，默认方法；但不包括父类的方法
-    Method[] methods = clazz.getDeclaredMethods();
-    for (Method method : methods) &#123;
-        String name = method.getName();
-        System.out.println(name);
-    &#125;
-&#125;
-
-
-/**
- * 通过反射 invoke方法
- * @param obj
- */
-public static void invokeMethod(Object obj, String methodName) &#123;
-    Class&lt;?&gt; clazz = obj.getClass();
-    try &#123;
-        Method method = clazz.getMethod(methodName, String.class, Integer.class, Date.class, BigDecimal.class);
-        String result = (String) method.invoke(obj, &quot;李天刚&quot;, 1, new Date(), BigDecimal.valueOf(3));
-        System.out.println(result);
-    &#125; catch (NoSuchMethodException e) &#123;
-        System.out.println(&quot;在当前类中没有找到找到指定方法: &quot; + methodName);
-    &#125; catch (IllegalAccessException | InvocationTargetException e) &#123;
-        e.printStackTrace();
-    &#125;
-&#125;</code></pre>
-<p>}</p>
+<p><code>效果展示</code></p>
+<p><img src="/2021/01/24/%E5%8F%8D%E5%B0%84/image-20210124213011090.png" alt="image-20210124213011090"></p>
+<p><code>属性-值列表</code>:</p>
+<p><img src="/2021/01/24/%E5%8F%8D%E5%B0%84/image-20210124213103575.png" alt="image-20210124213103575"></p>
  
       <!-- reward -->
       
