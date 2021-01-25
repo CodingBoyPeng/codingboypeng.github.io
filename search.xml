@@ -27,6 +27,7 @@
     <title>回顾2020</title>
     <url>/2021/01/15/%E5%9B%9E%E9%A1%BE2020/</url>
     <content><![CDATA[<p>2020已经过去， 但回想起来经历的事，遇见的人都在脑海中一一浮现。</p>
+<a id="more"></a>
 <p>2020说起来是艰难的一年，也是‘幸运’的一年，艰难的是年初疫情让我无法正常工作，人生的第一份实习工作也就因此结束了。辞退给我的信心大打折扣 <code>第一份工作被辞退的确很难受</code>，被辞退的我并没有选择再去深圳找工作，而是选择了等接下来3、4月的春招。</p>
 <p>​    接下来的两个月里，忙着巩固<code>java</code>基础，其他时间用来陪陪爷爷奶奶。所以说2020对于我来说也是幸运的一年，即将宣告毕业的我可以好好利用学生旅途中最后一个来陪陪家人，如今的我已经23岁了，是该工作的年纪了意味着我没有时间陪家人了，所以我也很<code>感谢2020</code>。</p>
 <p>​    话说回来，春招后我总共拿到的4家offer, 一家是南昌的，其他分别是广州，深圳，上海。<code>乡下的孩子还是很渴望去一线城市的</code>广州给的稍微低点<code>7.5K</code>并没有达到我期望薪资，<code>深圳</code>的<code>8k</code>但是需要大小周，最后我选择了<code>魔都</code>,一家相对于来说’比较好’的所谓8.5k的上海offer, 顺道感受一下魔都的魅力。</p>
@@ -59,6 +60,7 @@
     <url>/2021/01/05/CentOS%E6%89%8B%E5%8A%A8%E6%9B%B4%E6%96%B0gcc/</url>
     <content><![CDATA[<h1 id="CentOS手动更新gcc"><a href="#CentOS手动更新gcc" class="headerlink" title="CentOS手动更新gcc"></a>CentOS手动更新gcc</h1><p>不久前在阿里云服务买了台服务器，急忙的装了jdk，mysql……</p>
 <p>步入正题，<code>centos7</code>默认的gcc版本是<code>4.8</code>，<code>仅支持c++11</code>，更高版本需要自行手动升级，所以想给它升级一下。。。哪想会有这么多坑！！！</p>
+<a id="more"></a>
 <p><img src="/2021/01/05/CentOS%E6%89%8B%E5%8A%A8%E6%9B%B4%E6%96%B0gcc/image-20210105141953681.png" alt="image-20210105141953681"></p>
 <h4 id="1-手动升级，需要去下载对应的tar包，放到linux环境中进行解压"><a href="#1-手动升级，需要去下载对应的tar包，放到linux环境中进行解压" class="headerlink" title="1.手动升级，需要去下载对应的tar包，放到linux环境中进行解压"></a>1.手动升级，需要去下载对应的tar包，放到linux环境中进行解压</h4><p>可以在<a href="https://ftp.gnu.org/gnu/gcc/">gcc版本库</a>中下载所需版本，这里我下载的是9.2版本，下载完成后放到服务器上解压。</p>
 <p><img src="/2021/01/05/CentOS%E6%89%8B%E5%8A%A8%E6%9B%B4%E6%96%B0gcc/image-20210105142725271.png" alt="image-20210105142725271"></p>
@@ -139,6 +141,7 @@
     <title>jquery元素绑定事件失效的原因</title>
     <url>/2020/12/24/jquery%E5%85%83%E7%B4%A0%E7%BB%91%E5%AE%9A%E4%BA%8B%E4%BB%B6%E5%A4%B1%E6%95%88%E7%9A%84%E5%8E%9F%E5%9B%A0/</url>
     <content><![CDATA[<p>今天开发过程中在给页面初始化设置的适合遇见了绑定事件无效的问题，特此总结下。以往给指定元素绑定事件是因为id或class是经过渲染后的，是动态的，才导致页面<code>定位出错</code>。这次并不是<code>定位出错</code>，而是<code>有效</code>的（我手动在浏览器里执行了）</p>
+<a id="more"></a>
 <figure class="highlight html"><table><tr><td class="code"><pre><span class="line">// 请求ajax，进行页面的intput二级联动</span><br><span class="line">initAdvSourceType(&quot;$&#123;advSourceType&#125;&quot;);</span><br><span class="line">// 给渲染出来标签赋初始值</span><br><span class="line">echoData();</span><br></pre></td></tr></table></figure>
 
 <p>select二级联动<br><img src="/2020/12/24/jquery%E5%85%83%E7%B4%A0%E7%BB%91%E5%AE%9A%E4%BA%8B%E4%BB%B6%E5%A4%B1%E6%95%88%E7%9A%84%E5%8E%9F%E5%9B%A0/image-20201224234414431.png" alt="image-20201224234414431"><br>给渲染的标签赋值<br><img src="/2020/12/24/jquery%E5%85%83%E7%B4%A0%E7%BB%91%E5%AE%9A%E4%BA%8B%E4%BB%B6%E5%A4%B1%E6%95%88%E7%9A%84%E5%8E%9F%E5%9B%A0/image-20201224234459006.png" alt="image-20201224234459006"><br>手动执行一下，居然成功了。到这里说明并不是定位不到元素，仔细想想可能是在ajax还没有执行完毕（<code>ajax是异步</code>）就已经执行了该<code>标签赋值</code>方法。因为ajax是异步的，会另起一个线程去执行接下来的代码。<br><img src="/2020/12/24/jquery%E5%85%83%E7%B4%A0%E7%BB%91%E5%AE%9A%E4%BA%8B%E4%BB%B6%E5%A4%B1%E6%95%88%E7%9A%84%E5%8E%9F%E5%9B%A0/image-20201224235045884.png" alt="image-20201224235045884"><br>分析好原因后，所以我们要解决的就是想办法让操作同步，所以我们可以在ajax拿到数据渲染后我们再进行赋值初始化操作<br><img src="/2020/12/24/jquery%E5%85%83%E7%B4%A0%E7%BB%91%E5%AE%9A%E4%BA%8B%E4%BB%B6%E5%A4%B1%E6%95%88%E7%9A%84%E5%8E%9F%E5%9B%A0/image-20201224235715203.png" alt="image-20201224235045884"></p>
@@ -155,6 +158,7 @@
     <title>多个class名相同时，jquery定位指定class</title>
     <url>/2020/12/24/%E5%A4%9A%E4%B8%AAclass%E5%90%8D%E7%9B%B8%E5%90%8C%E6%97%B6%EF%BC%8Cjquery%E5%AE%9A%E4%BD%8D%E6%8C%87%E5%AE%9Aclass/</url>
     <content><![CDATA[<p>本人在开发一个新页面的时候，需要给经过动态渲染后的多个input框赋不同的值。</p>
+<a id="more"></a>
 <figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span> = <span class="string">&quot;trackKey&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span> = <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span> = <span class="string">&quot;trackParam&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span> = <span class="string">&quot;trackKey&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span> = <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span> = <span class="string">&quot;trackParam&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span> = <span class="string">&quot;trackKey&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span> = <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span> = <span class="string">&quot;trackParam&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"> ……</span><br></pre></td></tr></table></figure>
 <p>这边有6个经过动态渲染生成的input框，且类名都为<code>trackKey</code>。现在需要给它们一一赋值，值列表取自后台，以下只演示示范代码</p>
 <figure class="highlight html"><table><tr><td class="code"><pre><span class="line">var trackParam = &#123;&quot;sub1&quot;:&quot;qaq&quot;, &quot;sub2&quot;: &quot;wow&quot;, &quot;sub3&quot;: &quot;qwq&quot;&#125;</span><br><span class="line"></span><br><span class="line">var i = 0;</span><br><span class="line">for (var key in trackParam) &#123;</span><br><span class="line">    // 遍历给trackParam input赋值</span><br><span class="line">    $(&quot;.trackKey&quot;).eq(i).val(key);</span><br><span class="line">    $(&quot;.trackValue&quot;).eq(i).val(trackParam[key]);</span><br><span class="line">    i = i + 1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -238,6 +242,7 @@
     <title>仨月的地球儿</title>
     <url>/2020/12/13/%E4%BB%A8%E6%9C%88%E7%9A%84%E5%9C%B0%E7%90%83%E5%84%BF/</url>
     <content><![CDATA[<h1 id="可爱的球球仨月了"><a href="#可爱的球球仨月了" class="headerlink" title="可爱的球球仨月了"></a>可爱的球球仨月了</h1><p>球已经到家已经一个月了，现在已经特别粘人了。。。每次回到家开门，她就在门口瞪着大眼睛对着我，然后一直粘着你的脚跟。</p>
+<a id="more"></a>
 <p><img src="/2020/12/13/%E4%BB%A8%E6%9C%88%E7%9A%84%E5%9C%B0%E7%90%83%E5%84%BF/image-20201213202113835.png" alt="image-20201213202113835"></p>
 <p>似乎在看我敲电脑。。。不屑你</p>
 <p><img src="/2020/12/13/%E4%BB%A8%E6%9C%88%E7%9A%84%E5%9C%B0%E7%90%83%E5%84%BF/image-20201213202144924.png" alt="image-20201213202144924"></p>
@@ -260,6 +265,7 @@
     <title>html中的attr和css区别</title>
     <url>/2020/12/13/html%E4%B8%AD%E7%9A%84attr%E5%92%8Ccss%E5%8C%BA%E5%88%AB/</url>
     <content><![CDATA[<p>本人再通过jquery给input标签添加visibility属性（保留网页物理空间）</p>
+<a id="more"></a>
 <figure class="highlight html"><table><tr><td class="code"><pre><span class="line">$.(&quot;#input&quot;).attr(&quot;visibility&quot;, &quot;none&quot;)</span><br></pre></td></tr></table></figure>
 
 <p>并没有生效。最终发现应该调用.css方法，如下</p>
@@ -280,6 +286,7 @@
     <url>/2020/12/01/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1Mongdb%E5%8A%A8%E6%80%81%E5%88%87%E6%8D%A2%E5%BA%93%E6%9F%A5%E8%AF%A2/</url>
     <content><![CDATA[<h1 id="记录一次Mongdb动态切换库查询"><a href="#记录一次Mongdb动态切换库查询" class="headerlink" title="记录一次Mongdb动态切换库查询"></a>记录一次Mongdb动态切换库查询</h1><p>最近因为mongdb从单库改成随日期递增的多库，所以现在需要将原本单个数据源改为根据每天日期动态读库。</p>
 <p>原版本是采用MongodbTemplate读取properties配置文件中mongo相关配置，网上找了不下20篇博文，却没有一篇有清晰解释的。</p>
+<a id="more"></a>
 <p>业务：ip超过三次发送邮件</p>
 <p>mongo：</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 原聚合查询是这样的 </span></span><br><span class="line">Aggregation aggregation = Aggregation.newAggregation(</span><br><span class="line"><span class="comment">// where匹配查询条件：affid, offerid,sourceid。</span></span><br><span class="line">Aggregation.match(</span><br><span class="line">    Criteria.where(<span class="string">&quot;aff_id&quot;</span>).is(affId.toString())</span><br><span class="line">            .and(<span class="string">&quot;offer_id&quot;</span>).is(offerId.toString())</span><br><span class="line">            .and(<span class="string">&quot;source_id&quot;</span>).is(originSourceId)),</span><br><span class="line"><span class="comment">// 通过ip进行分组，查询超过3条记录的ip</span></span><br><span class="line">Aggregation.group(<span class="string">&quot;ip&quot;</span>).count().as(<span class="string">&quot;ipCount&quot;</span>), Aggregation.match(Criteria.where(<span class="string">&quot;ipCount&quot;</span>).gt(<span class="number">3</span>)));</span><br><span class="line">AggregationResults&lt;Map&gt; ans = mongoTemplate.aggregate(aggregation, collectionName, Map.class);</span><br></pre></td></tr></table></figure>
@@ -302,6 +309,7 @@
     <title>千万级数据表优化</title>
     <url>/2020/12/01/%E5%8D%83%E4%B8%87%E7%BA%A7%E6%95%B0%E6%8D%AE%E8%A1%A8%E4%BC%98%E5%8C%96/</url>
     <content><![CDATA[<h1 id="千万级数据表优化"><a href="#千万级数据表优化" class="headerlink" title="千万级数据表优化"></a>千万级数据表优化</h1><p>最近因为工作量不大，向老大讨了一个活—优化SeverLog。公司项目的ServerLog查询功能太慢（数据量千万级别），这对一个毫无Sql实战经验的人来说有点难以着手，不知道从何处入手。</p>
+<a id="more"></a>
 <h3 id="1-找到执行Sql"><a href="#1-找到执行Sql" class="headerlink" title="1.找到执行Sql"></a>1.找到执行Sql</h3><p>sql如下：</p>
 <figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">  <span class="keyword">SELECT</span></span><br><span class="line"> sld.offer_id <span class="keyword">AS</span> offerId,</span><br><span class="line"> sld.date <span class="keyword">AS</span> dateTime,</span><br><span class="line"> oe.NAME <span class="keyword">AS</span> offerName,</span><br><span class="line"> ad.id <span class="keyword">AS</span> advertiserId,</span><br><span class="line"> ad.company <span class="keyword">AS</span> advertiserName,</span><br><span class="line"> af.company <span class="keyword">AS</span> affiliateName,</span><br><span class="line"> sld.aff_id <span class="keyword">AS</span> affiliateId,</span><br><span class="line"> sld.origin_source_id <span class="keyword">AS</span> originSourceId,</span><br><span class="line"> sld.new_source_id <span class="keyword">AS</span> newSourceId,</span><br><span class="line"> sld.action,</span><br><span class="line"> co.option_name <span class="keyword">AS</span> actionName,</span><br><span class="line"> sld.CODE,</span><br><span class="line"> con.option_name <span class="keyword">AS</span> codeName,</span><br><span class="line"> <span class="keyword">SUM</span>( sld.quantity ) <span class="keyword">AS</span> quantity </span><br><span class="line"><span class="keyword">FROM</span></span><br><span class="line"> server_log_daily sld</span><br><span class="line"> <span class="keyword">LEFT</span> <span class="keyword">JOIN</span> config_option co <span class="keyword">ON</span> co.option_value = sld.action </span><br><span class="line"> <span class="keyword">AND</span> co.group_id = <span class="number">38</span></span><br><span class="line"> <span class="keyword">LEFT</span> <span class="keyword">JOIN</span> config_option con <span class="keyword">ON</span> con.option_value = sld.CODE </span><br><span class="line"> <span class="keyword">AND</span> con.group_id = <span class="number">39</span></span><br><span class="line"> <span class="keyword">LEFT</span> <span class="keyword">JOIN</span> offer oe <span class="keyword">ON</span> oe.id = sld.offer_id</span><br><span class="line"> <span class="keyword">LEFT</span> <span class="keyword">JOIN</span> advertiser ad <span class="keyword">ON</span> ad.id = oe.advertiser_id</span><br><span class="line"> <span class="keyword">LEFT</span> <span class="keyword">JOIN</span> affiliate af <span class="keyword">ON</span> af.id = sld.aff_id </span><br><span class="line"><span class="keyword">WHERE</span></span><br><span class="line"> <span class="number">1</span> = <span class="number">1</span> </span><br><span class="line"> <span class="keyword">AND</span> sld.action = <span class="number">1</span></span><br><span class="line"> <span class="keyword">AND</span> sld.type = <span class="number">1</span>  </span><br><span class="line"> <span class="keyword">AND</span> sld.date &gt;= <span class="string">&#x27;2020-11-17&#x27;</span></span><br><span class="line"> <span class="keyword">AND</span> sld.date &lt;= <span class="string">&#x27;2020-11-19&#x27;</span> </span><br><span class="line"><span class="keyword">GROUP</span> <span class="keyword">BY</span></span><br><span class="line"> sld.date,</span><br><span class="line"> advertiserId,</span><br><span class="line"> affiliateId,</span><br><span class="line"> originSourceId,</span><br><span class="line"> newSourceId,</span><br><span class="line"> <span class="keyword">action</span>,</span><br><span class="line"> actionName,</span><br><span class="line"> CODE,</span><br><span class="line"> codeName,</span><br><span class="line"> offerId,</span><br><span class="line"> dateTime,</span><br><span class="line"> offerName </span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span></span><br><span class="line"> dateTime <span class="keyword">ASC</span></span><br><span class="line"><span class="keyword">limit</span> <span class="number">10</span></span><br></pre></td></tr></table></figure>
 
@@ -333,7 +341,9 @@
   <entry>
     <title>与地球的第一次相遇</title>
     <url>/2020/11/24/%E4%B8%8E%E5%9C%B0%E7%90%83%E7%9A%84%E7%AC%AC%E4%B8%80%E6%AC%A1%E7%9B%B8%E9%81%87/</url>
-    <content><![CDATA[<p>地球是一只英短银渐层猫咪，是我女朋友和我在她同事那买的一只只有2个月大的小猫咪。<br>十一月，是我与她的第一次见面，由于还不熟悉，她对我们还是心有芥蒂。<br>偷看她!!!<br><img src="/2020/11/24/%E4%B8%8E%E5%9C%B0%E7%90%83%E7%9A%84%E7%AC%AC%E4%B8%80%E6%AC%A1%E7%9B%B8%E9%81%87/1.png" alt="偷拍1"><br><img src="/2020/11/24/%E4%B8%8E%E5%9C%B0%E7%90%83%E7%9A%84%E7%AC%AC%E4%B8%80%E6%AC%A1%E7%9B%B8%E9%81%87/2.png" alt="偷拍2"><br>与她的晚餐：<br><img src="/2020/11/24/%E4%B8%8E%E5%9C%B0%E7%90%83%E7%9A%84%E7%AC%AC%E4%B8%80%E6%AC%A1%E7%9B%B8%E9%81%87/3.png" alt="晚饭"><br>我相信她会慢慢的向我们靠近的！</p>
+    <content><![CDATA[<p>地球是一只英短银渐层猫咪，是我女朋友和我在她同事那买的一只只有2个月大的小猫咪。<br>十一月，是我与她的第一次见面，由于还不熟悉，她对我们还是心有芥蒂。</p>
+<a id="more"></a>
+<p>偷看她!!!<br><img src="/2020/11/24/%E4%B8%8E%E5%9C%B0%E7%90%83%E7%9A%84%E7%AC%AC%E4%B8%80%E6%AC%A1%E7%9B%B8%E9%81%87/1.png" alt="偷拍1"><br><img src="/2020/11/24/%E4%B8%8E%E5%9C%B0%E7%90%83%E7%9A%84%E7%AC%AC%E4%B8%80%E6%AC%A1%E7%9B%B8%E9%81%87/2.png" alt="偷拍2"><br>与她的晚餐：<br><img src="/2020/11/24/%E4%B8%8E%E5%9C%B0%E7%90%83%E7%9A%84%E7%AC%AC%E4%B8%80%E6%AC%A1%E7%9B%B8%E9%81%87/3.png" alt="晚饭"><br>我相信她会慢慢的向我们靠近的！</p>
 ]]></content>
       <categories>
         <category>地球</category>

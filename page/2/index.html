@@ -172,11 +172,11 @@
       
     <div class="article-entry" itemprop="articleBody">
        
-  <p>今天开发过程中在给页面初始化设置的适合遇见了绑定事件无效的问题，特此总结下。以往给指定元素绑定事件是因为id或class是经过渲染后的，是动态的，才导致页面<code>定位出错</code>。这次并不是<code>定位出错</code>，而是<code>有效</code>的（我手动在浏览器里执行了）</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// 请求ajax，进行页面的intput二级联动</span><br><span class="line">initAdvSourceType(&quot;$&#123;advSourceType&#125;&quot;);</span><br><span class="line">// 给渲染出来标签赋初始值</span><br><span class="line">echoData();</span><br></pre></td></tr></table></figure>
-
-<p>select二级联动<br><img src="/2020/12/24/jquery%E5%85%83%E7%B4%A0%E7%BB%91%E5%AE%9A%E4%BA%8B%E4%BB%B6%E5%A4%B1%E6%95%88%E7%9A%84%E5%8E%9F%E5%9B%A0/image-20201224234414431.png" alt="image-20201224234414431"><br>给渲染的标签赋值<br><img src="/2020/12/24/jquery%E5%85%83%E7%B4%A0%E7%BB%91%E5%AE%9A%E4%BA%8B%E4%BB%B6%E5%A4%B1%E6%95%88%E7%9A%84%E5%8E%9F%E5%9B%A0/image-20201224234459006.png" alt="image-20201224234459006"><br>手动执行一下，居然成功了。到这里说明并不是定位不到元素，仔细想想可能是在ajax还没有执行完毕（<code>ajax是异步</code>）就已经执行了该<code>标签赋值</code>方法。因为ajax是异步的，会另起一个线程去执行接下来的代码。<br><img src="/2020/12/24/jquery%E5%85%83%E7%B4%A0%E7%BB%91%E5%AE%9A%E4%BA%8B%E4%BB%B6%E5%A4%B1%E6%95%88%E7%9A%84%E5%8E%9F%E5%9B%A0/image-20201224235045884.png" alt="image-20201224235045884"><br>分析好原因后，所以我们要解决的就是想办法让操作同步，所以我们可以在ajax拿到数据渲染后我们再进行赋值初始化操作<br><img src="/2020/12/24/jquery%E5%85%83%E7%B4%A0%E7%BB%91%E5%AE%9A%E4%BA%8B%E4%BB%B6%E5%A4%B1%E6%95%88%E7%9A%84%E5%8E%9F%E5%9B%A0/image-20201224235715203.png" alt="image-20201224235045884"></p>
- 
+  <p>今天开发过程中在给页面初始化设置的适合遇见了绑定事件无效的问题，特此总结下。以往给指定元素绑定事件是因为id或class是经过渲染后的，是动态的，才导致页面<code>定位出错</code>。这次并不是<code>定位出错</code>，而是<code>有效</code>的（我手动在浏览器里执行了）</p> 
+      <a class="article-more-link" href="/2020/12/24/jquery%E5%85%83%E7%B4%A0%E7%BB%91%E5%AE%9A%E4%BA%8B%E4%BB%B6%E5%A4%B1%E6%95%88%E7%9A%84%E5%8E%9F%E5%9B%A0/"
+        >阅读更多...</a
+      >
+       
       <!-- reward -->
       
     </div>
@@ -227,14 +227,11 @@
       
     <div class="article-entry" itemprop="articleBody">
        
-  <p>本人在开发一个新页面的时候，需要给经过动态渲染后的多个input框赋不同的值。</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span> = <span class="string">&quot;trackKey&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span> = <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span> = <span class="string">&quot;trackParam&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span> = <span class="string">&quot;trackKey&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span> = <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span> = <span class="string">&quot;trackParam&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span> = <span class="string">&quot;trackKey&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span> = <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span> = <span class="string">&quot;trackParam&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"> ……</span><br></pre></td></tr></table></figure>
-<p>这边有6个经过动态渲染生成的input框，且类名都为<code>trackKey</code>。现在需要给它们一一赋值，值列表取自后台，以下只演示示范代码</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">var trackParam = &#123;&quot;sub1&quot;:&quot;qaq&quot;, &quot;sub2&quot;: &quot;wow&quot;, &quot;sub3&quot;: &quot;qwq&quot;&#125;</span><br><span class="line"></span><br><span class="line">var i = 0;</span><br><span class="line">for (var key in trackParam) &#123;</span><br><span class="line">    // 遍历给trackParam input赋值</span><br><span class="line">    $(&quot;.trackKey&quot;).eq(i).val(key);</span><br><span class="line">    $(&quot;.trackValue&quot;).eq(i).val(trackParam[key]);</span><br><span class="line">    i = i + 1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>当然，如果你只是单纯想为某个下拉框赋值，我们可以这样写：</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">// 第4个trackKey</span><br><span class="line">$(&#x27;.trackKey&#x27;).eq(4);</span><br><span class="line">// 倒数第二个trackKey</span><br><span class="line">$(&#x27;.trackKey&#x27;).eq(-2);</span><br><span class="line">// 最后一个trackKey</span><br><span class="line">$(&#x27;.trackKey&#x27;).last();</span><br></pre></td></tr></table></figure>
- 
+  <p>本人在开发一个新页面的时候，需要给经过动态渲染后的多个input框赋不同的值。</p> 
+      <a class="article-more-link" href="/2020/12/24/%E5%A4%9A%E4%B8%AAclass%E5%90%8D%E7%9B%B8%E5%90%8C%E6%97%B6%EF%BC%8Cjquery%E5%AE%9A%E4%BD%8D%E6%8C%87%E5%AE%9Aclass/"
+        >阅读更多...</a
+      >
+       
       <!-- reward -->
       
     </div>

@@ -100,6 +100,7 @@
     <div class="article-entry" itemprop="articleBody">
        
   <p>本人再通过jquery给input标签添加visibility属性（保留网页物理空间）</p>
+<a id="more"></a>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$.(&quot;#input&quot;).attr(&quot;visibility&quot;, &quot;none&quot;)</span><br></pre></td></tr></table></figure>
 
 <p>并没有生效。最终发现应该调用.css方法，如下</p>
