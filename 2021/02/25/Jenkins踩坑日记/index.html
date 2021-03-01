@@ -9,7 +9,7 @@
     
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <title>
-     地球之家
+    Jenkins踩坑日记 |  地球之家
   </title>
   <meta name="generator" content="hexo-theme-ayer">
   
@@ -45,335 +45,156 @@
         style="position: fixed; left: 0px; top: 0px; z-index: 99999; pointer-events: none;"></canvas>
       
     <main class="content on">
-      
-<section class="cover">
+      <section class="outer">
+  <article
+  id="post-Jenkins踩坑日记"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
     
-  <div class="cover-frame">
-    <div class="bg-box">
-      <img src="/images/cover5.jpg" alt="image frame" />
-    </div>
-    <div class="cover-inner text-center text-white">
-      <h1><a href="/">地球之家</a></h1>
-      <div id="subtitle-box">
-        
-        <span id="subtitle"></span>
-        
-      </div>
-      <div>
-        
-      </div>
-    </div>
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  Jenkins踩坑日记
+</h1>
+ 
+
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2021/02/25/Jenkins%E8%B8%A9%E5%9D%91%E6%97%A5%E8%AE%B0/" class="article-date">
+  <time datetime="2021-02-25T06:22:38.000Z" itemprop="datePublished">2021-02-25</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BF%90%E7%BB%B4/">运维</a> / <a class="article-category-link" href="/categories/%E8%BF%90%E7%BB%B4/%E8%87%AA%E5%8A%A8%E5%8C%96/">自动化</a>
   </div>
-  <div class="cover-learn-more">
-    <a href="javascript:void(0)" class="anchor"><i class="ri-arrow-down-line"></i></a>
-  </div>
-</section>
-
-
-
-<script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js"></script>
-
-
-<!-- Subtitle -->
-
-  <script>
-    try {
-      var typed = new Typed("#subtitle", {
-        strings: ['面朝大海，春暖花开', '愿你一生努力，一生被爱', '想要的都拥有，得不到的都释怀'],
-        startDelay: 0,
-        typeSpeed: 200,
-        loop: true,
-        backSpeed: 100,
-        showCursor: true
-      });
-    } catch (err) {
-      console.log(err)
-    }
-  </script>
   
-<div id="main">
-  <section class="outer">
-  
-  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">100</span>
+        </span>
+    </span>
 
-<div class="notice" style="margin-top:50px">
-    <i class="ri-heart-fill"></i>
-    <div class="notice-content" id="broad"></div>
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">1 分钟</span>
+        </span>
+    </span>
 </div>
-<script type="text/javascript">
-    fetch('https://v1.hitokoto.cn')
-        .then(response => response.json())
-        .then(data => {
-            document.getElementById("broad").innerHTML = data.hitokoto;
-        })
-        .catch(console.error)
-</script>
-
-<style>
-    .notice {
-        padding: 20px;
-        border: 1px dashed #e6e6e6;
-        color: #969696;
-        position: relative;
-        display: inline-block;
-        width: 100%;
-        background: #fbfbfb50;
-        border-radius: 10px;
-    }
-
-    .notice i {
-        float: left;
-        color: #999;
-        font-size: 16px;
-        padding-right: 10px;
-        vertical-align: middle;
-        margin-top: -2px;
-    }
-
-    .notice-content {
-        display: initial;
-        vertical-align: middle;
-    }
-</style>
-  
-  <article class="articles">
-    
-    
-    
-    
-    <article
-  id="post-仨月的地球儿"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2020/12/13/%E4%BB%A8%E6%9C%88%E7%9A%84%E5%9C%B0%E7%90%83%E5%84%BF/"
-    >仨月的地球儿</a> 
-</h2>
  
-
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2020/12/13/%E4%BB%A8%E6%9C%88%E7%9A%84%E5%9C%B0%E7%90%83%E5%84%BF/" class="article-date">
-  <time datetime="2020-12-13T12:23:38.000Z" itemprop="datePublished">2020-12-13</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E5%9C%B0%E7%90%83/">地球</a> / <a class="article-category-link" href="/categories/%E5%9C%B0%E7%90%83/%E7%8C%AB%E5%92%AA/">猫咪</a>
-  </div>
-   
     </div>
       
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h1 id="可爱的球球仨月了"><a href="#可爱的球球仨月了" class="headerlink" title="可爱的球球仨月了"></a>可爱的球球仨月了</h1><p>球已经到家已经一个月了，现在已经特别粘人了。。。每次回到家开门，她就在门口瞪着大眼睛对着我，然后一直粘着你的脚跟。</p> 
-      <a class="article-more-link" href="/2020/12/13/%E4%BB%A8%E6%9C%88%E7%9A%84%E5%9C%B0%E7%90%83%E5%84%BF/"
-        >阅读更多...</a
-      >
-       
-      <!-- reward -->
-      
-    </div>
-    
 
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%9C%B0%E7%90%83/" rel="tag">地球</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%AE%A0%E7%89%A9/" rel="tag">宠物</a></li></ul>
 
-    </footer>
-  </div>
-
-   
-   
-</article>
-
-    
-    <article
-  id="post-html中的attr和css区别"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2020/12/13/html%E4%B8%AD%E7%9A%84attr%E5%92%8Ccss%E5%8C%BA%E5%88%AB/"
-    >html中的attr和css区别</a> 
-</h2>
- 
-
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2020/12/13/html%E4%B8%AD%E7%9A%84attr%E5%92%8Ccss%E5%8C%BA%E5%88%AB/" class="article-date">
-  <time datetime="2020-12-13T05:58:13.000Z" itemprop="datePublished">2020-12-13</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>本人再通过jquery给input标签添加visibility属性（保留网页物理空间）</p> 
-      <a class="article-more-link" href="/2020/12/13/html%E4%B8%AD%E7%9A%84attr%E5%92%8Ccss%E5%8C%BA%E5%88%AB/"
-        >阅读更多...</a
-      >
-       
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jquery/" rel="tag">jquery</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-   
-</article>
-
-    
-    <article
-  id="post-记录一次Mongdb动态切换库查询"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2020/12/01/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1Mongdb%E5%8A%A8%E6%80%81%E5%88%87%E6%8D%A2%E5%BA%93%E6%9F%A5%E8%AF%A2/"
-    >记录一次Mongdb动态切换库查询</a> 
-</h2>
- 
-
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2020/12/01/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1Mongdb%E5%8A%A8%E6%80%81%E5%88%87%E6%8D%A2%E5%BA%93%E6%9F%A5%E8%AF%A2/" class="article-date">
-  <time datetime="2020-12-01T09:48:31.000Z" itemprop="datePublished">2020-12-01</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h1 id="记录一次Mongdb动态切换库查询"><a href="#记录一次Mongdb动态切换库查询" class="headerlink" title="记录一次Mongdb动态切换库查询"></a>记录一次Mongdb动态切换库查询</h1><p>最近因为mongdb从单库改成随日期递增的多库，所以现在需要将原本单个数据源改为根据每天日期动态读库。</p>
-<p>原版本是采用MongodbTemplate读取properties配置文件中mongo相关配置，网上找了不下20篇博文，却没有一篇有清晰解释的。</p> 
-      <a class="article-more-link" href="/2020/12/01/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1Mongdb%E5%8A%A8%E6%80%81%E5%88%87%E6%8D%A2%E5%BA%93%E6%9F%A5%E8%AF%A2/"
-        >阅读更多...</a
-      >
-       
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mongo/" rel="tag">mongo</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-   
-</article>
-
-    
-    <article
-  id="post-千万级数据表优化"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2020/12/01/%E5%8D%83%E4%B8%87%E7%BA%A7%E6%95%B0%E6%8D%AE%E8%A1%A8%E4%BC%98%E5%8C%96/"
-    >千万级数据表优化</a> 
-</h2>
- 
-
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2020/12/01/%E5%8D%83%E4%B8%87%E7%BA%A7%E6%95%B0%E6%8D%AE%E8%A1%A8%E4%BC%98%E5%8C%96/" class="article-date">
-  <time datetime="2020-12-01T09:42:54.000Z" itemprop="datePublished">2020-12-01</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h1 id="千万级数据表优化"><a href="#千万级数据表优化" class="headerlink" title="千万级数据表优化"></a>千万级数据表优化</h1><p>最近因为工作量不大，向老大讨了一个活—优化SeverLog。公司项目的ServerLog查询功能太慢（数据量千万级别），这对一个毫无Sql实战经验的人来说有点难以着手，不知道从何处入手。</p> 
-      <a class="article-more-link" href="/2020/12/01/%E5%8D%83%E4%B8%87%E7%BA%A7%E6%95%B0%E6%8D%AE%E8%A1%A8%E4%BC%98%E5%8C%96/"
-        >阅读更多...</a
-      >
-       
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mysql/" rel="tag">mysql</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-   
-</article>
-
-    
-  </article>
-  
 
   
-  <nav class="page-nav">
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>在jenkins使用<code>Publish over SSH</code>插件时，可谓时踩到了一个不小的坑，记录一下。。。</p>
+<p>1.首先，在服务器上使用<code>ssh-keygen</code>生成一对密钥对。</p>
+<p><img src="/2021/02/25/Jenkins%E8%B8%A9%E5%9D%91%E6%97%A5%E8%AE%B0/image-20210224235449847.png" alt="image-20210224235449847"></p>
+<p>2.通过<code>cat  /root/.ssh/id_rsa文件</code>，将打印内容复制输入到key中。<code>这里一定要带上begin key --- end key, 否则会Can&#39;t connect to server </code></p>
+<p><img src="/2021/02/25/Jenkins%E8%B8%A9%E5%9D%91%E6%97%A5%E8%AE%B0/image-20210224235858659.png" alt="image-20210224235858659"></p>
+<p>3.点击<code>Test Configuration</code>，出现<code>success</code>，证明配置成功了。</p>
+ 
+      <!-- reward -->
+      
+    </div>
     
-    <a class="extend prev" rel="prev" href="/page/3/">上一页</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/5/">下一页</a>
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>版权声明： </strong>
+          
+          本博客所有文章除特别声明外，著作权归作者所有。转载请注明出处！
+          
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://www.codingboypeng.tech/2021/02/25/Jenkins%E8%B8%A9%E5%9D%91%E6%97%A5%E8%AE%B0/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>  
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jenkins/" rel="tag">jenkins</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+    
+      <a href="/2021/02/09/%E5%9C%A8jenkins%E5%B9%B3%E5%8F%B0%E9%83%A8%E7%BD%B2%E9%A1%B9%E7%9B%AE/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">在jenkins平台部署项目</div>
+      </a>
+    
   </nav>
-  
-</section>
-</div>
 
+  
+     
+</article>
+
+</section>
       <footer class="footer">
   <div class="outer">
     <ul>
@@ -517,6 +338,23 @@
 <script src="/js/lazyload.min.js"></script>
 
 <!-- Tocbot -->
+
+
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  tocbot.init({
+    tocSelector: '.tocbot',
+    contentSelector: '.article-entry',
+    headingSelector: 'h1, h2, h3, h4, h5, h6',
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: 'main',
+    positionFixedSelector: '.tocbot',
+    positionFixedClass: 'is-position-fixed',
+    fixedSidebarOffset: 'auto'
+  });
+</script>
 
 <script src="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.css">

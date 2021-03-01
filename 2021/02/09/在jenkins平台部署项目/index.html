@@ -9,7 +9,7 @@
     
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <title>
-     地球之家
+    在jenkins平台部署项目 |  地球之家
   </title>
   <meta name="generator" content="hexo-theme-ayer">
   
@@ -45,160 +45,8 @@
         style="position: fixed; left: 0px; top: 0px; z-index: 99999; pointer-events: none;"></canvas>
       
     <main class="content on">
-      
-<section class="cover">
-    
-  <div class="cover-frame">
-    <div class="bg-box">
-      <img src="/images/cover5.jpg" alt="image frame" />
-    </div>
-    <div class="cover-inner text-center text-white">
-      <h1><a href="/">地球之家</a></h1>
-      <div id="subtitle-box">
-        
-        <span id="subtitle"></span>
-        
-      </div>
-      <div>
-        
-      </div>
-    </div>
-  </div>
-  <div class="cover-learn-more">
-    <a href="javascript:void(0)" class="anchor"><i class="ri-arrow-down-line"></i></a>
-  </div>
-</section>
-
-
-
-<script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js"></script>
-
-
-<!-- Subtitle -->
-
-  <script>
-    try {
-      var typed = new Typed("#subtitle", {
-        strings: ['面朝大海，春暖花开', '愿你一生努力，一生被爱', '想要的都拥有，得不到的都释怀'],
-        startDelay: 0,
-        typeSpeed: 200,
-        loop: true,
-        backSpeed: 100,
-        showCursor: true
-      });
-    } catch (err) {
-      console.log(err)
-    }
-  </script>
-  
-<div id="main">
-  <section class="outer">
-  
-  
-
-<div class="notice" style="margin-top:50px">
-    <i class="ri-heart-fill"></i>
-    <div class="notice-content" id="broad"></div>
-</div>
-<script type="text/javascript">
-    fetch('https://v1.hitokoto.cn')
-        .then(response => response.json())
-        .then(data => {
-            document.getElementById("broad").innerHTML = data.hitokoto;
-        })
-        .catch(console.error)
-</script>
-
-<style>
-    .notice {
-        padding: 20px;
-        border: 1px dashed #e6e6e6;
-        color: #969696;
-        position: relative;
-        display: inline-block;
-        width: 100%;
-        background: #fbfbfb50;
-        border-radius: 10px;
-    }
-
-    .notice i {
-        float: left;
-        color: #999;
-        font-size: 16px;
-        padding-right: 10px;
-        vertical-align: middle;
-        margin-top: -2px;
-    }
-
-    .notice-content {
-        display: initial;
-        vertical-align: middle;
-    }
-</style>
-  
-  <article class="articles">
-    
-    
-    
-    
-    <article
-  id="post-Jenkins踩坑日记"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2021/02/25/Jenkins%E8%B8%A9%E5%9D%91%E6%97%A5%E8%AE%B0/"
-    >Jenkins踩坑日记</a> 
-</h2>
- 
-
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2021/02/25/Jenkins%E8%B8%A9%E5%9D%91%E6%97%A5%E8%AE%B0/" class="article-date">
-  <time datetime="2021-02-25T06:22:38.000Z" itemprop="datePublished">2021-02-25</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BF%90%E7%BB%B4/">运维</a> / <a class="article-category-link" href="/categories/%E8%BF%90%E7%BB%B4/%E8%87%AA%E5%8A%A8%E5%8C%96/">自动化</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>在jenkins使用<code>Publish over SSH</code>插件时，可谓时踩到了一个不小的坑，记录一下。。。</p>
-<p>1.首先，在服务器上使用<code>ssh-keygen</code>生成一对密钥对。</p>
-<p><img src="/2021/02/25/Jenkins%E8%B8%A9%E5%9D%91%E6%97%A5%E8%AE%B0/image-20210224235449847.png" alt="image-20210224235449847"></p>
-<p>2.通过<code>cat  /root/.ssh/id_rsa文件</code>，将打印内容复制输入到key中。<code>这里一定要带上begin key --- end key, 否则会Can&#39;t connect to server </code></p>
-<p><img src="/2021/02/25/Jenkins%E8%B8%A9%E5%9D%91%E6%97%A5%E8%AE%B0/image-20210224235858659.png" alt="image-20210224235858659"></p>
-<p>3.点击<code>Test Configuration</code>，出现<code>success</code>，证明配置成功了。</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jenkins/" rel="tag">jenkins</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-   
-</article>
-
-    
-    <article
+      <section class="outer">
+  <article
   id="post-在jenkins平台部署项目"
   class="article article-type-post"
   itemscope
@@ -209,10 +57,9 @@
     
     <header class="article-header">
        
-<h2 itemprop="name">
-  <a class="article-title" href="/2021/02/09/%E5%9C%A8jenkins%E5%B9%B3%E5%8F%B0%E9%83%A8%E7%BD%B2%E9%A1%B9%E7%9B%AE/"
-    >在jenkins平台部署项目</a> 
-</h2>
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  在jenkins平台部署项目
+</h1>
  
 
     </header>
@@ -224,9 +71,34 @@
   <div class="article-category">
     <a class="article-category-link" href="/categories/%E8%BF%90%E7%BB%B4/">运维</a> / <a class="article-category-link" href="/categories/%E8%BF%90%E7%BB%B4/%E8%87%AA%E5%8A%A8%E5%8C%96/">自动化</a>
   </div>
-   
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">735</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">3 分钟</span>
+        </span>
+    </span>
+</div>
+ 
     </div>
       
+    <div class="tocbot"></div>
+
+
+
+
+  
     <div class="article-entry" itemprop="articleBody">
        
   <h3 id="1-远程服务器配置SSH服务，实现远程文件传输"><a href="#1-远程服务器配置SSH服务，实现远程文件传输" class="headerlink" title="1.远程服务器配置SSH服务，实现远程文件传输"></a>1.远程服务器配置SSH服务，实现远程文件传输</h3><p>1）安装<code>Publish Over SSH</code>插件</p>
@@ -294,206 +166,97 @@
 
     <!-- copyright -->
     
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>版权声明： </strong>
+          
+          本博客所有文章除特别声明外，著作权归作者所有。转载请注明出处！
+          
+        </li>
+      </ul>
+    </div>
+    
     <footer class="article-footer">
        
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://www.codingboypeng.tech/2021/02/09/%E5%9C%A8jenkins%E5%B9%B3%E5%8F%B0%E9%83%A8%E7%BD%B2%E9%A1%B9%E7%9B%AE/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>  
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jenkins/" rel="tag">jenkins</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/maven%E9%83%A8%E7%BD%B2/" rel="tag">maven部署</a></li></ul>
 
     </footer>
   </div>
 
    
-   
-</article>
-
+  <nav class="article-nav">
     
-    <article
-  id="post-jenkins在linux平台上的搭建"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
+      <a href="/2021/02/25/Jenkins%E8%B8%A9%E5%9D%91%E6%97%A5%E8%AE%B0/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            Jenkins踩坑日记
+          
+        </div>
+      </a>
     
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2021/02/07/jenkins%E5%9C%A8linux%E5%B9%B3%E5%8F%B0%E4%B8%8A%E7%9A%84%E6%90%AD%E5%BB%BA/"
-    >jenkins在linux平台上的搭建</a> 
-</h2>
- 
-
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2021/02/07/jenkins%E5%9C%A8linux%E5%B9%B3%E5%8F%B0%E4%B8%8A%E7%9A%84%E6%90%AD%E5%BB%BA/" class="article-date">
-  <time datetime="2021-02-07T09:57:40.000Z" itemprop="datePublished">2021-02-07</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BF%90%E7%BB%B4/">运维</a> / <a class="article-category-link" href="/categories/%E8%BF%90%E7%BB%B4/%E8%87%AA%E5%8A%A8%E5%8C%96/">自动化</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h1 id="jenkins在linux平台上的搭建"><a href="#jenkins在linux平台上的搭建" class="headerlink" title="jenkins在linux平台上的搭建"></a>jenkins在linux平台上的搭建</h1><p>之前有想过研究jenkins，但是一直没有时间。自己手上又有一台闲置的服务器，想着趁着年前这几天了解了解jenkins。</p>
-<p>了解jenkins第一步就是安装和搭建jenkins环境了。</p>
-<h3 id="1-Jenkins环境搭建"><a href="#1-Jenkins环境搭建" class="headerlink" title="1.Jenkins环境搭建"></a>1.Jenkins环境搭建</h3><h4 id="1-1-Jenkins介绍"><a href="#1-1-Jenkins介绍" class="headerlink" title="1.1 Jenkins介绍"></a>1.1 Jenkins介绍</h4><p><code>jenkins</code>是一个<code>持续集成</code>平台 ,对现有产品功能不断迭代，使工作流形成一个闭环，产品质量得到高效保证，解决项目不同人员间的沟通效率问题。</p>
-<p><code>jenkins的思想</code></p>
-<ol>
-<li>准备：开发者功能开发完毕，将代码<code>commit</code>至远程仓库。</li>
-<li>测试：jenkins对代码仓库<code>commit</code>操作配置了<code>钩子(hook)</code>，对当前代码实施构建，跑测试用例。</li>
-<li>合并：自动化测试后， 将当前代码与主干代码进行合并。</li>
-<li>部署：项目成功构建后，打成war包，将war包通过ssh上传至生产服务器。</li>
-</ol>
-<p>了解jenkins平台思想很重要，这对于我们理解和使用Jenkins是十分有利的。</p>
-<p>通过以上四点，我们可以联想到jenkins搭建避免不了<code>maven(gradle)</code>,<code> jdk(maven依赖jdk)</code>和<code>git（svn）</code></p>
-<h4 id="1-2-安装Git"><a href="#1-2-安装Git" class="headerlink" title="1.2 安装Git"></a>1.2 安装Git</h4><p><code>Git</code>是一个<code>分布式版本控制器</code>，其他用途就不在这赘述了。本文采用<code>yum</code>安装<code>git</code>。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum -y install git</span><br></pre></td></tr></table></figure>
-
-<h4 id="1-3-安装Jdk"><a href="#1-3-安装Jdk" class="headerlink" title="1.3 安装Jdk"></a>1.3 安装Jdk</h4><p>jenkins最新需要jdk版本8以上，由于官网下载jdk太慢，这是<a target="_blank" rel="noopener" href="https://repo.huaweicloud.com/java/jdk/8u151-b12/">镜像地址</a>。）</p>
-<p>1). 将下载好的tar包放在linux的服务器下，使用<code>tar -zxvf jdk.1.8.0_161-linux.tar.gz </code>解压。</p>
-<p><img src="/2021/02/07/jenkins%E5%9C%A8linux%E5%B9%B3%E5%8F%B0%E4%B8%8A%E7%9A%84%E6%90%AD%E5%BB%BA/image-20210208120205707.png" alt="image-20210208120205707"></p>
-<p>2). 解压后，就需要配置好环境变量。</p>
-<p><code>vim /etc/profile</code></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">export JAVA_HOME=/usr/local/java/jdk1.8.0_161  # 换成你安装jdk的路径 </span><br><span class="line">export CLASSPATH=$:CLASSPATH:$JAVA_HOME/lib/</span><br><span class="line">export PATH=$PATH:$JAVA_HOME/bin</span><br></pre></td></tr></table></figure>
-
-<ol start="3">
-<li><code>source /etc/profile</code>刷新一下配置，使用<code>java -version</code>查看是否配置成功。</li>
-</ol>
-<p><img src="/2021/02/07/jenkins%E5%9C%A8linux%E5%B9%B3%E5%8F%B0%E4%B8%8A%E7%9A%84%E6%90%AD%E5%BB%BA/image-20210208121931776.png" alt="image-20210208121931776"></p>
-<h4 id="1-4-安装Maven"><a href="#1-4-安装Maven" class="headerlink" title="1.4 安装Maven"></a>1.4 安装Maven</h4><p>由于<code>jdk</code>版本采用<code>1.8</code>，<code>maven</code>版本最好是<code>3.3</code>以上。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget https:&#x2F;&#x2F;mirrors.cnnic.cn&#x2F;apache&#x2F;maven&#x2F;maven-3&#x2F;3.6.3&#x2F;binaries&#x2F;apache-maven-3.6.3-bin.tar.gz</span><br></pre></td></tr></table></figure>
-
-<p>如果提示<code>wget commend not found！</code>，那么你需要先通过<code>yum install -y wget</code>。</p>
-<p><code>tar -zxvf apache-maven-3.6.3-bin.tar.gz</code>解压完成后，需要配置一下maven的环境变量。将以下配置添加到你的服务器<code>/etc/profile</code>。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 替换成你的安装路径</span></span><br><span class="line">export MAVEN_HOME=/usr/local/apache-maven-3.6.3</span><br><span class="line">export PATH=$PATH:$MAVEN_HOME/bin</span><br></pre></td></tr></table></figure>
-
-<p><img src="/2021/02/07/jenkins%E5%9C%A8linux%E5%B9%B3%E5%8F%B0%E4%B8%8A%E7%9A%84%E6%90%AD%E5%BB%BA/image-20210208160832581.png" alt="image-20210208160832581"></p>
-<h4 id="1-5-安装Jenkins"><a href="#1-5-安装Jenkins" class="headerlink" title="1.5 安装Jenkins"></a>1.5 安装Jenkins</h4><p>安装jenkins方法有很多：</p>
-<ol>
-<li><p>可以通过官网下载<code>war</code>包，然后将war包放在<code>tomcat</code>的<code>webapp</code>下，就可以了</p>
-</li>
-<li><p><code>linux</code>可以选择通过<code>yum</code>安装， 跟着<a target="_blank" rel="noopener" href="https://pkg.jenkins.io/redhat-stable/">官网</a>的步骤就可以了</p>
-</li>
-<li><p>直接通过<code>rpm</code>安装 <code>wget https://pkg.jenkins.io/redhat/jenkins-2.156-1.1.noarch.rpm rpm -ivh jenkins-2.156-1.1.noarch.rpm</code></p>
-</li>
-</ol>
-<p>第二种方式，出现了<code>error: https://jenkins-ci.org/redhat/jenkins-ci.org.key: import read failed(-1)</code>, 才疏学浅，实在没有搞明白是什么原因导致的，最后通过第三种方式成功安装了jenkins</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">systemctl start jenkins</span><br><span class="line">systemctl status jenkins</span><br></pre></td></tr></table></figure>
-
-<p><img src="/2021/02/07/jenkins%E5%9C%A8linux%E5%B9%B3%E5%8F%B0%E4%B8%8A%E7%9A%84%E6%90%AD%E5%BB%BA/image-20210208180805133.png" alt="image-20210208180805133"></p>
-<p>说明Jenkins已经启动成功了，接下来就是配置jenkins了。</p>
-<h3 id="2-Jenkins初始化"><a href="#2-Jenkins初始化" class="headerlink" title="2.Jenkins初始化"></a>2.Jenkins初始化</h3><p>启动jenkins后，我们可以通过<a target="_blank" rel="noopener" href="http://localhost:8080/">http://localhost:8080</a> 来访问，可以看见页面初始化内容<code>这里端口可以自行设置，默认8080，如果你用的是云服务器，那么还需要配置一下防火墙安全组策略</code>。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim &#x2F;etc&#x2F;sysconfig&#x2F;jenkins</span><br></pre></td></tr></table></figure>
-
-<p>访问页面后，将会要求你输入初始化密码在<code>/var/lib/jenkins/secrets/initialAdminPassword</code></p>
-<p><img src="/2021/02/07/jenkins%E5%9C%A8linux%E5%B9%B3%E5%8F%B0%E4%B8%8A%E7%9A%84%E6%90%AD%E5%BB%BA/image-20210208183737457.png" alt="image-20210208183737457"></p>
-<h4 id="2-1-插件安装"><a href="#2-1-插件安装" class="headerlink" title="2.1 插件安装"></a>2.1 插件安装</h4><p>这里我们可以先不选择安装插件，因为实在太慢了。。。我们后续可以配置下镜像源。</p>
-<p><img src="/2021/02/07/jenkins%E5%9C%A8linux%E5%B9%B3%E5%8F%B0%E4%B8%8A%E7%9A%84%E6%90%AD%E5%BB%BA/image-20210208181952514.png" alt="image-20210208181952514"></p>
-<h4 id="2-2-更换镜像源-系统工具插件"><a href="#2-2-更换镜像源-系统工具插件" class="headerlink" title="2.2 更换镜像源, 系统工具插件"></a>2.2 更换镜像源, 系统工具插件</h4><p>插件管理》》》高级设置》》》升级站点， 将以下内容复制到输入框中</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;mirror.esuni.jp&#x2F;jenkins&#x2F;updates&#x2F;update-center.json</span><br></pre></td></tr></table></figure>
-
-<p><strong>系统工具所需插件</strong></p>
-<p><a target="_blank" rel="noopener" href="https://plugins.jenkins.io/maven-plugin">Maven Integration</a>：是jenkins进行持续集成需要的maven插件</p>
-<p><a target="_blank" rel="noopener" href="https://plugins.jenkins.io/git">Git plugin</a>: 集成git</p>
-<p><a target="_blank" rel="noopener" href="https://plugins.jenkins.io/github">GitHub plugin</a>：指定拉取github中的仓库地址</p>
-<h4 id="2-3-配置系统工具"><a href="#2-3-配置系统工具" class="headerlink" title="2.3 配置系统工具"></a>2.3 配置系统工具</h4><p>在步骤一已经提到了<code>jenkins</code>构建自动化测试所需要的工具，接下来就是配置这些工具》》》系统管理》》》全局工具配置。</p>
-<p><strong>jdk配置</strong></p>
-<p><img src="/2021/02/07/jenkins%E5%9C%A8linux%E5%B9%B3%E5%8F%B0%E4%B8%8A%E7%9A%84%E6%90%AD%E5%BB%BA/image-20210208224048880.png" alt="image-20210208224048880"></p>
-<p><strong>maven配置</strong></p>
-<p><img src="/2021/02/07/jenkins%E5%9C%A8linux%E5%B9%B3%E5%8F%B0%E4%B8%8A%E7%9A%84%E6%90%AD%E5%BB%BA/image-20210208224517522.png" alt="image-20210208224517522"></p>
-<p><strong>git配置</strong></p>
-<p><img src="/2021/02/07/jenkins%E5%9C%A8linux%E5%B9%B3%E5%8F%B0%E4%B8%8A%E7%9A%84%E6%90%AD%E5%BB%BA/image-20210208224451299.png" alt="image-20210208224451299"></p>
-<p>执行到这一步，<code>jenkins</code>已经搭建好了，接下来就是好好学习jenkins如何构建复杂项目了</p>
- 
-      <!-- reward -->
-      
-    </div>
     
-
-    <!-- copyright -->
+      <a href="/2021/02/07/jenkins%E5%9C%A8linux%E5%B9%B3%E5%8F%B0%E4%B8%8A%E7%9A%84%E6%90%AD%E5%BB%BA/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">jenkins在linux平台上的搭建</div>
+      </a>
     
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jenkins/" rel="tag">jenkins</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-   
-</article>
-
-    
-    <article
-  id="post-DateFormat不要定义成全局！！！"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2021/01/28/DateFormat%E4%B8%8D%E8%A6%81%E5%AE%9A%E4%B9%89%E6%88%90%E5%85%A8%E5%B1%80%EF%BC%81%EF%BC%81%EF%BC%81/"
-    >DateFormat不要定义成全局！！！</a> 
-</h2>
- 
-
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2021/01/28/DateFormat%E4%B8%8D%E8%A6%81%E5%AE%9A%E4%B9%89%E6%88%90%E5%85%A8%E5%B1%80%EF%BC%81%EF%BC%81%EF%BC%81/" class="article-date">
-  <time datetime="2021-01-28T15:06:58.000Z" itemprop="datePublished">2021-01-28</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h2 id="1-问题产生原因"><a href="#1-问题产生原因" class="headerlink" title="1.问题产生原因"></a>1.问题产生原因</h2><p>一次项目开发过程中，因为多出需要<code>Format Date</code>鄙人为求<code>捷径</code>, 将<code>DateFormat</code>对象定义成全局的。。。</p> 
-      <a class="article-more-link" href="/2021/01/28/DateFormat%E4%B8%8D%E8%A6%81%E5%AE%9A%E4%B9%89%E6%88%90%E5%85%A8%E5%B1%80%EF%BC%81%EF%BC%81%EF%BC%81/"
-        >阅读更多...</a
-      >
-       
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/" rel="tag">java</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-   
-</article>
-
-    
-  </article>
-  
-
-  
-  <nav class="page-nav">
-    
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/">下一页</a>
   </nav>
-  
-</section>
-</div>
 
+  
+     
+</article>
+
+</section>
       <footer class="footer">
   <div class="outer">
     <ul>
@@ -637,6 +400,23 @@
 <script src="/js/lazyload.min.js"></script>
 
 <!-- Tocbot -->
+
+
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  tocbot.init({
+    tocSelector: '.tocbot',
+    contentSelector: '.article-entry',
+    headingSelector: 'h1, h2, h3, h4, h5, h6',
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: 'main',
+    positionFixedSelector: '.tocbot',
+    positionFixedClass: 'is-position-fixed',
+    fixedSidebarOffset: 'auto'
+  });
+</script>
 
 <script src="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.css">
