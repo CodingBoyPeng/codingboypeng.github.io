@@ -77,7 +77,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> 字数统计:</span>
-            <span class="post-count">735</span>
+            <span class="post-count">765</span>
         </span>
     </span>
 
@@ -122,9 +122,8 @@
 <p>1）<code>在jenkins界面中，系统设置 》》Manage Credentials》》添加凭据</code></p>
 <p><img src="/2021/02/09/%E5%9C%A8jenkins%E5%B9%B3%E5%8F%B0%E9%83%A8%E7%BD%B2%E9%A1%B9%E7%9B%AE/image-20210228222033048.png" alt="image-20210228222033048"></p>
 <ol start="2">
-<li>复制<code>/root/.ssh/id_rsa/pub</code>内容</li>
+<li>复制<code>/root/.ssh/id_rsa/pub</code>内容<br><img src="/2021/02/09/%E5%9C%A8jenkins%E5%B9%B3%E5%8F%B0%E9%83%A8%E7%BD%B2%E9%A1%B9%E7%9B%AE/image-20210228224043422.png" alt="image-20210228224043422"> 点击你的git账户setting设置，将内容粘贴到<code>Ssh andGPG Keys</code>中。</li>
 </ol>
-<p><img src="/2021/02/09/%E5%9C%A8jenkins%E5%B9%B3%E5%8F%B0%E9%83%A8%E7%BD%B2%E9%A1%B9%E7%9B%AE/image-20210228224043422.png" alt="image-20210228224043422"> 点击你的git账户setting设置，将内容粘贴到<code>Ssh andGPG Keys</code>中。</p>
 <h3 id="4-项目配置"><a href="#4-项目配置" class="headerlink" title="4.项目配置"></a>4.项目配置</h3><p>完成以上配置后，就可以添加一个任务了。</p>
 <p>1）新建任务</p>
 <p><code>左侧选项卡》》新建任务》》选择maven项目</code> 点击确定，任务新建完成。</p>
@@ -132,13 +131,12 @@
 <ol start="2">
 <li> 项目配置</li>
 </ol>
-<p>任务新建完成后，那jenkins如何知道你构建的项目呢？如何触发构建，构建完成后又需要做说明呢？接下来就是项目配置了。</p>
-<p><code>1）触发器</code></p>
-<p><code>jenkins触发构建的方式有许多种, 这里只介绍最常用的多工程构建, 定时构建和轮询SCM方式</code>。多工程构建触发可以设置指定工程构建完成后触发；后两种触发方式都需要配置<a target="_blank" rel="noopener" href="https://www.beejson.com/tool/cron.html">Cron</a>。</p>
+<p>任务新建完成后，那jenkins如何知道你构建的项目呢？如何触发构建，构建完成后又需要做说明呢？接下来就是项目配置了。<br><code>1) 源码管理</code><br>jenkins从github中拉取代码配置<br><img src="/2021/02/09/%E5%9C%A8jenkins%E5%B9%B3%E5%8F%B0%E9%83%A8%E7%BD%B2%E9%A1%B9%E7%9B%AE/image-20210301151600848.png" alt="image-20210301151600848"><br><code>2）触发器</code></p>
+<p><code>jenkins触发构建的方式有许多种, 这里只介绍最常用的多工程构建, 定时构建和轮询SCM方式</code>。多工程构建触发可以设置指定工程构建完成后触发；后两种触发方式都需要配置<a target="_blank" rel="noopener" href="https://www.beejson.com/tool/cron.html">Cron</a>。<br>定时字符串从左往右分别为： 分 时 日 月 周</p>
 <p><img src="/2021/02/09/%E5%9C%A8jenkins%E5%B9%B3%E5%8F%B0%E9%83%A8%E7%BD%B2%E9%A1%B9%E7%9B%AE/image-20210301140347622.png" alt="image-20210301140347622"></p>
-<p><code>2) 构建环境</code></p>
+<p><code>3) 构建环境</code></p>
 <p><img src="/2021/02/09/%E5%9C%A8jenkins%E5%B9%B3%E5%8F%B0%E9%83%A8%E7%BD%B2%E9%A1%B9%E7%9B%AE/image-20210301142213363.png" alt="image-20210301142213363"></p>
-<p><code>3）构建后操作</code></p>
+<p><code>4）构建后操作</code></p>
 <p>（1）邮件发送构建结果</p>
 <p><img src="/2021/02/09/%E5%9C%A8jenkins%E5%B9%B3%E5%8F%B0%E9%83%A8%E7%BD%B2%E9%A1%B9%E7%9B%AE/image-20210301142400243.png" alt="image-20210301142400243"></p>
 <p>邮件触发器：这里设置项目构建不管成功还是失败都发送构建结果</p>
@@ -271,7 +269,7 @@
         
         
         
-        由 <a href="https://hexo.io" target="_blank">Hexo</a> 强力驱动
+        Powered by <a href="https://hexo.io" target="_blank">Hexo</a>
         <span class="division">|</span>
         主题 - <a href="https://github.com/Shen-Yu/hexo-theme-ayer" target="_blank">Ayer</a>
         

@@ -142,6 +142,134 @@
     
     
     <article
+  id="post-2021年个人计划"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2021/03/01/2021%E5%B9%B4%E4%B8%AA%E4%BA%BA%E8%AE%A1%E5%88%92/"
+    >2021年个人计划</a> 
+</h2>
+ 
+
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2021/03/01/2021%E5%B9%B4%E4%B8%AA%E4%BA%BA%E8%AE%A1%E5%88%92/" class="article-date">
+  <time datetime="2021-03-01T14:32:38.000Z" itemprop="datePublished">2021-03-01</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E7%94%9F%E6%B4%BB/">生活</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h3 id="2021年个人计划"><a href="#2021年个人计划" class="headerlink" title="2021年个人计划"></a>2021年个人计划</h3><p>虽然2021年已经过去3个月，没有第一时间做出2021的个人计划，只因当时自己没有好好规划自己目标。我相信现在做规划还是来得及的。</p>
+<p>以下是我2021年的计划清单：</p>
+<h3 id="生活类"><a href="#生活类" class="headerlink" title="生活类"></a>生活类</h3><p>1.每天坐50个深蹲</p>
+<p>2.每月陪女朋友看一场电影</p>
+<p>3.对当月进行一次个人汇总总结，对人生观一个正向反馈</p>
+<p>4.每月尝试一道新菜。</p>
+<p>5.带女朋友去一次杭州。</p>
+<p>6.每个月增重3斤</p>
+<p>7.控制游戏时间，每个星期游戏时间控制在2h以内</p>
+<h3 id="知识类"><a href="#知识类" class="headerlink" title="知识类"></a>知识类</h3><p>1.每月看4本书(1本技术类，3本杂书)，吸收不同维度的知识</p>
+<p>2.每天看10分钟新闻</p>
+<p>3.每天背40个单词</p>
+<h3 id="理财类"><a href="#理财类" class="headerlink" title="理财类"></a>理财类</h3><p>将每月工资的【1/4】存入银行卡，作为固定积蓄；300作为地铁费用；3.5k作为生活住宿支出；500用来购物；</p>
+<p>剩下的钱则是购买基金。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E4%B8%AA%E4%BA%BA%E8%AE%A1%E5%88%92/" rel="tag">个人计划</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+   
+</article>
+
+    
+    <article
+  id="post-Jenkins用户权限管理"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2021/03/01/Jenkins%E7%94%A8%E6%88%B7%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86/"
+    >Jenkins用户权限管理</a> 
+</h2>
+ 
+
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2021/03/01/Jenkins%E7%94%A8%E6%88%B7%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86/" class="article-date">
+  <time datetime="2021-03-01T08:13:33.000Z" itemprop="datePublished">2021-03-01</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BF%90%E7%BB%B4/">运维</a> / <a class="article-category-link" href="/categories/%E8%BF%90%E7%BB%B4/%E8%87%AA%E5%8A%A8%E5%8C%96/">自动化</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>Jenkins需要用<code>Role-based Authorization Strategy</code> 插件来实现对不同用户的访问控制。</p>
+<h3 id="1-下载插件"><a href="#1-下载插件" class="headerlink" title="1.下载插件"></a>1.下载插件</h3><p>点jenkins的插件管理，下载<code>Role-based Authorization Strategy</code></p>
+<h3 id="2-安全配置"><a href="#2-安全配置" class="headerlink" title="2.安全配置"></a>2.安全配置</h3><p>下载插件后，重启jenkins，找到全局安全设置，配置安全访问策略</p>
+<p><img src="/2021/03/01/Jenkins%E7%94%A8%E6%88%B7%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86/image-20210301160728310.png" alt="image-20210301160728310"></p>
+<p>1）管理角色</p>
+<p>系统配置找到<code>Manage and assign Roles</code>实现对不同角色权限控制。</p>
+<p><img src="/2021/03/01/Jenkins%E7%94%A8%E6%88%B7%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86/image-20210301160932429.png" alt="image-20210301160932429"></p>
+<p>2）分配角色</p>
+<p><img src="/2021/03/01/Jenkins%E7%94%A8%E6%88%B7%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86/image-20210301161125085.png" alt="image-20210301161125085"></p>
+<p>3.查看用户权限是否配置成功</p>
+<p>登录hewu用户，只能看见test项目，证明权限配置成功。</p>
+<p><img src="/2021/03/01/Jenkins%E7%94%A8%E6%88%B7%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86/image-20210301161222741.png" alt="image-20210301161222741"></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%A7%92%E8%89%B2%E6%9D%83%E9%99%90/" rel="tag">角色权限</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+   
+</article>
+
+    
+    <article
   id="post-Jenkins踩坑日记"
   class="article article-type-post"
   itemscope
@@ -250,9 +378,8 @@
 <p>1）<code>在jenkins界面中，系统设置 》》Manage Credentials》》添加凭据</code></p>
 <p><img src="/2021/02/09/%E5%9C%A8jenkins%E5%B9%B3%E5%8F%B0%E9%83%A8%E7%BD%B2%E9%A1%B9%E7%9B%AE/image-20210228222033048.png" alt="image-20210228222033048"></p>
 <ol start="2">
-<li>复制<code>/root/.ssh/id_rsa/pub</code>内容</li>
+<li>复制<code>/root/.ssh/id_rsa/pub</code>内容<br><img src="/2021/02/09/%E5%9C%A8jenkins%E5%B9%B3%E5%8F%B0%E9%83%A8%E7%BD%B2%E9%A1%B9%E7%9B%AE/image-20210228224043422.png" alt="image-20210228224043422"> 点击你的git账户setting设置，将内容粘贴到<code>Ssh andGPG Keys</code>中。</li>
 </ol>
-<p><img src="/2021/02/09/%E5%9C%A8jenkins%E5%B9%B3%E5%8F%B0%E9%83%A8%E7%BD%B2%E9%A1%B9%E7%9B%AE/image-20210228224043422.png" alt="image-20210228224043422"> 点击你的git账户setting设置，将内容粘贴到<code>Ssh andGPG Keys</code>中。</p>
 <h3 id="4-项目配置"><a href="#4-项目配置" class="headerlink" title="4.项目配置"></a>4.项目配置</h3><p>完成以上配置后，就可以添加一个任务了。</p>
 <p>1）新建任务</p>
 <p><code>左侧选项卡》》新建任务》》选择maven项目</code> 点击确定，任务新建完成。</p>
@@ -260,13 +387,12 @@
 <ol start="2">
 <li> 项目配置</li>
 </ol>
-<p>任务新建完成后，那jenkins如何知道你构建的项目呢？如何触发构建，构建完成后又需要做说明呢？接下来就是项目配置了。</p>
-<p><code>1）触发器</code></p>
-<p><code>jenkins触发构建的方式有许多种, 这里只介绍最常用的多工程构建, 定时构建和轮询SCM方式</code>。多工程构建触发可以设置指定工程构建完成后触发；后两种触发方式都需要配置<a target="_blank" rel="noopener" href="https://www.beejson.com/tool/cron.html">Cron</a>。</p>
+<p>任务新建完成后，那jenkins如何知道你构建的项目呢？如何触发构建，构建完成后又需要做说明呢？接下来就是项目配置了。<br><code>1) 源码管理</code><br>jenkins从github中拉取代码配置<br><img src="/2021/02/09/%E5%9C%A8jenkins%E5%B9%B3%E5%8F%B0%E9%83%A8%E7%BD%B2%E9%A1%B9%E7%9B%AE/image-20210301151600848.png" alt="image-20210301151600848"><br><code>2）触发器</code></p>
+<p><code>jenkins触发构建的方式有许多种, 这里只介绍最常用的多工程构建, 定时构建和轮询SCM方式</code>。多工程构建触发可以设置指定工程构建完成后触发；后两种触发方式都需要配置<a target="_blank" rel="noopener" href="https://www.beejson.com/tool/cron.html">Cron</a>。<br>定时字符串从左往右分别为： 分 时 日 月 周</p>
 <p><img src="/2021/02/09/%E5%9C%A8jenkins%E5%B9%B3%E5%8F%B0%E9%83%A8%E7%BD%B2%E9%A1%B9%E7%9B%AE/image-20210301140347622.png" alt="image-20210301140347622"></p>
-<p><code>2) 构建环境</code></p>
+<p><code>3) 构建环境</code></p>
 <p><img src="/2021/02/09/%E5%9C%A8jenkins%E5%B9%B3%E5%8F%B0%E9%83%A8%E7%BD%B2%E9%A1%B9%E7%9B%AE/image-20210301142213363.png" alt="image-20210301142213363"></p>
-<p><code>3）构建后操作</code></p>
+<p><code>4）构建后操作</code></p>
 <p>（1）邮件发送构建结果</p>
 <p><img src="/2021/02/09/%E5%9C%A8jenkins%E5%B9%B3%E5%8F%B0%E9%83%A8%E7%BD%B2%E9%A1%B9%E7%9B%AE/image-20210301142400243.png" alt="image-20210301142400243"></p>
 <p>邮件触发器：这里设置项目构建不管成功还是失败都发送构建结果</p>
@@ -306,189 +432,13 @@
 </article>
 
     
-    <article
-  id="post-jenkins在linux平台上的搭建"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2021/02/07/jenkins%E5%9C%A8linux%E5%B9%B3%E5%8F%B0%E4%B8%8A%E7%9A%84%E6%90%AD%E5%BB%BA/"
-    >jenkins在linux平台上的搭建</a> 
-</h2>
- 
-
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2021/02/07/jenkins%E5%9C%A8linux%E5%B9%B3%E5%8F%B0%E4%B8%8A%E7%9A%84%E6%90%AD%E5%BB%BA/" class="article-date">
-  <time datetime="2021-02-07T09:57:40.000Z" itemprop="datePublished">2021-02-07</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BF%90%E7%BB%B4/">运维</a> / <a class="article-category-link" href="/categories/%E8%BF%90%E7%BB%B4/%E8%87%AA%E5%8A%A8%E5%8C%96/">自动化</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h1 id="jenkins在linux平台上的搭建"><a href="#jenkins在linux平台上的搭建" class="headerlink" title="jenkins在linux平台上的搭建"></a>jenkins在linux平台上的搭建</h1><p>之前有想过研究jenkins，但是一直没有时间。自己手上又有一台闲置的服务器，想着趁着年前这几天了解了解jenkins。</p>
-<p>了解jenkins第一步就是安装和搭建jenkins环境了。</p>
-<h3 id="1-Jenkins环境搭建"><a href="#1-Jenkins环境搭建" class="headerlink" title="1.Jenkins环境搭建"></a>1.Jenkins环境搭建</h3><h4 id="1-1-Jenkins介绍"><a href="#1-1-Jenkins介绍" class="headerlink" title="1.1 Jenkins介绍"></a>1.1 Jenkins介绍</h4><p><code>jenkins</code>是一个<code>持续集成</code>平台 ,对现有产品功能不断迭代，使工作流形成一个闭环，产品质量得到高效保证，解决项目不同人员间的沟通效率问题。</p>
-<p><code>jenkins的思想</code></p>
-<ol>
-<li>准备：开发者功能开发完毕，将代码<code>commit</code>至远程仓库。</li>
-<li>测试：jenkins对代码仓库<code>commit</code>操作配置了<code>钩子(hook)</code>，对当前代码实施构建，跑测试用例。</li>
-<li>合并：自动化测试后， 将当前代码与主干代码进行合并。</li>
-<li>部署：项目成功构建后，打成war包，将war包通过ssh上传至生产服务器。</li>
-</ol>
-<p>了解jenkins平台思想很重要，这对于我们理解和使用Jenkins是十分有利的。</p>
-<p>通过以上四点，我们可以联想到jenkins搭建避免不了<code>maven(gradle)</code>,<code> jdk(maven依赖jdk)</code>和<code>git（svn）</code></p>
-<h4 id="1-2-安装Git"><a href="#1-2-安装Git" class="headerlink" title="1.2 安装Git"></a>1.2 安装Git</h4><p><code>Git</code>是一个<code>分布式版本控制器</code>，其他用途就不在这赘述了。本文采用<code>yum</code>安装<code>git</code>。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum -y install git</span><br></pre></td></tr></table></figure>
-
-<h4 id="1-3-安装Jdk"><a href="#1-3-安装Jdk" class="headerlink" title="1.3 安装Jdk"></a>1.3 安装Jdk</h4><p>jenkins最新需要jdk版本8以上，由于官网下载jdk太慢，这是<a target="_blank" rel="noopener" href="https://repo.huaweicloud.com/java/jdk/8u151-b12/">镜像地址</a>。）</p>
-<p>1). 将下载好的tar包放在linux的服务器下，使用<code>tar -zxvf jdk.1.8.0_161-linux.tar.gz </code>解压。</p>
-<p><img src="/2021/02/07/jenkins%E5%9C%A8linux%E5%B9%B3%E5%8F%B0%E4%B8%8A%E7%9A%84%E6%90%AD%E5%BB%BA/image-20210208120205707.png" alt="image-20210208120205707"></p>
-<p>2). 解压后，就需要配置好环境变量。</p>
-<p><code>vim /etc/profile</code></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">export JAVA_HOME=/usr/local/java/jdk1.8.0_161  # 换成你安装jdk的路径 </span><br><span class="line">export CLASSPATH=$:CLASSPATH:$JAVA_HOME/lib/</span><br><span class="line">export PATH=$PATH:$JAVA_HOME/bin</span><br></pre></td></tr></table></figure>
-
-<ol start="3">
-<li><code>source /etc/profile</code>刷新一下配置，使用<code>java -version</code>查看是否配置成功。</li>
-</ol>
-<p><img src="/2021/02/07/jenkins%E5%9C%A8linux%E5%B9%B3%E5%8F%B0%E4%B8%8A%E7%9A%84%E6%90%AD%E5%BB%BA/image-20210208121931776.png" alt="image-20210208121931776"></p>
-<h4 id="1-4-安装Maven"><a href="#1-4-安装Maven" class="headerlink" title="1.4 安装Maven"></a>1.4 安装Maven</h4><p>由于<code>jdk</code>版本采用<code>1.8</code>，<code>maven</code>版本最好是<code>3.3</code>以上。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget https:&#x2F;&#x2F;mirrors.cnnic.cn&#x2F;apache&#x2F;maven&#x2F;maven-3&#x2F;3.6.3&#x2F;binaries&#x2F;apache-maven-3.6.3-bin.tar.gz</span><br></pre></td></tr></table></figure>
-
-<p>如果提示<code>wget commend not found！</code>，那么你需要先通过<code>yum install -y wget</code>。</p>
-<p><code>tar -zxvf apache-maven-3.6.3-bin.tar.gz</code>解压完成后，需要配置一下maven的环境变量。将以下配置添加到你的服务器<code>/etc/profile</code>。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 替换成你的安装路径</span></span><br><span class="line">export MAVEN_HOME=/usr/local/apache-maven-3.6.3</span><br><span class="line">export PATH=$PATH:$MAVEN_HOME/bin</span><br></pre></td></tr></table></figure>
-
-<p><img src="/2021/02/07/jenkins%E5%9C%A8linux%E5%B9%B3%E5%8F%B0%E4%B8%8A%E7%9A%84%E6%90%AD%E5%BB%BA/image-20210208160832581.png" alt="image-20210208160832581"></p>
-<h4 id="1-5-安装Jenkins"><a href="#1-5-安装Jenkins" class="headerlink" title="1.5 安装Jenkins"></a>1.5 安装Jenkins</h4><p>安装jenkins方法有很多：</p>
-<ol>
-<li><p>可以通过官网下载<code>war</code>包，然后将war包放在<code>tomcat</code>的<code>webapp</code>下，就可以了</p>
-</li>
-<li><p><code>linux</code>可以选择通过<code>yum</code>安装， 跟着<a target="_blank" rel="noopener" href="https://pkg.jenkins.io/redhat-stable/">官网</a>的步骤就可以了</p>
-</li>
-<li><p>直接通过<code>rpm</code>安装 <code>wget https://pkg.jenkins.io/redhat/jenkins-2.156-1.1.noarch.rpm rpm -ivh jenkins-2.156-1.1.noarch.rpm</code></p>
-</li>
-</ol>
-<p>第二种方式，出现了<code>error: https://jenkins-ci.org/redhat/jenkins-ci.org.key: import read failed(-1)</code>, 才疏学浅，实在没有搞明白是什么原因导致的，最后通过第三种方式成功安装了jenkins</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">systemctl start jenkins</span><br><span class="line">systemctl status jenkins</span><br></pre></td></tr></table></figure>
-
-<p><img src="/2021/02/07/jenkins%E5%9C%A8linux%E5%B9%B3%E5%8F%B0%E4%B8%8A%E7%9A%84%E6%90%AD%E5%BB%BA/image-20210208180805133.png" alt="image-20210208180805133"></p>
-<p>说明Jenkins已经启动成功了，接下来就是配置jenkins了。</p>
-<h3 id="2-Jenkins初始化"><a href="#2-Jenkins初始化" class="headerlink" title="2.Jenkins初始化"></a>2.Jenkins初始化</h3><p>启动jenkins后，我们可以通过<a target="_blank" rel="noopener" href="http://localhost:8080/">http://localhost:8080</a> 来访问，可以看见页面初始化内容<code>这里端口可以自行设置，默认8080，如果你用的是云服务器，那么还需要配置一下防火墙安全组策略</code>。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim &#x2F;etc&#x2F;sysconfig&#x2F;jenkins</span><br></pre></td></tr></table></figure>
-
-<p>访问页面后，将会要求你输入初始化密码在<code>/var/lib/jenkins/secrets/initialAdminPassword</code></p>
-<p><img src="/2021/02/07/jenkins%E5%9C%A8linux%E5%B9%B3%E5%8F%B0%E4%B8%8A%E7%9A%84%E6%90%AD%E5%BB%BA/image-20210208183737457.png" alt="image-20210208183737457"></p>
-<h4 id="2-1-插件安装"><a href="#2-1-插件安装" class="headerlink" title="2.1 插件安装"></a>2.1 插件安装</h4><p>这里我们可以先不选择安装插件，因为实在太慢了。。。我们后续可以配置下镜像源。</p>
-<p><img src="/2021/02/07/jenkins%E5%9C%A8linux%E5%B9%B3%E5%8F%B0%E4%B8%8A%E7%9A%84%E6%90%AD%E5%BB%BA/image-20210208181952514.png" alt="image-20210208181952514"></p>
-<h4 id="2-2-更换镜像源-系统工具插件"><a href="#2-2-更换镜像源-系统工具插件" class="headerlink" title="2.2 更换镜像源, 系统工具插件"></a>2.2 更换镜像源, 系统工具插件</h4><p>插件管理》》》高级设置》》》升级站点， 将以下内容复制到输入框中</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;mirror.esuni.jp&#x2F;jenkins&#x2F;updates&#x2F;update-center.json</span><br></pre></td></tr></table></figure>
-
-<p><strong>系统工具所需插件</strong></p>
-<p><a target="_blank" rel="noopener" href="https://plugins.jenkins.io/maven-plugin">Maven Integration</a>：是jenkins进行持续集成需要的maven插件</p>
-<p><a target="_blank" rel="noopener" href="https://plugins.jenkins.io/git">Git plugin</a>: 集成git</p>
-<p><a target="_blank" rel="noopener" href="https://plugins.jenkins.io/github">GitHub plugin</a>：指定拉取github中的仓库地址</p>
-<h4 id="2-3-配置系统工具"><a href="#2-3-配置系统工具" class="headerlink" title="2.3 配置系统工具"></a>2.3 配置系统工具</h4><p>在步骤一已经提到了<code>jenkins</code>构建自动化测试所需要的工具，接下来就是配置这些工具》》》系统管理》》》全局工具配置。</p>
-<p><strong>jdk配置</strong></p>
-<p><img src="/2021/02/07/jenkins%E5%9C%A8linux%E5%B9%B3%E5%8F%B0%E4%B8%8A%E7%9A%84%E6%90%AD%E5%BB%BA/image-20210208224048880.png" alt="image-20210208224048880"></p>
-<p><strong>maven配置</strong></p>
-<p><img src="/2021/02/07/jenkins%E5%9C%A8linux%E5%B9%B3%E5%8F%B0%E4%B8%8A%E7%9A%84%E6%90%AD%E5%BB%BA/image-20210208224517522.png" alt="image-20210208224517522"></p>
-<p><strong>git配置</strong></p>
-<p><img src="/2021/02/07/jenkins%E5%9C%A8linux%E5%B9%B3%E5%8F%B0%E4%B8%8A%E7%9A%84%E6%90%AD%E5%BB%BA/image-20210208224451299.png" alt="image-20210208224451299"></p>
-<p>执行到这一步，<code>jenkins</code>已经搭建好了，接下来就是好好学习jenkins如何构建复杂项目了</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jenkins/" rel="tag">jenkins</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-   
-</article>
-
-    
-    <article
-  id="post-DateFormat不要定义成全局！！！"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2021/01/28/DateFormat%E4%B8%8D%E8%A6%81%E5%AE%9A%E4%B9%89%E6%88%90%E5%85%A8%E5%B1%80%EF%BC%81%EF%BC%81%EF%BC%81/"
-    >DateFormat不要定义成全局！！！</a> 
-</h2>
- 
-
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2021/01/28/DateFormat%E4%B8%8D%E8%A6%81%E5%AE%9A%E4%B9%89%E6%88%90%E5%85%A8%E5%B1%80%EF%BC%81%EF%BC%81%EF%BC%81/" class="article-date">
-  <time datetime="2021-01-28T15:06:58.000Z" itemprop="datePublished">2021-01-28</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h2 id="1-问题产生原因"><a href="#1-问题产生原因" class="headerlink" title="1.问题产生原因"></a>1.问题产生原因</h2><p>一次项目开发过程中，因为多出需要<code>Format Date</code>鄙人为求<code>捷径</code>, 将<code>DateFormat</code>对象定义成全局的。。。</p> 
-      <a class="article-more-link" href="/2021/01/28/DateFormat%E4%B8%8D%E8%A6%81%E5%AE%9A%E4%B9%89%E6%88%90%E5%85%A8%E5%B1%80%EF%BC%81%EF%BC%81%EF%BC%81/"
-        >阅读更多...</a
-      >
-       
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/" rel="tag">java</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-   
-</article>
-
-    
   </article>
   
 
   
   <nav class="page-nav">
     
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/">下一页</a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/2/">下一页</a>
   </nav>
   
 </section>
@@ -508,7 +458,7 @@
         
         
         
-        由 <a href="https://hexo.io" target="_blank">Hexo</a> 强力驱动
+        Powered by <a href="https://hexo.io" target="_blank">Hexo</a>
         <span class="division">|</span>
         主题 - <a href="https://github.com/Shen-Yu/hexo-theme-ayer" target="_blank">Ayer</a>
         

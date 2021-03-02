@@ -1,6 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>2021年个人计划</title>
+    <url>/2021/03/01/2021%E5%B9%B4%E4%B8%AA%E4%BA%BA%E8%AE%A1%E5%88%92/</url>
+    <content><![CDATA[<h3 id="2021年个人计划"><a href="#2021年个人计划" class="headerlink" title="2021年个人计划"></a>2021年个人计划</h3><p>虽然2021年已经过去3个月，没有第一时间做出2021的个人计划，只因当时自己没有好好规划自己目标。我相信现在做规划还是来得及的。</p>
+<p>以下是我2021年的计划清单：</p>
+<h3 id="生活类"><a href="#生活类" class="headerlink" title="生活类"></a>生活类</h3><p>1.每天坐50个深蹲</p>
+<p>2.每月陪女朋友看一场电影</p>
+<p>3.对当月进行一次个人汇总总结，对人生观一个正向反馈</p>
+<p>4.每月尝试一道新菜。</p>
+<p>5.带女朋友去一次杭州。</p>
+<p>6.每个月增重3斤</p>
+<p>7.控制游戏时间，每个星期游戏时间控制在2h以内</p>
+<h3 id="知识类"><a href="#知识类" class="headerlink" title="知识类"></a>知识类</h3><p>1.每月看4本书(1本技术类，3本杂书)，吸收不同维度的知识</p>
+<p>2.每天看10分钟新闻</p>
+<p>3.每天背40个单词</p>
+<h3 id="理财类"><a href="#理财类" class="headerlink" title="理财类"></a>理财类</h3><p>将每月工资的【1/4】存入银行卡，作为固定积蓄；300作为地铁费用；3.5k作为生活住宿支出；500用来购物；</p>
+<p>剩下的钱则是购买基金。</p>
+]]></content>
+      <categories>
+        <category>生活</category>
+      </categories>
+      <tags>
+        <tag>个人计划</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Jenkins用户权限管理</title>
+    <url>/2021/03/01/Jenkins%E7%94%A8%E6%88%B7%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86/</url>
+    <content><![CDATA[<p>Jenkins需要用<code>Role-based Authorization Strategy</code> 插件来实现对不同用户的访问控制。</p>
+<h3 id="1-下载插件"><a href="#1-下载插件" class="headerlink" title="1.下载插件"></a>1.下载插件</h3><p>点jenkins的插件管理，下载<code>Role-based Authorization Strategy</code></p>
+<h3 id="2-安全配置"><a href="#2-安全配置" class="headerlink" title="2.安全配置"></a>2.安全配置</h3><p>下载插件后，重启jenkins，找到全局安全设置，配置安全访问策略</p>
+<p><img src="/2021/03/01/Jenkins%E7%94%A8%E6%88%B7%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86/image-20210301160728310.png" alt="image-20210301160728310"></p>
+<p>1）管理角色</p>
+<p>系统配置找到<code>Manage and assign Roles</code>实现对不同角色权限控制。</p>
+<p><img src="/2021/03/01/Jenkins%E7%94%A8%E6%88%B7%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86/image-20210301160932429.png" alt="image-20210301160932429"></p>
+<p>2）分配角色</p>
+<p><img src="/2021/03/01/Jenkins%E7%94%A8%E6%88%B7%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86/image-20210301161125085.png" alt="image-20210301161125085"></p>
+<p>3.查看用户权限是否配置成功</p>
+<p>登录hewu用户，只能看见test项目，证明权限配置成功。</p>
+<p><img src="/2021/03/01/Jenkins%E7%94%A8%E6%88%B7%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86/image-20210301161222741.png" alt="image-20210301161222741"></p>
+]]></content>
+      <categories>
+        <category>运维</category>
+        <category>自动化</category>
+      </categories>
+      <tags>
+        <tag>角色权限</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Jenkins踩坑日记</title>
     <url>/2021/02/25/Jenkins%E8%B8%A9%E5%9D%91%E6%97%A5%E8%AE%B0/</url>
     <content><![CDATA[<p>在jenkins使用<code>Publish over SSH</code>插件时，可谓时踩到了一个不小的坑，记录一下。。。</p>
@@ -42,9 +91,8 @@
 <p>1）<code>在jenkins界面中，系统设置 》》Manage Credentials》》添加凭据</code></p>
 <p><img src="/2021/02/09/%E5%9C%A8jenkins%E5%B9%B3%E5%8F%B0%E9%83%A8%E7%BD%B2%E9%A1%B9%E7%9B%AE/image-20210228222033048.png" alt="image-20210228222033048"></p>
 <ol start="2">
-<li>复制<code>/root/.ssh/id_rsa/pub</code>内容</li>
+<li>复制<code>/root/.ssh/id_rsa/pub</code>内容<br><img src="/2021/02/09/%E5%9C%A8jenkins%E5%B9%B3%E5%8F%B0%E9%83%A8%E7%BD%B2%E9%A1%B9%E7%9B%AE/image-20210228224043422.png" alt="image-20210228224043422"> 点击你的git账户setting设置，将内容粘贴到<code>Ssh andGPG Keys</code>中。</li>
 </ol>
-<p><img src="/2021/02/09/%E5%9C%A8jenkins%E5%B9%B3%E5%8F%B0%E9%83%A8%E7%BD%B2%E9%A1%B9%E7%9B%AE/image-20210228224043422.png" alt="image-20210228224043422"> 点击你的git账户setting设置，将内容粘贴到<code>Ssh andGPG Keys</code>中。</p>
 <h3 id="4-项目配置"><a href="#4-项目配置" class="headerlink" title="4.项目配置"></a>4.项目配置</h3><p>完成以上配置后，就可以添加一个任务了。</p>
 <p>1）新建任务</p>
 <p><code>左侧选项卡》》新建任务》》选择maven项目</code> 点击确定，任务新建完成。</p>
@@ -52,13 +100,12 @@
 <ol start="2">
 <li> 项目配置</li>
 </ol>
-<p>任务新建完成后，那jenkins如何知道你构建的项目呢？如何触发构建，构建完成后又需要做说明呢？接下来就是项目配置了。</p>
-<p><code>1）触发器</code></p>
-<p><code>jenkins触发构建的方式有许多种, 这里只介绍最常用的多工程构建, 定时构建和轮询SCM方式</code>。多工程构建触发可以设置指定工程构建完成后触发；后两种触发方式都需要配置<a href="https://www.beejson.com/tool/cron.html">Cron</a>。</p>
+<p>任务新建完成后，那jenkins如何知道你构建的项目呢？如何触发构建，构建完成后又需要做说明呢？接下来就是项目配置了。<br><code>1) 源码管理</code><br>jenkins从github中拉取代码配置<br><img src="/2021/02/09/%E5%9C%A8jenkins%E5%B9%B3%E5%8F%B0%E9%83%A8%E7%BD%B2%E9%A1%B9%E7%9B%AE/image-20210301151600848.png" alt="image-20210301151600848"><br><code>2）触发器</code></p>
+<p><code>jenkins触发构建的方式有许多种, 这里只介绍最常用的多工程构建, 定时构建和轮询SCM方式</code>。多工程构建触发可以设置指定工程构建完成后触发；后两种触发方式都需要配置<a href="https://www.beejson.com/tool/cron.html">Cron</a>。<br>定时字符串从左往右分别为： 分 时 日 月 周</p>
 <p><img src="/2021/02/09/%E5%9C%A8jenkins%E5%B9%B3%E5%8F%B0%E9%83%A8%E7%BD%B2%E9%A1%B9%E7%9B%AE/image-20210301140347622.png" alt="image-20210301140347622"></p>
-<p><code>2) 构建环境</code></p>
+<p><code>3) 构建环境</code></p>
 <p><img src="/2021/02/09/%E5%9C%A8jenkins%E5%B9%B3%E5%8F%B0%E9%83%A8%E7%BD%B2%E9%A1%B9%E7%9B%AE/image-20210301142213363.png" alt="image-20210301142213363"></p>
-<p><code>3）构建后操作</code></p>
+<p><code>4）构建后操作</code></p>
 <p>（1）邮件发送构建结果</p>
 <p><img src="/2021/02/09/%E5%9C%A8jenkins%E5%B9%B3%E5%8F%B0%E9%83%A8%E7%BD%B2%E9%A1%B9%E7%9B%AE/image-20210301142400243.png" alt="image-20210301142400243"></p>
 <p>邮件触发器：这里设置项目构建不管成功还是失败都发送构建结果</p>
