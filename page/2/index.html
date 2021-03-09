@@ -142,6 +142,112 @@
     
     
     <article
+  id="post-在jenkins平台部署项目"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2021/02/09/%E5%9C%A8jenkins%E5%B9%B3%E5%8F%B0%E9%83%A8%E7%BD%B2%E9%A1%B9%E7%9B%AE/"
+    >在jenkins平台部署项目</a> 
+</h2>
+ 
+
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2021/02/09/%E5%9C%A8jenkins%E5%B9%B3%E5%8F%B0%E9%83%A8%E7%BD%B2%E9%A1%B9%E7%9B%AE/" class="article-date">
+  <time datetime="2021-02-09T10:15:23.000Z" itemprop="datePublished">2021-02-09</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BF%90%E7%BB%B4/">运维</a> / <a class="article-category-link" href="/categories/%E8%BF%90%E7%BB%B4/%E8%87%AA%E5%8A%A8%E5%8C%96/">自动化</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h3 id="1-远程服务器配置SSH服务，实现远程文件传输"><a href="#1-远程服务器配置SSH服务，实现远程文件传输" class="headerlink" title="1.远程服务器配置SSH服务，实现远程文件传输"></a>1.远程服务器配置SSH服务，实现远程文件传输</h3><p>1）安装<code>Publish Over SSH</code>插件</p>
+<p><img src="/2021/02/09/%E5%9C%A8jenkins%E5%B9%B3%E5%8F%B0%E9%83%A8%E7%BD%B2%E9%A1%B9%E7%9B%AE/image-20210228182701201.png" alt="image-20210228182701201"></p>
+<p>2）开启22端口</p>
+<p>3）配置SSH</p>
+<p><code>在服务器上使用ssh-keygen生成一对密钥对，将私钥复制。</code></p>
+<p><img src="/2021/02/09/%E5%9C%A8jenkins%E5%B9%B3%E5%8F%B0%E9%83%A8%E7%BD%B2%E9%A1%B9%E7%9B%AE/image-20210228183323674.png" alt="image-20210228183323674"></p>
+<p><code>系统配置》》配置 》》Publish over SSH</code></p>
+<p><img src="/2021/02/09/%E5%9C%A8jenkins%E5%B9%B3%E5%8F%B0%E9%83%A8%E7%BD%B2%E9%A1%B9%E7%9B%AE/image-20210228184933425.png" alt="image-20210228184933425"></p>
+<p><img src="/2021/02/09/%E5%9C%A8jenkins%E5%B9%B3%E5%8F%B0%E9%83%A8%E7%BD%B2%E9%A1%B9%E7%9B%AE/image-20210228185120357.png" alt="image-20210228185120357"></p>
+<h3 id="2-配置邮件服务"><a href="#2-配置邮件服务" class="headerlink" title="2.配置邮件服务"></a>2.配置邮件服务</h3><p>1）下载插件<code>Email Extension Plugin</code></p>
+<p><img src="/2021/02/09/%E5%9C%A8jenkins%E5%B9%B3%E5%8F%B0%E9%83%A8%E7%BD%B2%E9%A1%B9%E7%9B%AE/image-20210228185317672.png" alt="image-20210228185317672"></p>
+<ol start="2">
+<li> <code>邮件配置</code></li>
+</ol>
+<p>进入Jenkins界面，系统配置》》Extended E-mail Notification</p>
+<p><img src="/2021/02/09/%E5%9C%A8jenkins%E5%B9%B3%E5%8F%B0%E9%83%A8%E7%BD%B2%E9%A1%B9%E7%9B%AE/image-20210228190230257.png" alt="image-20210228190230257"></p>
+<p><img src="/2021/02/09/%E5%9C%A8jenkins%E5%B9%B3%E5%8F%B0%E9%83%A8%E7%BD%B2%E9%A1%B9%E7%9B%AE/image-20210228190452491.png" alt="image-20210228190452491"></p>
+<h3 id="3-凭据设置"><a href="#3-凭据设置" class="headerlink" title="3.凭据设置"></a>3.凭据设置</h3><p>jenkins需要拉取远程项目代码，本文采用<code>SSH方式</code>。</p>
+<p>1）<code>在jenkins界面中，系统设置 》》Manage Credentials》》添加凭据</code></p>
+<p><img src="/2021/02/09/%E5%9C%A8jenkins%E5%B9%B3%E5%8F%B0%E9%83%A8%E7%BD%B2%E9%A1%B9%E7%9B%AE/image-20210228222033048.png" alt="image-20210228222033048"></p>
+<ol start="2">
+<li>复制<code>/root/.ssh/id_rsa/pub</code>内容<br><img src="/2021/02/09/%E5%9C%A8jenkins%E5%B9%B3%E5%8F%B0%E9%83%A8%E7%BD%B2%E9%A1%B9%E7%9B%AE/image-20210228224043422.png" alt="image-20210228224043422"> 点击你的git账户setting设置，将内容粘贴到<code>Ssh andGPG Keys</code>中。</li>
+</ol>
+<h3 id="4-项目配置"><a href="#4-项目配置" class="headerlink" title="4.项目配置"></a>4.项目配置</h3><p>完成以上配置后，就可以添加一个任务了。</p>
+<p>1）新建任务</p>
+<p><code>左侧选项卡》》新建任务》》选择maven项目</code> 点击确定，任务新建完成。</p>
+<p><img src="/2021/02/09/%E5%9C%A8jenkins%E5%B9%B3%E5%8F%B0%E9%83%A8%E7%BD%B2%E9%A1%B9%E7%9B%AE/image-20210228233535139.png" alt="image-20210228233535139"></p>
+<ol start="2">
+<li> 项目配置</li>
+</ol>
+<p>任务新建完成后，那jenkins如何知道你构建的项目呢？如何触发构建，构建完成后又需要做说明呢？接下来就是项目配置了。<br><code>1) 源码管理</code><br>jenkins从github中拉取代码配置<br><img src="/2021/02/09/%E5%9C%A8jenkins%E5%B9%B3%E5%8F%B0%E9%83%A8%E7%BD%B2%E9%A1%B9%E7%9B%AE/image-20210301151600848.png" alt="image-20210301151600848"><br><code>2）触发器</code></p>
+<p><code>jenkins触发构建的方式有许多种, 这里只介绍最常用的多工程构建, 定时构建和轮询SCM方式</code>。多工程构建触发可以设置指定工程构建完成后触发；后两种触发方式都需要配置<a target="_blank" rel="noopener" href="https://www.beejson.com/tool/cron.html">Cron</a>。<br>定时字符串从左往右分别为： 分 时 日 月 周</p>
+<p><img src="/2021/02/09/%E5%9C%A8jenkins%E5%B9%B3%E5%8F%B0%E9%83%A8%E7%BD%B2%E9%A1%B9%E7%9B%AE/image-20210301140347622.png" alt="image-20210301140347622"></p>
+<p><code>3) 构建环境</code></p>
+<p><img src="/2021/02/09/%E5%9C%A8jenkins%E5%B9%B3%E5%8F%B0%E9%83%A8%E7%BD%B2%E9%A1%B9%E7%9B%AE/image-20210301142213363.png" alt="image-20210301142213363"></p>
+<p><code>4）构建后操作</code></p>
+<p>（1）邮件发送构建结果</p>
+<p><img src="/2021/02/09/%E5%9C%A8jenkins%E5%B9%B3%E5%8F%B0%E9%83%A8%E7%BD%B2%E9%A1%B9%E7%9B%AE/image-20210301142400243.png" alt="image-20210301142400243"></p>
+<p>邮件触发器：这里设置项目构建不管成功还是失败都发送构建结果</p>
+<p><code>这里有一个坑！！！默认生成的Recipient List里面是Devoleper，我们需要选择默认配置的接收人</code></p>
+<p><img src="/2021/02/09/%E5%9C%A8jenkins%E5%B9%B3%E5%8F%B0%E9%83%A8%E7%BD%B2%E9%A1%B9%E7%9B%AE/image-20210301143300683.png" alt="image-20210301143300683"></p>
+<p>（2）SSH服务设置</p>
+<p><img src="/2021/02/09/%E5%9C%A8jenkins%E5%B9%B3%E5%8F%B0%E9%83%A8%E7%BD%B2%E9%A1%B9%E7%9B%AE/image-20210301145443024.png" alt="image-20210301145443024"></p>
+<p><code>执行命令</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line">echo &quot;准备将springboot发版&quot; &gt;&gt;  codingboypeng.txt</span><br><span class="line"><span class="meta">#</span><span class="bash"> <span class="built_in">cd</span>到你jar包所在目录</span></span><br><span class="line">cd /usr/local/java/work_space/</span><br><span class="line">mv classes/deploy.sh  deploy.sh</span><br><span class="line">rm -rf  classes</span><br><span class="line">chmod 777 deploy.sh</span><br><span class="line">sh deploy.sh &gt;&gt; log</span><br></pre></td></tr></table></figure>
+
+<p><code>jar包部署脚本</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line">echo &quot;stopping springboot application....&quot;</span><br><span class="line"><span class="meta">#</span><span class="bash"> 查找端口是否被占用</span></span><br><span class="line">pid=`ps -ef | grep springboot.jar | grep -v grep | awk &#x27;&#123;print $2&#125;&#x27;`</span><br><span class="line">if [ &quot;$pid&quot; == &quot;&quot; ];</span><br><span class="line">    then</span><br><span class="line">        echo &quot;springboot is already stop!&quot;</span><br><span class="line">    else</span><br><span class="line">        echo &quot;kill -9 的pid:&quot; + $pid</span><br><span class="line">        kill -9 $pid</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">echo &quot;remove old springboot.jar ...&quot;</span><br><span class="line"><span class="meta">#</span><span class="bash"> 这里如果你配置的ssh传输节点不在同一目录下，你需要将当然需要部署的旧版本jar替换成新jar...</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 由于我配置的ssh传输目录在当前目录下，所以当前jar包就是新jar包，不需要进行删除替换。</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> rm /home/jenkins/HelloWorld/helloboot-0.0.1-SNAPSHOT.jar</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> cp /root/.jenkins/<span class="built_in">jobs</span>/HelloWorld/workspace/target/helloboot-0.0.1-SNAPSHOT.jar /home/jenkins/HelloWorld</span></span><br><span class="line">sleep 2s</span><br><span class="line">echo &quot;running springboot.jar....&quot;</span><br><span class="line">java -jar springboot.jar &amp;</span><br><span class="line">echo &quot;running springboot finish&quot;</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-项目构建"><a href="#5-项目构建" class="headerlink" title="5.项目构建"></a>5.项目构建</h3><p>1）项目构建十分简单，以上操作完成后，主页面会多出一个<code>springboot-test</code>任务，点击立即构建就可以了。</p>
+<p><img src="/2021/02/09/%E5%9C%A8jenkins%E5%B9%B3%E5%8F%B0%E9%83%A8%E7%BD%B2%E9%A1%B9%E7%9B%AE/image-20210301144318379.png" alt="image-20210301144318379">2）可以查看指定构建详情</p>
+<p><code>某次构建》》控制台输出</code></p>
+<p><img src="/2021/02/09/%E5%9C%A8jenkins%E5%B9%B3%E5%8F%B0%E9%83%A8%E7%BD%B2%E9%A1%B9%E7%9B%AE/image-20210301145209006.png" alt="image-20210301145209006"></p>
+<p>3）查看是否部署成功</p>
+<p><img src="/2021/02/09/%E5%9C%A8jenkins%E5%B9%B3%E5%8F%B0%E9%83%A8%E7%BD%B2%E9%A1%B9%E7%9B%AE/image-20210301145538057.png" alt="image-20210301145538057"></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jenkins/" rel="tag">jenkins</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/maven%E9%83%A8%E7%BD%B2/" rel="tag">maven部署</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+   
+</article>
+
+    
+    <article
   id="post-jenkins在linux平台上的搭建"
   class="article article-type-post"
   itemscope
@@ -363,61 +469,6 @@
     <footer class="article-footer">
        
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/" rel="tag">java</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-   
-</article>
-
-    
-    <article
-  id="post-回顾2020"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2021/01/15/%E5%9B%9E%E9%A1%BE2020/"
-    >回顾2020</a> 
-</h2>
- 
-
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2021/01/15/%E5%9B%9E%E9%A1%BE2020/" class="article-date">
-  <time datetime="2021-01-15T06:40:16.000Z" itemprop="datePublished">2021-01-15</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E6%97%A5%E5%B8%B8%E7%94%9F%E6%B4%BB/">日常生活</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>2020已经过去， 但回想起来经历的事，遇见的人都在脑海中一一浮现。</p> 
-      <a class="article-more-link" href="/2021/01/15/%E5%9B%9E%E9%A1%BE2020/"
-        >阅读更多...</a
-      >
-       
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%94%9F%E6%B4%BB%E8%A7%84%E5%88%92/" rel="tag">生活规划</a></li></ul>
 
     </footer>
   </div>
