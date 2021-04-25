@@ -1,15 +1,139 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>XML中的CDATA</title>
+    <url>/2021/04/25/XML%E4%B8%AD%E7%9A%84CDATA/</url>
+    <content><![CDATA[<p>CDATA是什么，这是XML语法。在CDATA内部的所有内容都会被解析器忽略。</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line">SELECT *</span><br><span class="line">FROM xxl_job_registry AS t</span><br><span class="line">WHERE t.update_time &lt;![CDATA[ &gt; ]]&gt; DATE_ADD(#&#123;nowTime&#125;,INTERVAL -#&#123;timeout&#125; SECOND)</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+
+<p>类似与</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> *</span><br><span class="line"><span class="keyword">FROM</span> xxl_job_registry <span class="keyword">AS</span> t</span><br><span class="line"><span class="keyword">WHERE</span> t.update_time &gt; <span class="keyword">DATE_ADD</span>(<span class="comment">#&#123;nowTime&#125;,INTERVAL -#&#123;timeout&#125; SECOND)</span></span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>技术</category>
+      </categories>
+      <tags>
+        <tag>XML</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Docker搭建redis集群</title>
+    <url>/2021/04/23/Docker%E6%90%AD%E5%BB%BAredis%E9%9B%86%E7%BE%A4/</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>Docker容器通信</title>
+    <url>/2021/04/19/Docker%E5%AE%B9%E5%99%A8%E9%80%9A%E4%BF%A1/</url>
+    <content><![CDATA[<h1 id="Docker容器通信"><a href="#Docker容器通信" class="headerlink" title="Docker容器通信"></a>Docker容器通信</h1><p>一直以来想用Docker搭建一个RocketMQ集群，但是由于一直没有对docker进行深入了解，无法知道容器之间是如何通信，导致该想法止步于此。</p>
+<p>想知道容器之间通信，那就应该先了解docker网络。</p>
+<a id="more"></a>
+<p>安装docker时，会自动在host上创建3个网络：host, network和bridge；执行<code>ip addr</code>，可以发现多了一块docker0虚拟网卡（稍后为你解释docker0的作用）</p>
+<p><img src="/2021/04/19/Docker%E5%AE%B9%E5%99%A8%E9%80%9A%E4%BF%A1/image-20210416144755032.png" alt="image-20210416144755032"></p>
+<p>准备容器，这里以redis为例<code>docker pull redis</code></p>
+<p><img src="/2021/04/19/Docker%E5%AE%B9%E5%99%A8%E9%80%9A%E4%BF%A1/image-20210416145428843.png" alt="image-20210416145428843"></p>
+<p>首先<code>docker run  --name  redis01  redis    apt-get install -y iputils-ping</code>创建一个名为<code>redis01</code>容器。</p>
+<p><img src="/2021/04/19/Docker%E5%AE%B9%E5%99%A8%E9%80%9A%E4%BF%A1/image-20210416154803175.png" alt="image-20210416154803175"></p>
+<p><code>docker inspect redis01</code>查看容器内部详细信息。可以看见容器使用的是bridge网络模式。</p>
+<p><img src="/2021/04/19/Docker%E5%AE%B9%E5%99%A8%E9%80%9A%E4%BF%A1/image-20210416161551657.png" alt="image-20210416161551657"></p>
+<p>当docker进程启动时，就会默认生成3个网络，使用<code>docker network  ls</code>列出docker已存在的网络，如下图所示</p>
+<p><img src="/2021/04/19/Docker%E5%AE%B9%E5%99%A8%E9%80%9A%E4%BF%A1/image-20210417213304645.png" alt="image-20210417213304645"></p>
+<p>bridge模式下，每当docker生成一个容器，docker将会创建一对<code>veth pair</code>虚拟网卡，一段在宿主机中，叫做veth， 另一端存在于新建的容器中，名为<code>eth0</code>。容器就可以通过eth0来连接宿主机和其他容器。</p>
+<p>创建redis01容器后，宿主机执行<code>ip addr</code>，就可以看见新增具有唯一识别的veth。</p>
+<p><img src="/2021/04/19/Docker%E5%AE%B9%E5%99%A8%E9%80%9A%E4%BF%A1/image-20210417214218596.png" alt="image-20210417214218596"></p>
+<p>docker共有4种网络模式，这里只做简单介绍。Network namespace顾名思义，就是docker网络中的命名空间，docker是以命名空间来控制不同容器之间通信的。不同namespace的容器是无法进行通信的(当然也可以做到容器互联)。</p>
+<p><img src="/2021/04/19/Docker%E5%AE%B9%E5%99%A8%E9%80%9A%E4%BF%A1/image-20210416233941905.png" alt="image-20210416233941905"></p>
+<p>如果没有指定网络模式，那么容器和宿主机则是互通 的。那么容器与容器是如何互联的呢？</p>
+<p>使用<code>docker run  --name  redis02  redis    apt-get install -y iputils-ping</code>，再查看分配redis02容器的ip</p>
+<p><img src="/2021/04/19/Docker%E5%AE%B9%E5%99%A8%E9%80%9A%E4%BF%A1/image-20210417220957415.png" alt="image-20210417220957415"></p>
+<p>尝试将两容器互ping</p>
+<p><img src="/2021/04/19/Docker%E5%AE%B9%E5%99%A8%E9%80%9A%E4%BF%A1/image-20210417221520012.png" alt="image-20210417221520012"></p>
+<p>结果：以上是由于我们容器都使用了默认参数-net bridge，namespace都是相同的，所以redis02, redis01网络是互通的。但容器之间网络并不是直连的，而是通过eth0经过宿主机网桥转发到目标容器。</p>
+<p><img src="/2021/04/19/Docker%E5%AE%B9%E5%99%A8%E9%80%9A%E4%BF%A1/image-20210417223526642.png" alt="image-20210417223526642"></p>
+<p><strong>创建自定义网络</strong></p>
+<p><code>docker network create --driver bridge --subnet 192.168.0.0/16  --gateway 192.168.0.1 redis</code></p>
+<p><img src="/2021/04/19/Docker%E5%AE%B9%E5%99%A8%E9%80%9A%E4%BF%A1/image-20210419120115793.png" alt="image-20210419120115793"></p>
+<p>创建指定网络容器</p>
+<p><code>docker run -it  -d --name redis-net-01  --network=redis   redis</code></p>
+<p><img src="/2021/04/19/Docker%E5%AE%B9%E5%99%A8%E9%80%9A%E4%BF%A1/image-20210419121055233.png" alt="image-20210419121055233"></p>
+<p><img src="/2021/04/19/Docker%E5%AE%B9%E5%99%A8%E9%80%9A%E4%BF%A1/image-20210419121151790.png" alt="image-20210419121151790"></p>
+<p>宿主机使用<code>ip addr</code>，发现多了一块网卡</p>
+<p><img src="/2021/04/19/Docker%E5%AE%B9%E5%99%A8%E9%80%9A%E4%BF%A1/image-20210419122346820.png" alt="image-20210419122346820"></p>
+<p>再创建一个相同网络的容器，名为<code>redis-net-02</code></p>
+<p><code>docker run -it  -d --name redis-net-02  --network=redis   redis</code></p>
+<p><img src="/2021/04/19/Docker%E5%AE%B9%E5%99%A8%E9%80%9A%E4%BF%A1/image-20210419121506682.png" alt="image-20210419121506682"></p>
+<p>测试redis-net-02与redis-net-01网络联通</p>
+<p><img src="/2021/04/19/Docker%E5%AE%B9%E5%99%A8%E9%80%9A%E4%BF%A1/image-20210419122125701.png" alt="image-20210419122125701"></p>
+<p>当然，使用自定义网络的容器是可以使用容器名的</p>
+<p><img src="/2021/04/19/Docker%E5%AE%B9%E5%99%A8%E9%80%9A%E4%BF%A1/image-20210419122508412.png" alt="image-20210419122508412"></p>
+<p>使用自定义网络的好处</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">很好的做到容器之间网络隔离</span><br><span class="line">使用自定义网络 ping 容器的 ip 地址和名称都能 ping 通</span><br><span class="line">不同集群可以采用不同的网络，避免的网络的复杂性，保证集群健康和安全</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>运维</category>
+        <category>docker</category>
+      </categories>
+      <tags>
+        <tag>docker网络</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Docker安装部署mysql踩坑</title>
+    <url>/2021/04/15/Docker%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2mysql%E8%B8%A9%E5%9D%91/</url>
+    <content><![CDATA[<h1 id="Docker安装部署mysql踩坑"><a href="#Docker安装部署mysql踩坑" class="headerlink" title="Docker安装部署mysql踩坑"></a>Docker安装部署mysql踩坑</h1><p>最近花了一段时间学习Docker，准备自己搭建一个镜像，更深层次的了解一个镜像生成原理。</p>
+<p>以前一直都不知道docker为什么会比传统虚拟机更快？镜像和容器之间的关系是什么？经过一周的学习，终于有了一个最基本的概念！</p>
+<p><strong>轻量级容器</strong></p>
+<p>docker具有<code>分层</code>概念, 所有镜像都会有一个基础镜像Image；一个镜像具有很多层layer; 上层在下层layer基础上只做增量，docker比虚拟机更为轻量级的原因就是因为layer；可以通过<code>docker inspect 镜像名</code>查看当前镜像layer。</p>
+<p><img src="/2021/04/15/Docker%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2mysql%E8%B8%A9%E5%9D%91/image-20210412151439814.png" alt="image-20210412151439814"></p>
+<p><strong>docker使用大致流程</strong></p>
+<ol>
+<li><p>使用<code>docker search</code>从<code>docker hub</code>找到我们所需要的镜像。</p>
+</li>
+<li><p><code>docker pull</code>从<code>docker hub</code>拉取镜像。</p>
+</li>
+<li><p>镜像下拉后，就可以通过run镜像来生成容器，生成容器时可携带参数来对生成容器进行配置(挂载，环境，端口映射等等)。docker hub中都有容器启动<code>guide</code>，请自行查看。</p>
+</li>
+<li><p>对容器进行commit，打包成镜像image,  push推送到仓库中。</p>
+</li>
+</ol>
+<p><img src="/2021/04/15/Docker%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2mysql%E8%B8%A9%E5%9D%91/image-20210415163331618.png" alt="image-20210415163331618"></p>
+<p><strong>容器和镜像</strong></p>
+<p>容器是镜像的实例，当run一个镜像的时候，容器就产生了。run镜像的实质就是为镜像提供一个可写层，可以通过该可写层来自定义配置镜像，构建自己的镜像。</p>
+<p><strong>常用命令</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">docker search  镜像</span><br><span class="line">docker pull 镜像名称:版本 #默认下拉latest最新版本</span><br><span class="line">docker run  [--name 容器名称] [-it 分配一个伪终端] [-p 映射端口] [-v 挂载数据卷] ImageId [容器启动后执行的命令]</span><br><span class="line">docker exec 容器ID&#x2F;容器名  &#x2F;bin&#x2F;bash    # 以命令行形式执行容器</span><br><span class="line">docker attach  进入容器内部</span><br><span class="line">docker commit 容器名 镜像名:版本</span><br><span class="line">docker build [-t 指定生成镜像名] [-f 指定dockerfile文件路径和文件名] . #默认会将当前目录下名为Dockerfile的文件</span><br><span class="line">docker inspect 镜像名  # 查看镜像详细信息</span><br><span class="line">docker rmi [-f 强制] 镜像</span><br><span class="line">docker rm [-f 强制] 容器</span><br><span class="line">docker contain prune #删除全部无用容器</span><br></pre></td></tr></table></figure>
+
+<p><strong>Dockerfile</strong></p>
+<p>这里只简单介绍dockerfile常用命令</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 所有镜像都拥有一个基础镜像；当我们用dockerfile构建镜像时，可以原有镜像上添加一些工具插件以及自定义配置</span><br><span class="line">FROM   基础镜像</span><br><span class="line"># 维护者信息</span><br><span class="line">MAINTAINER 个人签名</span><br><span class="line"># 镜像标签， 键值对 key&#x3D;value  可以打多个标签</span><br><span class="line">Label  version&#x3D;&quot;test:0.1&quot;</span><br><span class="line"># 制作镜像中需要用到的命令（安装服务，工具和配置）</span><br><span class="line"># 这里注意 dockerfile中run一次就会产生一个新的镜像；所以当多条run命令时，当前命令总在最新镜像执行；建议使用RUN 命令1 $$ # 命令2 连接</span><br><span class="line">RUN  yum -y install yim  或 RUN [&quot;yum&quot;, &quot;istall&quot;, &quot;nginx&quot;]</span><br><span class="line"># 容器启动执行的初始命令， 这里是启动后执行&#x2F;bin&#x2F;bash； 注意：容易被覆盖</span><br><span class="line">CMD &#x2F;bin&#x2F;bash</span><br><span class="line">#  EXPOSE 宿主机端口:容器内部端口 暴露端口 </span><br><span class="line"># ENV 设置容器内环境变量</span><br><span class="line">ENV MYSQL_PASSWORD 123456</span><br><span class="line">#  ADD 将dockerfile当前目录下的文件或目录拷贝镜像（压缩包会自动解压）</span><br><span class="line"># COPY docker file当前目录下的文件拷贝到镜像中</span><br><span class="line"># ENTRYPOINT    容器启动的时候执行的初始命令，不能被替换 </span><br><span class="line">ENTRYPOINT [ &quot;&#x2F;bin&#x2F;bash&quot;,&quot;-c&quot;,&quot;&#x2F;start.sh&quot; ]</span><br><span class="line"># VOLUME 挂载数据卷</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>部署Mysql踩坑</strong></p>
+<p>在部署Mysql后，想通过云服务器连接容器mysql，测试是否部署成功。却发现怎么也链接不进去，而使用navicat工具却链接成功了。</p>
+<p><img src="/2021/04/15/Docker%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2mysql%E8%B8%A9%E5%9D%91/image-20210412152149608.png" alt="image-20210412152149608"></p>
+<p>仔细检查密码，ip端口，阿里云安全组，发现都没有问题，</p>
+<p>最后发现是<code>容器版本和服务器mysql客户端版本不一致</code>导致的。当前服务器版本是5.7， 而容器Mysql却是8.0版本的，所以将mysql客户端更新到8.0就可以了</p>
+]]></content>
+      <categories>
+        <category>运维</category>
+      </categories>
+      <tags>
+        <tag>docker</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>MybatisPlus自动生成及其原理</title>
     <url>/2021/03/08/MybatisPlus%E8%87%AA%E5%8A%A8%E7%94%9F%E6%88%90%E5%8F%8A%E5%85%B6%E5%8E%9F%E7%90%86/</url>
     <content><![CDATA[<h1 id="MybatisPlus自动生成及其原理"><a href="#MybatisPlus自动生成及其原理" class="headerlink" title="MybatisPlus自动生成及其原理"></a>MybatisPlus自动生成及其原理</h1><p>在学习<code>MybatisPlus</code>的时候，觉得编写<code>Entity</code>,<code>Mapper</code>,<code>Service</code>和<code>Controller</code>类这种最基本而又重复性较高的步骤是十分没有必要的。我们可以使用Mybatis的逆向工程插件来快速搭建基本脚手架。</p>
+<a id="more"></a>
 <h3 id="1-模板引擎"><a href="#1-模板引擎" class="headerlink" title="1.模板引擎"></a>1.模板引擎</h3><p>我们可以通过<code>Template</code>引擎来大大减少编写的代码，常见的模板框架有<code>Freemarker</code>，<code>Theamleaf</code>,  <code>Velocity</code>等。。。本文使用<code>Velocity</code>作为模板引擎。</p>
 <p>导入Velocity相关依赖</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.apache.velocity&lt;&#x2F;groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;velocity-engine-core&lt;&#x2F;artifactId&gt;</span><br><span class="line">    &lt;version&gt;2.2&lt;&#x2F;version&gt;</span><br><span class="line">&lt;&#x2F;dependency&gt;</span><br></pre></td></tr></table></figure>
 
 <h3 id="2-自定义模板内容"><a href="#2-自定义模板内容" class="headerlink" title="2.自定义模板内容"></a>2.自定义模板内容</h3><p>导入<code>Velocity</code>相关依赖包后，我们就可以创建.vm模板文件来自定义模板内容了, 以下模板内容可以根据自身业务需要自行配置。</p>
 <p>(1) entity.vm</p>
+
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">package $&#123;package.Entity&#125;;</span><br><span class="line"></span><br><span class="line">#foreach($pkg in $&#123;table.importPackages&#125;)</span><br><span class="line">import $&#123;pkg&#125;;</span><br><span class="line">#end</span><br><span class="line"></span><br><span class="line">#if($&#123;entityLombokModel&#125;)</span><br><span class="line">import lombok.Data;</span><br><span class="line">import lombok.EqualsAndHashCode;</span><br><span class="line">    #if($&#123;chainModel&#125;)</span><br><span class="line">    import lombok.experimental.Accessors;</span><br><span class="line">    #end</span><br><span class="line">#end</span><br><span class="line"></span><br><span class="line">&#x2F;**</span><br><span class="line"> * &lt;p&gt;</span><br><span class="line"> * $!&#123;table.comment&#125;</span><br><span class="line"> * &lt;&#x2F;p&gt;</span><br><span class="line"> *</span><br><span class="line"> * @author $&#123;author&#125;</span><br><span class="line"> * @since $&#123;date&#125;</span><br><span class="line"> *&#x2F;</span><br><span class="line">#if($&#123;entityLombokModel&#125;)</span><br><span class="line">@Data</span><br><span class="line">    #if($&#123;superEntityClass&#125;)</span><br><span class="line">    @EqualsAndHashCode(callSuper &#x3D; true)</span><br><span class="line">    #else</span><br><span class="line">    @EqualsAndHashCode(callSuper &#x3D; false)</span><br><span class="line">    #end</span><br><span class="line">    #if($&#123;chainModel&#125;)</span><br><span class="line">    @Accessors(chain &#x3D; true)</span><br><span class="line">    #end</span><br><span class="line">#end</span><br><span class="line">#if($&#123;table.convert&#125;)</span><br><span class="line">@TableName(&quot;$&#123;table.name&#125;&quot;)</span><br><span class="line">#end</span><br><span class="line">#if($&#123;swagger2&#125;)</span><br><span class="line">@ApiModel(value&#x3D;&quot;$&#123;entity&#125;对象&quot;, description&#x3D;&quot;$!&#123;table.comment&#125;&quot;)</span><br><span class="line">#end</span><br><span class="line">#if($&#123;superEntityClass&#125;)</span><br><span class="line">public class $&#123;entity&#125; extends $&#123;superEntityClass&#125;#if($&#123;activeRecord&#125;)&lt;$&#123;entity&#125;&gt;#end &#123;</span><br><span class="line">#elseif($&#123;activeRecord&#125;)</span><br><span class="line">public class $&#123;entity&#125; extends Model&lt;$&#123;entity&#125;&gt; &#123;</span><br><span class="line">#else</span><br><span class="line">public class $&#123;entity&#125; implements Serializable &#123;</span><br><span class="line">#end</span><br><span class="line"></span><br><span class="line">#if($&#123;entitySerialVersionUID&#125;)</span><br><span class="line">    private static final long serialVersionUID&#x3D;1L;</span><br><span class="line">#end</span><br><span class="line"></span><br><span class="line">## ----------  BEGIN 字段循环遍历  ----------</span><br><span class="line">#foreach($field in $&#123;table.fields&#125;)</span><br><span class="line">#if($&#123;field.keyFlag&#125;)</span><br><span class="line">    #set($keyPropertyName&#x3D;$&#123;field.propertyName&#125;)</span><br><span class="line">#end</span><br><span class="line"></span><br><span class="line">#if(&quot;$!field.comment&quot; !&#x3D; &quot;&quot;)</span><br><span class="line">    #if($&#123;swagger2&#125;)</span><br><span class="line">    @ApiModelProperty(value &#x3D; &quot;$&#123;field.comment&#125;&quot;)</span><br><span class="line">    #else</span><br><span class="line">    &#x2F;**</span><br><span class="line">     * $&#123;field.comment&#125;</span><br><span class="line">     *&#x2F;</span><br><span class="line">    #end</span><br><span class="line">#end</span><br><span class="line">#if($&#123;field.keyFlag&#125;)</span><br><span class="line">    ## 主键</span><br><span class="line">#if($&#123;field.keyIdentityFlag&#125;)</span><br><span class="line">@TableId(value &#x3D; &quot;$&#123;field.annotationColumnName&#125;&quot;, type &#x3D; IdType.AUTO)</span><br><span class="line">#elseif(!$null.isNull($&#123;idType&#125;) &amp;&amp; &quot;$!idType&quot; !&#x3D; &quot;&quot;)</span><br><span class="line">@TableId(value &#x3D; &quot;$&#123;field.annotationColumnName&#125;&quot;, type &#x3D; IdType.$&#123;idType&#125;)</span><br><span class="line">#elseif($&#123;field.convert&#125;)</span><br><span class="line">@TableId(&quot;$&#123;field.annotationColumnName&#125;&quot;)</span><br><span class="line">#end</span><br><span class="line">## 普通字段</span><br><span class="line">#elseif($&#123;field.fill&#125;)</span><br><span class="line">    ## -----   存在字段填充设置   -----</span><br><span class="line">    #if($&#123;field.convert&#125;)</span><br><span class="line">    @TableField(value &#x3D; &quot;$&#123;field.annotationColumnName&#125;&quot;, fill &#x3D; FieldFill.$&#123;field.fill&#125;)</span><br><span class="line">    #else</span><br><span class="line">    @TableField(fill &#x3D; FieldFill.$&#123;field.fill&#125;)</span><br><span class="line">    #end</span><br><span class="line">#elseif($&#123;field.convert&#125;)</span><br><span class="line">@TableField(&quot;$&#123;field.annotationColumnName&#125;&quot;)</span><br><span class="line">#end</span><br><span class="line">## 乐观锁注解</span><br><span class="line">#if($&#123;versionFieldName&#125;&#x3D;&#x3D;$&#123;field.name&#125;)</span><br><span class="line">@Version</span><br><span class="line">#end</span><br><span class="line">## 逻辑删除注解</span><br><span class="line">#if($&#123;logicDeleteFieldName&#125;&#x3D;&#x3D;$&#123;field.name&#125;)</span><br><span class="line">    @TableLogic</span><br><span class="line">    #end</span><br><span class="line">    private $&#123;field.propertyType&#125; $&#123;field.propertyName&#125;;</span><br><span class="line">    #end</span><br><span class="line">    ## ----------  END 字段循环遍历  ----------</span><br><span class="line"></span><br><span class="line">    #if(!$&#123;entityLombokModel&#125;)</span><br><span class="line">    #foreach($field in $&#123;table.fields&#125;)</span><br><span class="line">    #if($&#123;field.propertyType.equals(&quot;boolean&quot;)&#125;)</span><br><span class="line">    #set($getprefix&#x3D;&quot;is&quot;)</span><br><span class="line">    #else</span><br><span class="line">    #set($getprefix&#x3D;&quot;get&quot;)</span><br><span class="line">    #end</span><br><span class="line"></span><br><span class="line">    public $&#123;field.propertyType&#125; $&#123;getprefix&#125;$&#123;field.capitalName&#125;() &#123;</span><br><span class="line">        return $&#123;field.propertyName&#125;;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    #if($&#123;chainModel&#125;)</span><br><span class="line">    public $&#123;entity&#125; set$&#123;field.capitalName&#125;($&#123;field.propertyType&#125; $&#123;field.propertyName&#125;) &#123;</span><br><span class="line">    #else</span><br><span class="line">    public void set$&#123;field.capitalName&#125;($&#123;field.propertyType&#125; $&#123;field.propertyName&#125;) &#123;</span><br><span class="line">    #end</span><br><span class="line">        this.$&#123;field.propertyName&#125; &#x3D; $&#123;field.propertyName&#125;;</span><br><span class="line">    #if($&#123;chainModel&#125;)</span><br><span class="line">    return this;</span><br><span class="line">    #end</span><br><span class="line">    &#125;</span><br><span class="line">    #end</span><br><span class="line">    ## --foreach end---</span><br><span class="line">    #end</span><br><span class="line">    ## --end of #if(!$&#123;entityLombokModel&#125;)--</span><br><span class="line"></span><br><span class="line">    #if($&#123;entityColumnConstant&#125;)</span><br><span class="line">        #foreach($field in $&#123;table.fields&#125;)</span><br><span class="line">            public static final String $&#123;field.name.toUpperCase()&#125; &#x3D; &quot;$&#123;field.name&#125;&quot;;</span><br><span class="line">        #end</span><br><span class="line">    #end</span><br><span class="line">    #if($&#123;activeRecord&#125;)</span><br><span class="line">    @Override</span><br><span class="line">    protected Serializable pkVal() &#123;</span><br><span class="line">        #if($&#123;keyPropertyName&#125;)</span><br><span class="line">                return this.$&#123;keyPropertyName&#125;;</span><br><span class="line">        #else</span><br><span class="line">                return null;</span><br><span class="line">        #end</span><br><span class="line">    &#125;</span><br><span class="line">    #end</span><br><span class="line">    #if(!$&#123;entityLombokModel&#125;)</span><br><span class="line">    @Override</span><br><span class="line">    public String toString() &#123;</span><br><span class="line">            return &quot;$&#123;entity&#125;&#123;&quot; +</span><br><span class="line">                #foreach($field in $&#123;table.fields&#125;)</span><br><span class="line">                    #if($!&#123;foreach.index&#125;&#x3D;&#x3D;0)</span><br><span class="line">                            &quot;$&#123;field.propertyName&#125;&#x3D;&quot; + $&#123;field.propertyName&#125; +</span><br><span class="line">                    #else</span><br><span class="line">                            &quot;, $&#123;field.propertyName&#125;&#x3D;&quot; + $&#123;field.propertyName&#125; +</span><br><span class="line">                    #end</span><br><span class="line">                #end</span><br><span class="line">                    &quot;&#125;&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">    #end</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>(2) mapper.java.vm</p>
@@ -433,6 +557,7 @@
 </ul>
 <p>Range表分区</p>
 <p>按照一定的返回值来确定每个分区的数据，分区函数的字段必须为整形，分区范围需要连续。符合范围条件的数据将会写入对应的分区。</p>
+
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">CREATE TABLE employees ( id INT NOT NULL,</span><br><span class="line"> fname VARCHAR(30), lname VARCHAR(30),</span><br><span class="line"> store_id INT NOT NULL </span><br><span class="line"> primary key (&#96;id&#96;, &#96;store_id&#96;)    -- 这里因为有主键字段，分区字段必须是主键和唯一索引的全部或一部分                    </span><br><span class="line"> )</span><br><span class="line"> PARTITION BY RANGE (store_id)</span><br><span class="line"> ( PARTITION p0 VALUES LESS THAN (6), PARTITION p1 VALUES LESS THAN (11),</span><br><span class="line"> PARTITION p2 VALUES LESS THAN (16), PARTITION p3 VALUES LESS THAN (21) );</span><br></pre></td></tr></table></figure>
 
 <p>其他分区可以自行去了解。</p>
@@ -544,7 +669,7 @@
 <p>驱动下载地址：<a href="https://chromedriver.storage.googleapis.com/index.html">https://chromedriver.storage.googleapis.com/index.html</a></p>
 <p>（2）第二步，配置环境变量</p>
 <p>​        1.首先我们应该找到浏览器安装包所在位置，将ChromeDriver.exe复制其根目录下</p>
-<p>​            <img src="/2020/12/14/selenuim%E7%9A%84%E5%AE%89%E8%A3%85%E5%92%8C%E9%85%8D%E7%BD%AE/image-20200904175241549.png" alt="image-20200904175241549"></p>
+<p>​            <img src="/2020/12/14/selenuim%E7%9A%84%E5%AE%89%E8%A3%85%E5%92%8C%E9%85%8D%E7%BD%AE/image-20200904175241549.png" alt="image-20200904175241549"><br>         如果您找不到你的chrome安装路径，您可以在浏览器处输入<code>chrome://version/</code>即可查看文件路径</p>
 <p>​        2.再将当前路径配置导环境变量Path中，打开cmd输入chromedriver检验是否安装成功</p>
 <p><img src="/2020/12/14/selenuim%E7%9A%84%E5%AE%89%E8%A3%85%E5%92%8C%E9%85%8D%E7%BD%AE/image-20200904175917351.png" alt="image-20200904175917351"></p>
 <p><img src="/2020/12/14/selenuim%E7%9A%84%E5%AE%89%E8%A3%85%E5%92%8C%E9%85%8D%E7%BD%AE/image-20200904180008917.png" alt="image-20200904180008917">        </p>
@@ -741,23 +866,6 @@
       </categories>
       <tags>
         <tag>博客</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>XML中的CDATA</title>
-    <url>/2020/11/17/XML%E4%B8%AD%E7%9A%84CDATA/</url>
-    <content><![CDATA[<p>CDATA是什么，这是XML语法。在CDATA内部的所有内容都会被解析器忽略。</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line">SELECT *</span><br><span class="line">FROM xxl_job_registry AS t</span><br><span class="line">WHERE t.update_time &lt;![CDATA[ &gt; ]]&gt; DATE_ADD(#&#123;nowTime&#125;,INTERVAL -#&#123;timeout&#125; SECOND)</span><br></pre></td></tr></table></figure>
-<a id="more"></a>
-
-<p>类似与</p>
-<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> *</span><br><span class="line"><span class="keyword">FROM</span> xxl_job_registry <span class="keyword">AS</span> t</span><br><span class="line"><span class="keyword">WHERE</span> t.update_time &gt; <span class="keyword">DATE_ADD</span>(<span class="comment">#&#123;nowTime&#125;,INTERVAL -#&#123;timeout&#125; SECOND)</span></span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>技术</category>
-      </categories>
-      <tags>
-        <tag>XML</tag>
       </tags>
   </entry>
 </search>

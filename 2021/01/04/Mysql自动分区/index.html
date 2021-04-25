@@ -118,6 +118,7 @@
 </ul>
 <p>Range表分区</p>
 <p>按照一定的返回值来确定每个分区的数据，分区函数的字段必须为整形，分区范围需要连续。符合范围条件的数据将会写入对应的分区。</p>
+
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE employees ( id INT NOT NULL,</span><br><span class="line"> fname VARCHAR(30), lname VARCHAR(30),</span><br><span class="line"> store_id INT NOT NULL </span><br><span class="line"> primary key (&#96;id&#96;, &#96;store_id&#96;)    -- 这里因为有主键字段，分区字段必须是主键和唯一索引的全部或一部分                    </span><br><span class="line"> )</span><br><span class="line"> PARTITION BY RANGE (store_id)</span><br><span class="line"> ( PARTITION p0 VALUES LESS THAN (6), PARTITION p1 VALUES LESS THAN (11),</span><br><span class="line"> PARTITION p2 VALUES LESS THAN (16), PARTITION p3 VALUES LESS THAN (21) );</span><br></pre></td></tr></table></figure>
 
 <p>其他分区可以自行去了解。</p>
