@@ -142,6 +142,90 @@
     
     
     <article
+  id="post-Docker安装部署mysql踩坑"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2021/04/15/Docker%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2mysql%E8%B8%A9%E5%9D%91/"
+    >Docker安装部署mysql踩坑</a> 
+</h2>
+ 
+
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2021/04/15/Docker%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2mysql%E8%B8%A9%E5%9D%91/" class="article-date">
+  <time datetime="2021-04-15T09:26:02.000Z" itemprop="datePublished">2021-04-15</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BF%90%E7%BB%B4/">运维</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="Docker安装部署mysql踩坑"><a href="#Docker安装部署mysql踩坑" class="headerlink" title="Docker安装部署mysql踩坑"></a>Docker安装部署mysql踩坑</h1><p>最近花了一段时间学习Docker，准备自己搭建一个镜像，更深层次的了解一个镜像生成原理。</p>
+<p>以前一直都不知道docker为什么会比传统虚拟机更快？镜像和容器之间的关系是什么？经过一周的学习，终于有了一个最基本的概念！</p>
+<p><strong>轻量级容器</strong></p>
+<p>docker具有<code>分层</code>概念, 所有镜像都会有一个基础镜像Image；一个镜像具有很多层layer; 上层在下层layer基础上只做增量，docker比虚拟机更为轻量级的原因就是因为layer；可以通过<code>docker inspect 镜像名</code>查看当前镜像layer。</p>
+<p><img src="/2021/04/15/Docker%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2mysql%E8%B8%A9%E5%9D%91/image-20210412151439814.png" alt="image-20210412151439814"></p>
+<p><strong>docker使用大致流程</strong></p>
+<ol>
+<li><p>使用<code>docker search</code>从<code>docker hub</code>找到我们所需要的镜像。</p>
+</li>
+<li><p><code>docker pull</code>从<code>docker hub</code>拉取镜像。</p>
+</li>
+<li><p>镜像下拉后，就可以通过run镜像来生成容器，生成容器时可携带参数来对生成容器进行配置(挂载，环境，端口映射等等)。docker hub中都有容器启动<code>guide</code>，请自行查看。</p>
+</li>
+<li><p>对容器进行commit，打包成镜像image,  push推送到仓库中。</p>
+</li>
+</ol>
+<p><img src="/2021/04/15/Docker%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2mysql%E8%B8%A9%E5%9D%91/image-20210415163331618.png" alt="image-20210415163331618"></p>
+<p><strong>容器和镜像</strong></p>
+<p>容器是镜像的实例，当run一个镜像的时候，容器就产生了。run镜像的实质就是为镜像提供一个可写层，可以通过该可写层来自定义配置镜像，构建自己的镜像。</p>
+<p><strong>常用命令</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">docker search  镜像</span><br><span class="line">docker pull 镜像名称:版本 #默认下拉latest最新版本</span><br><span class="line">docker run  [--name 容器名称] [-it 分配一个伪终端] [-p 映射端口] [-v 挂载数据卷] ImageId [容器启动后执行的命令]</span><br><span class="line">docker exec 容器ID&#x2F;容器名  &#x2F;bin&#x2F;bash    # 以命令行形式执行容器</span><br><span class="line">docker attach  进入容器内部</span><br><span class="line">docker commit 容器名 镜像名:版本</span><br><span class="line">docker build [-t 指定生成镜像名] [-f 指定dockerfile文件路径和文件名] . #默认会将当前目录下名为Dockerfile的文件</span><br><span class="line">docker inspect 镜像名  # 查看镜像详细信息</span><br><span class="line">docker rmi [-f 强制] 镜像</span><br><span class="line">docker rm [-f 强制] 容器</span><br><span class="line">docker contain prune #删除全部无用容器</span><br></pre></td></tr></table></figure>
+
+<p><strong>Dockerfile</strong></p>
+<p>这里只简单介绍dockerfile常用命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"># 所有镜像都拥有一个基础镜像；当我们用dockerfile构建镜像时，可以原有镜像上添加一些工具插件以及自定义配置</span><br><span class="line">FROM   基础镜像</span><br><span class="line"># 维护者信息</span><br><span class="line">MAINTAINER 个人签名</span><br><span class="line"># 镜像标签， 键值对 key&#x3D;value  可以打多个标签</span><br><span class="line">Label  version&#x3D;&quot;test:0.1&quot;</span><br><span class="line"># 制作镜像中需要用到的命令（安装服务，工具和配置）</span><br><span class="line"># 这里注意 dockerfile中run一次就会产生一个新的镜像；所以当多条run命令时，当前命令总在最新镜像执行；建议使用RUN 命令1 $$ # 命令2 连接</span><br><span class="line">RUN  yum -y install yim  或 RUN [&quot;yum&quot;, &quot;istall&quot;, &quot;nginx&quot;]</span><br><span class="line"># 容器启动执行的初始命令， 这里是启动后执行&#x2F;bin&#x2F;bash； 注意：容易被覆盖</span><br><span class="line">CMD &#x2F;bin&#x2F;bash</span><br><span class="line">#  EXPOSE 宿主机端口:容器内部端口 暴露端口 </span><br><span class="line"># ENV 设置容器内环境变量</span><br><span class="line">ENV MYSQL_PASSWORD 123456</span><br><span class="line">#  ADD 将dockerfile当前目录下的文件或目录拷贝镜像（压缩包会自动解压）</span><br><span class="line"># COPY docker file当前目录下的文件拷贝到镜像中</span><br><span class="line"># ENTRYPOINT    容器启动的时候执行的初始命令，不能被替换 </span><br><span class="line">ENTRYPOINT [ &quot;&#x2F;bin&#x2F;bash&quot;,&quot;-c&quot;,&quot;&#x2F;start.sh&quot; ]</span><br><span class="line"># VOLUME 挂载数据卷</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>部署Mysql踩坑</strong></p>
+<p>在部署Mysql后，想通过云服务器连接容器mysql，测试是否部署成功。却发现怎么也链接不进去，而使用navicat工具却链接成功了。</p>
+<p><img src="/2021/04/15/Docker%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2mysql%E8%B8%A9%E5%9D%91/image-20210412152149608.png" alt="image-20210412152149608"></p>
+<p>仔细检查密码，ip端口，阿里云安全组，发现都没有问题，</p>
+<p>最后发现是<code>容器版本和服务器mysql客户端版本不一致</code>导致的。当前服务器版本是5.7， 而容器Mysql却是8.0版本的，所以将mysql客户端更新到8.0就可以了</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/docker/" rel="tag">docker</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+   
+</article>
+
+    
+    <article
   id="post-MybatisPlus自动生成及其原理"
   class="article article-type-post"
   itemscope
@@ -316,63 +400,6 @@
     <footer class="article-footer">
        
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%A7%92%E8%89%B2%E6%9D%83%E9%99%90/" rel="tag">角色权限</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-   
-</article>
-
-    
-    <article
-  id="post-Jenkins踩坑日记"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2021/02/25/Jenkins%E8%B8%A9%E5%9D%91%E6%97%A5%E8%AE%B0/"
-    >Jenkins踩坑日记</a> 
-</h2>
- 
-
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2021/02/25/Jenkins%E8%B8%A9%E5%9D%91%E6%97%A5%E8%AE%B0/" class="article-date">
-  <time datetime="2021-02-25T06:22:38.000Z" itemprop="datePublished">2021-02-25</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BF%90%E7%BB%B4/">运维</a> / <a class="article-category-link" href="/categories/%E8%BF%90%E7%BB%B4/%E8%87%AA%E5%8A%A8%E5%8C%96/">自动化</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>在jenkins使用<code>Publish over SSH</code>插件时，可谓时踩到了一个不小的坑，记录一下。。。</p>
-<p>1.首先，在服务器上使用<code>ssh-keygen</code>生成一对密钥对。</p>
-<p><img src="/2021/02/25/Jenkins%E8%B8%A9%E5%9D%91%E6%97%A5%E8%AE%B0/image-20210224235449847.png" alt="image-20210224235449847"></p>
-<p>2.通过<code>cat  /root/.ssh/id_rsa文件</code>，将打印内容复制输入到key中。<code>这里一定要带上begin key --- end key, 否则会Can&#39;t connect to server </code></p>
-<p><img src="/2021/02/25/Jenkins%E8%B8%A9%E5%9D%91%E6%97%A5%E8%AE%B0/image-20210224235858659.png" alt="image-20210224235858659"></p>
-<p>3.点击<code>Test Configuration</code>，出现<code>success</code>，证明配置成功了。</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jenkins/" rel="tag">jenkins</a></li></ul>
 
     </footer>
   </div>
