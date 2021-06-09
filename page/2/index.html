@@ -142,6 +142,212 @@
     
     
     <article
+  id="post-利用AOP配置事务"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2021/04/27/%E5%88%A9%E7%94%A8AOP%E9%85%8D%E7%BD%AE%E4%BA%8B%E5%8A%A1/"
+    >利用AOP配置事务</a> 
+</h2>
+ 
+
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2021/04/27/%E5%88%A9%E7%94%A8AOP%E9%85%8D%E7%BD%AE%E4%BA%8B%E5%8A%A1/" class="article-date">
+  <time datetime="2021-04-27T09:29:19.000Z" itemprop="datePublished">2021-04-27</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Spring/">Spring</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="利用AOP配置事务"><a href="#利用AOP配置事务" class="headerlink" title="利用AOP配置事务"></a>利用AOP配置事务</h1><p>由于最近面试被问到工作中有没有用到事务?，是如何使用的，事务又是如何回滚的？虽然我知道公司项目是通过XML配置，但是不知道具体的实现细节。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 配置事物管理器，在*ServiceImpl里写@Transactional就可以启用事物管理 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;transactionManager&quot;</span></span></span><br><span class="line"><span class="tag">      <span class="attr">class</span>=<span class="string">&quot;org.springframework.orm.hibernate5.HibernateTransactionManager&quot;</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;sessionFactory&quot;</span> <span class="attr">ref</span>=<span class="string">&quot;sessionFactory&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 使用注解来使用事务 --&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- &lt;tx:annotation-driven transaction-manager=&quot;transactionManager&quot; /&gt; --&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 通过AOP配置提供事务增强，让service包下所有Bean的所有方法拥有事务 --&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- aop:config proxy-target-class true:false true则使用jdk proxy，反之则使用cglib</span></span><br><span class="line"><span class="comment">      jdk是基于接口的代理，代理类必须实现接口；</span></span><br><span class="line"><span class="comment">      cglib是基于类，原理是对于每个被代理类动态生成其子类，子类覆盖父类方法实现增强；由于是继承       关系，所以被代理类是不能使用final修饰的</span></span><br><span class="line"><span class="comment">     这里由于被代理类是serviceimpl，都实现了接口，所以这里true/false并没太大关系</span></span><br><span class="line"><span class="comment">     aop:pointcut:切面，作用于哪些方法</span></span><br><span class="line"><span class="comment">--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">aop:config</span> <span class="attr">proxy-target-class</span>=<span class="string">&quot;true&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">aop:pointcut</span> <span class="attr">id</span>=<span class="string">&quot;serviceMethod&quot;</span></span></span><br><span class="line"><span class="tag">         <span class="attr">expression</span>=<span class="string">&quot;(execution(* com.adinall.buss.**.service..*.*(..))) or (execution(* com.adinall.core.common.service..*.*(..)))&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">aop:advisor</span> <span class="attr">pointcut-ref</span>=<span class="string">&quot;serviceMethod&quot;</span></span></span><br><span class="line"><span class="tag">         <span class="attr">advice-ref</span>=<span class="string">&quot;txAdvice&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">aop:config</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">tx:advice</span> <span class="attr">id</span>=<span class="string">&quot;txAdvice&quot;</span> <span class="attr">transaction-manager</span>=<span class="string">&quot;transactionManager&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">tx:attributes</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">tx:method</span> <span class="attr">name</span>=<span class="string">&quot;record*&quot;</span> <span class="attr">propagation</span>=<span class="string">&quot;REQUIRED&quot;</span></span></span><br><span class="line"><span class="tag">                       <span class="attr">rollback-for</span>=<span class="string">&quot;java.lang.Exception&quot;</span>/&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">tx:method</span> <span class="attr">name</span>=<span class="string">&quot;modify*&quot;</span> <span class="attr">propagation</span>=<span class="string">&quot;REQUIRED&quot;</span></span></span><br><span class="line"><span class="tag">                       <span class="attr">rollback-for</span>=<span class="string">&quot;java.lang.Exception&quot;</span>/&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">tx:method</span> <span class="attr">name</span>=<span class="string">&quot;execute*&quot;</span> <span class="attr">propagation</span>=<span class="string">&quot;REQUIRED&quot;</span></span></span><br><span class="line"><span class="tag">                       <span class="attr">rollback-for</span>=<span class="string">&quot;java.lang.Exception&quot;</span>/&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">tx:method</span> <span class="attr">name</span>=<span class="string">&quot;reset*&quot;</span> <span class="attr">propagation</span>=<span class="string">&quot;REQUIRED&quot;</span></span></span><br><span class="line"><span class="tag">                       <span class="attr">rollback-for</span>=<span class="string">&quot;java.lang.Exception&quot;</span>/&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">tx:method</span> <span class="attr">name</span>=<span class="string">&quot;batch*&quot;</span> <span class="attr">propagation</span>=<span class="string">&quot;REQUIRED&quot;</span></span></span><br><span class="line"><span class="tag">                       <span class="attr">rollback-for</span>=<span class="string">&quot;java.lang.Exception&quot;</span>/&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">tx:method</span> <span class="attr">name</span>=<span class="string">&quot;save*&quot;</span> <span class="attr">propagation</span>=<span class="string">&quot;REQUIRED&quot;</span></span></span><br><span class="line"><span class="tag">                       <span class="attr">rollback-for</span>=<span class="string">&quot;java.lang.Exception&quot;</span>/&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">tx:method</span> <span class="attr">name</span>=<span class="string">&quot;add*&quot;</span> <span class="attr">propagation</span>=<span class="string">&quot;REQUIRED&quot;</span></span></span><br><span class="line"><span class="tag">                       <span class="attr">rollback-for</span>=<span class="string">&quot;java.lang.Exception&quot;</span>/&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">tx:method</span> <span class="attr">name</span>=<span class="string">&quot;delete*&quot;</span> <span class="attr">propagation</span>=<span class="string">&quot;REQUIRED&quot;</span></span></span><br><span class="line"><span class="tag">                       <span class="attr">rollback-for</span>=<span class="string">&quot;java.lang.Exception&quot;</span>/&gt;</span></span><br><span class="line">        ····</span><br><span class="line">   <span class="tag">&lt;/<span class="name">tx:attributes</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">tx:advice</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>仔细想想也是，通过aop实现对所有service做事务织入就不用为每个service添加事务了</p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/shamo89/p/9925390.html">如何使用XML配置事务</a></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/aop/" rel="tag">aop</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/" rel="tag">java</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+   
+</article>
+
+    
+    <article
+  id="post-XML中的CDATA"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2021/04/25/XML%E4%B8%AD%E7%9A%84CDATA/"
+    >XML中的CDATA</a> 
+</h2>
+ 
+
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2021/04/25/XML%E4%B8%AD%E7%9A%84CDATA/" class="article-date">
+  <time datetime="2021-04-25T08:16:06.412Z" itemprop="datePublished">2021-04-25</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>CDATA是什么，这是XML语法。在CDATA内部的所有内容都会被解析器忽略。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT *</span><br><span class="line">FROM xxl_job_registry AS t</span><br><span class="line">WHERE t.update_time &lt;![CDATA[ &gt; ]]&gt; DATE_ADD(#&#123;nowTime&#125;,INTERVAL -#&#123;timeout&#125; SECOND)</span><br></pre></td></tr></table></figure> 
+      <a class="article-more-link" href="/2021/04/25/XML%E4%B8%AD%E7%9A%84CDATA/"
+        >阅读更多...</a
+      >
+       
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/XML/" rel="tag">XML</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+   
+</article>
+
+    
+    <article
+  id="post-Docker搭建redis集群"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2021/04/23/Docker%E6%90%AD%E5%BB%BAredis%E9%9B%86%E7%BE%A4/"
+    >Docker搭建redis集群</a> 
+</h2>
+ 
+
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2021/04/23/Docker%E6%90%AD%E5%BB%BAredis%E9%9B%86%E7%BE%A4/" class="article-date">
+  <time datetime="2021-04-23T08:09:08.000Z" itemprop="datePublished">2021-04-23</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BF%90%E7%BB%B4/">运维</a> / <a class="article-category-link" href="/categories/%E8%BF%90%E7%BB%B4/docker/">docker</a> / <a class="article-category-link" href="/categories/%E8%BF%90%E7%BB%B4/docker/redis/">redis</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="Docker搭建redis集群"><a href="#Docker搭建redis集群" class="headerlink" title="Docker搭建redis集群"></a>Docker搭建redis集群</h1><p>创建一个自定义redis网络</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker network create --driver bridge --subnet 192.168.0.0&#x2F;16  --gateway 192.168.0.1 redis</span><br></pre></td></tr></table></figure>
+
+<p>创建shell脚本</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> $(seq 1 6)  seq代表循环1-6之间的整数, 这里循环6次</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> EOF 自定义终止符（也可以使用自定义终止符）, 配合cat命令达到对文件的多行追加、覆盖</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> &lt;&lt; 输入重定向，  &gt;：输出重定向（覆盖）  &gt;&gt;: 输出重定向（追加）</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 分别生成192.168.0.11, 192.168.0.12, 192.168.0.13, 192.168.0.14, 192.168.0.15, 192.168.0.6</span></span><br><span class="line">for port in $(seq 1 6);</span><br><span class="line">do</span><br><span class="line">mkdir -p   redis/node-$&#123;port&#125;/conf</span><br><span class="line">touch   redis/node-$&#123;port&#125;/conf/redis.conf</span><br><span class="line">cat &lt;&lt; EOF &gt; redis/node-$&#123;port&#125;/conf/redis.conf</span><br><span class="line">port 6379</span><br><span class="line">bind 0.0.0.0</span><br><span class="line">cluster-enabled yes</span><br><span class="line">cluster-config-file nodes.conf</span><br><span class="line">cluster-node-timeout 5000</span><br><span class="line">cluster-announce-ip 192.168.0.1$&#123;port&#125;</span><br><span class="line">cluster-announce-port 6379</span><br><span class="line">cluster-announce-bus-port 16379</span><br><span class="line">appendonly yes</span><br><span class="line">EOF</span><br><span class="line">done </span><br></pre></td></tr></table></figure>
+
+<p>将以上脚本复制到终端中运行</p>
+<p><img src="/2021/04/23/Docker%E6%90%AD%E5%BB%BAredis%E9%9B%86%E7%BE%A4/image-20210422160500047.png" alt="image-20210422160500047"></p>
+<p>随后启动redis容器</p>
+<p>node-1节点</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;节点1</span><br><span class="line">docker run -p 6371:6379 -p 16371:16379 --name redis01 \</span><br><span class="line"> -v  &#x2F;root&#x2F;redis&#x2F;node-1&#x2F;data:&#x2F;data \</span><br><span class="line"> -v  &#x2F;root&#x2F;redis&#x2F;node-1&#x2F;conf&#x2F;redis.conf:&#x2F;etc&#x2F;redis&#x2F;redis.conf \</span><br><span class="line"> -d --net redis --ip 192.168.0.11  redis redis-server &#x2F;etc&#x2F;redis&#x2F;redis.conf</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2021/04/23/Docker%E6%90%AD%E5%BB%BAredis%E9%9B%86%E7%BE%A4/image-20210422163820267.png" alt="image-20210422163820267"></p>
+<p><code>原因是因为防火墙启动或重启的时候， 会从iptables移除规则，导致docker无法正常工作，所以我们重启docker服务久好了</code></p>
+<p><img src="/2021/04/23/Docker%E6%90%AD%E5%BB%BAredis%E9%9B%86%E7%BE%A4/image-20210422164323684.png" alt="image-20210422164323684"></p>
+<p>同理，节点2,3,4,5,6也是一样， 这里就不再演示了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 节点2</span><br><span class="line">docker run -p 6372:6379 -p 16372:16379 --name redis02 \</span><br><span class="line"> -v  &#x2F;root&#x2F;redis&#x2F;node-2&#x2F;data:&#x2F;data \</span><br><span class="line"> -v  &#x2F;root&#x2F;redis&#x2F;node-2&#x2F;conf&#x2F;redis.conf:&#x2F;etc&#x2F;redis&#x2F;redis.conf \</span><br><span class="line"> -d --net redis --ip 192.168.0.12  redis redis-server &#x2F;etc&#x2F;redis&#x2F;redis.conf</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 节点3</span><br><span class="line">docker run -p 6373:6379 -p 16373:16379 --name redis03 \</span><br><span class="line"> -v  &#x2F;root&#x2F;redis&#x2F;node-3&#x2F;data:&#x2F;data \</span><br><span class="line"> -v  &#x2F;root&#x2F;redis&#x2F;node-3&#x2F;conf&#x2F;redis.conf:&#x2F;etc&#x2F;redis&#x2F;redis.conf \</span><br><span class="line"> -d --net redis --ip 192.168.0.13  redis redis-server &#x2F;etc&#x2F;redis&#x2F;redis.conf</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 节点4</span><br><span class="line">docker run -p 6374:6379 -p 16374:16379 --name redis04 \</span><br><span class="line"> -v  &#x2F;root&#x2F;redis&#x2F;node-4&#x2F;data:&#x2F;data \</span><br><span class="line"> -v  &#x2F;root&#x2F;redis&#x2F;node-4&#x2F;conf&#x2F;redis.conf:&#x2F;etc&#x2F;redis&#x2F;redis.conf \</span><br><span class="line"> -d --net redis --ip 192.168.0.14  redis redis-server &#x2F;etc&#x2F;redis&#x2F;redis.conf</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 节点5</span><br><span class="line">docker run -p 6375:6379 -p 16375:16379 --name redis05 \</span><br><span class="line"> -v  &#x2F;root&#x2F;redis&#x2F;node-5&#x2F;data:&#x2F;data \</span><br><span class="line"> -v  &#x2F;root&#x2F;redis&#x2F;node-5&#x2F;conf&#x2F;redis.conf:&#x2F;etc&#x2F;redis&#x2F;redis.conf \</span><br><span class="line"> -d --net redis --ip 192.168.0.15 redis redis-server &#x2F;etc&#x2F;redis&#x2F;redis.conf</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">docker run -p <span class="number">6376</span>:<span class="number">6379</span> -p <span class="number">16376</span>:<span class="number">16379</span> --name redis06 \</span><br><span class="line"> -v  /root/redis/node-<span class="number">6</span>/data:/data \</span><br><span class="line"> -v  /root/redis/node-<span class="number">6</span>/conf/redis.conf:/etc/redis/redis.conf \</span><br><span class="line"> -d --net redis --ip <span class="number">192.168</span>.<span class="number">0.16</span>  redis redis-server /etc/redis/redis.conf</span><br></pre></td></tr></table></figure>
+
+<p>至此6个节点容器已经创建好了，接下来就是搭建redis集群了</p>
+<p><img src="/2021/04/23/Docker%E6%90%AD%E5%BB%BAredis%E9%9B%86%E7%BE%A4/image-20210422173501229.png" alt="image-20210422173501229"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 以交互方式执行redis01容器</span><br><span class="line">docker exec -it  redis01 &#x2F;bin&#x2F;bash</span><br></pre></td></tr></table></figure>
+
+<p><strong>创建Redis集群</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">  --cluster-replicas  主/从以1：1比例搭建集群</span></span><br><span class="line">redis-cli  --cluster create  192.168.0.11:6379  192.168.0.12:6379  192.168.0.13:6379  192.168.0.14:6379  192.168.0.15:6379  192.168.0.16:6379  --cluster-replicas 1</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2021/04/23/Docker%E6%90%AD%E5%BB%BAredis%E9%9B%86%E7%BE%A4/image-20210423155258763.png" alt="image-20210423155258763"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># 这里一定要以集群方式启动，否则会出现set key失败</span><br><span class="line">redis-cli -c # -c 表示启动集群模式</span><br><span class="line">cluster  info # 查看集群配置</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2021/04/23/Docker%E6%90%AD%E5%BB%BAredis%E9%9B%86%E7%BE%A4/image-20210423155953538.png" alt="image-20210423155953538"></p>
+<p>在当前redis01容器，set一个值</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># 显示ok，成功添加一条数据</span><br><span class="line">127.0.0.1:6379&gt; set peng 18</span><br><span class="line">OK</span><br></pre></td></tr></table></figure>
+
+<p>进入其他redis节点查看该key是否存在</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@codingboypeng ~]# docker exec -it redis04 &#x2F;bin&#x2F;bash</span><br><span class="line">root@a1eb72f5569e:&#x2F;data# redis-c </span><br><span class="line">redis-check-aof  redis-check-rdb  redis-cli        </span><br><span class="line">root@a1eb72f5569e:&#x2F;data# redis-cli -c </span><br><span class="line">127.0.0.1:6379&gt; keys *</span><br><span class="line">(empty array)</span><br><span class="line">127.0.0.1:6379&gt; get peng</span><br><span class="line">-&gt; Redirected to slot [1674] located at 192.168.0.11:6379</span><br><span class="line">&quot;18&quot;</span><br><span class="line">192.168.0.11:6379&gt; </span><br></pre></td></tr></table></figure>
+
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/docker%E7%BD%91%E7%BB%9C/" rel="tag">docker网络</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/redis/" rel="tag">redis</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%9B%86%E7%BE%A4/" rel="tag">集群</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+   
+</article>
+
+    
+    <article
   id="post-Docker容器通信"
   class="article article-type-post"
   itemscope
@@ -197,218 +403,13 @@
 </article>
 
     
-    <article
-  id="post-Docker安装部署mysql踩坑"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2021/04/15/Docker%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2mysql%E8%B8%A9%E5%9D%91/"
-    >Docker安装部署mysql踩坑</a> 
-</h2>
- 
-
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2021/04/15/Docker%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2mysql%E8%B8%A9%E5%9D%91/" class="article-date">
-  <time datetime="2021-04-15T09:26:02.000Z" itemprop="datePublished">2021-04-15</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BF%90%E7%BB%B4/">运维</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h1 id="Docker安装部署mysql踩坑"><a href="#Docker安装部署mysql踩坑" class="headerlink" title="Docker安装部署mysql踩坑"></a>Docker安装部署mysql踩坑</h1><p>最近花了一段时间学习Docker，准备自己搭建一个镜像，更深层次的了解一个镜像生成原理。</p>
-<p>以前一直都不知道docker为什么会比传统虚拟机更快？镜像和容器之间的关系是什么？经过一周的学习，终于有了一个最基本的概念！</p>
-<p><strong>轻量级容器</strong></p>
-<p>docker具有<code>分层</code>概念, 所有镜像都会有一个基础镜像Image；一个镜像具有很多层layer; 上层在下层layer基础上只做增量，docker比虚拟机更为轻量级的原因就是因为layer；可以通过<code>docker inspect 镜像名</code>查看当前镜像layer。</p>
-<p><img src="/2021/04/15/Docker%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2mysql%E8%B8%A9%E5%9D%91/image-20210412151439814.png" alt="image-20210412151439814"></p>
-<p><strong>docker使用大致流程</strong></p>
-<ol>
-<li><p>使用<code>docker search</code>从<code>docker hub</code>找到我们所需要的镜像。</p>
-</li>
-<li><p><code>docker pull</code>从<code>docker hub</code>拉取镜像。</p>
-</li>
-<li><p>镜像下拉后，就可以通过run镜像来生成容器，生成容器时可携带参数来对生成容器进行配置(挂载，环境，端口映射等等)。docker hub中都有容器启动<code>guide</code>，请自行查看。</p>
-</li>
-<li><p>对容器进行commit，打包成镜像image,  push推送到仓库中。</p>
-</li>
-</ol>
-<p><img src="/2021/04/15/Docker%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2mysql%E8%B8%A9%E5%9D%91/image-20210415163331618.png" alt="image-20210415163331618"></p>
-<p><strong>容器和镜像</strong></p>
-<p>容器是镜像的实例，当run一个镜像的时候，容器就产生了。run镜像的实质就是为镜像提供一个可写层，可以通过该可写层来自定义配置镜像，构建自己的镜像。</p>
-<p><strong>常用命令</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">docker search  镜像</span><br><span class="line">docker pull 镜像名称:版本 #默认下拉latest最新版本</span><br><span class="line">docker run  [--name 容器名称] [-it 分配一个伪终端] [-p 映射端口] [-v 挂载数据卷] ImageId [容器启动后执行的命令]</span><br><span class="line">docker exec 容器ID&#x2F;容器名  &#x2F;bin&#x2F;bash    # 以命令行形式执行容器</span><br><span class="line">docker attach  进入容器内部</span><br><span class="line">docker commit 容器名 镜像名:版本</span><br><span class="line">docker build [-t 指定生成镜像名] [-f 指定dockerfile文件路径和文件名] . #默认会将当前目录下名为Dockerfile的文件</span><br><span class="line">docker inspect 镜像名  # 查看镜像详细信息</span><br><span class="line">docker rmi [-f 强制] 镜像</span><br><span class="line">docker rm [-f 强制] 容器</span><br><span class="line">docker contain prune #删除全部无用容器</span><br></pre></td></tr></table></figure>
-
-<p><strong>Dockerfile</strong></p>
-<p>这里只简单介绍dockerfile常用命令</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"># 所有镜像都拥有一个基础镜像；当我们用dockerfile构建镜像时，可以原有镜像上添加一些工具插件以及自定义配置</span><br><span class="line">FROM   基础镜像</span><br><span class="line"># 维护者信息</span><br><span class="line">MAINTAINER 个人签名</span><br><span class="line"># 镜像标签， 键值对 key&#x3D;value  可以打多个标签</span><br><span class="line">Label  version&#x3D;&quot;test:0.1&quot;</span><br><span class="line"># 制作镜像中需要用到的命令（安装服务，工具和配置）</span><br><span class="line"># 这里注意 dockerfile中run一次就会产生一个新的镜像；所以当多条run命令时，当前命令总在最新镜像执行；建议使用RUN 命令1 $$ # 命令2 连接</span><br><span class="line">RUN  yum -y install yim  或 RUN [&quot;yum&quot;, &quot;istall&quot;, &quot;nginx&quot;]</span><br><span class="line"># 容器启动执行的初始命令， 这里是启动后执行&#x2F;bin&#x2F;bash； 注意：容易被覆盖</span><br><span class="line">CMD &#x2F;bin&#x2F;bash</span><br><span class="line">#  EXPOSE 宿主机端口:容器内部端口 暴露端口 </span><br><span class="line"># ENV 设置容器内环境变量</span><br><span class="line">ENV MYSQL_PASSWORD 123456</span><br><span class="line">#  ADD 将dockerfile当前目录下的文件或目录拷贝镜像（压缩包会自动解压）</span><br><span class="line"># COPY docker file当前目录下的文件拷贝到镜像中</span><br><span class="line"># ENTRYPOINT    容器启动的时候执行的初始命令，不能被替换 </span><br><span class="line">ENTRYPOINT [ &quot;&#x2F;bin&#x2F;bash&quot;,&quot;-c&quot;,&quot;&#x2F;start.sh&quot; ]</span><br><span class="line"># VOLUME 挂载数据卷</span><br></pre></td></tr></table></figure>
-
-
-
-<p><strong>部署Mysql踩坑</strong></p>
-<p>在部署Mysql后，想通过云服务器连接容器mysql，测试是否部署成功。却发现怎么也链接不进去，而使用navicat工具却链接成功了。</p>
-<p><img src="/2021/04/15/Docker%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2mysql%E8%B8%A9%E5%9D%91/image-20210412152149608.png" alt="image-20210412152149608"></p>
-<p>仔细检查密码，ip端口，阿里云安全组，发现都没有问题，</p>
-<p>最后发现是<code>容器版本和服务器mysql客户端版本不一致</code>导致的。当前服务器版本是5.7， 而容器Mysql却是8.0版本的，所以将mysql客户端更新到8.0就可以了</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/docker/" rel="tag">docker</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-   
-</article>
-
-    
-    <article
-  id="post-MybatisPlus自动生成及其原理"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2021/03/08/MybatisPlus%E8%87%AA%E5%8A%A8%E7%94%9F%E6%88%90%E5%8F%8A%E5%85%B6%E5%8E%9F%E7%90%86/"
-    >MybatisPlus自动生成及其原理</a> 
-</h2>
- 
-
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2021/03/08/MybatisPlus%E8%87%AA%E5%8A%A8%E7%94%9F%E6%88%90%E5%8F%8A%E5%85%B6%E5%8E%9F%E7%90%86/" class="article-date">
-  <time datetime="2021-03-08T14:03:30.000Z" itemprop="datePublished">2021-03-08</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Mybatis-Plus/">Mybatis Plus</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h1 id="MybatisPlus自动生成及其原理"><a href="#MybatisPlus自动生成及其原理" class="headerlink" title="MybatisPlus自动生成及其原理"></a>MybatisPlus自动生成及其原理</h1><p>在学习<code>MybatisPlus</code>的时候，觉得编写<code>Entity</code>,<code>Mapper</code>,<code>Service</code>和<code>Controller</code>类这种最基本而又重复性较高的步骤是十分没有必要的。我们可以使用Mybatis的逆向工程插件来快速搭建基本脚手架。</p> 
-      <a class="article-more-link" href="/2021/03/08/MybatisPlus%E8%87%AA%E5%8A%A8%E7%94%9F%E6%88%90%E5%8F%8A%E5%85%B6%E5%8E%9F%E7%90%86/"
-        >阅读更多...</a
-      >
-       
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E4%BB%A3%E7%A0%81%E7%94%9F%E6%88%90/" rel="tag">代码生成</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-   
-</article>
-
-    
-    <article
-  id="post-2021年个人计划"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2021/03/01/2021%E5%B9%B4%E4%B8%AA%E4%BA%BA%E8%AE%A1%E5%88%92/"
-    >2021年个人计划</a> 
-</h2>
- 
-
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2021/03/01/2021%E5%B9%B4%E4%B8%AA%E4%BA%BA%E8%AE%A1%E5%88%92/" class="article-date">
-  <time datetime="2021-03-01T14:32:38.000Z" itemprop="datePublished">2021-03-01</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E7%94%9F%E6%B4%BB/">生活</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>20210302/yekqgh163654.png</p>
-<h3 id="2021年个人计划"><a href="#2021年个人计划" class="headerlink" title="2021年个人计划"></a>2021年个人计划</h3><p>虽然2021年已经过去3个月，没有第一时间做出2021的个人计划，只因当时自己没有好好规划自己目标。我相信现在做规划还是来得及的。</p>
-<p>以下是我2021年的计划清单：</p>
-<h3 id="生活类"><a href="#生活类" class="headerlink" title="生活类"></a>生活类</h3><p>1.每天坐50个深蹲</p>
-<p>2.每月陪女朋友看一场电影</p>
-<p>3.对当月进行一次个人汇总总结，对人生观一个正向反馈</p>
-<p>4.每月尝试一道新菜。</p>
-<p>5.带女朋友去一次杭州。</p>
-<p>6.每个月增重3斤</p>
-<p>7.控制游戏时间，每个星期游戏时间控制在2h以内</p>
-<h3 id="知识类"><a href="#知识类" class="headerlink" title="知识类"></a>知识类</h3><p>1.每月看4本书(1本技术类，3本杂书)，吸收不同维度的知识</p>
-<p>2.每天看10分钟新闻</p>
-<p>3.每天背40个单词</p>
-<h3 id="理财类"><a href="#理财类" class="headerlink" title="理财类"></a>理财类</h3><p>将每月工资的【1/4】存入银行卡，作为固定积蓄；300作为地铁费用；3.5k作为生活住宿支出；500用来购物；</p>
-<p>剩下的钱则是购买基金。</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E4%B8%AA%E4%BA%BA%E8%AE%A1%E5%88%92/" rel="tag">个人计划</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-   
-</article>
-
-    
   </article>
   
 
   
   <nav class="page-nav">
     
-    <a class="extend prev" rel="prev" href="/">上一页</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/3/">下一页</a>
+    <a class="extend prev" rel="prev" href="/">上一页</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/3/">下一页</a>
   </nav>
   
 </section>
